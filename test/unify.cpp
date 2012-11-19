@@ -24,5 +24,6 @@ int main()
     std::cout << "munify::unify<boost::mpl::_1, boost::mpl::_2>::value = " << munify::unify<boost::mpl::_1, boost::mpl::_2>::value << std::endl;
     std::cout << "munify::unify<boost::mpl::_1, rel2<int, int*> >::value = " << munify::unify<boost::mpl::_1, rel2<int, int*> >::value << std::endl;
     std::cout << "munify::unify<rel2<int, int*>, rel2<int, int*> >::value = " << munify::unify<rel2<int, int*>, rel2<int, int*> >::value << std::endl;
+
     return 0;
 }

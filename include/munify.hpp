@@ -5,3 +5,4 @@
  */
 
 #include "munify/unify.hpp"
+#include "munify/substitute.hpp"

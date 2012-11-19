@@ -4,43 +4,73 @@
  * See accompanying file LICENSE.txt for its full text.
  */
 
+#ifndef _MUNIFY_UNIFY_HPP_
+#define _MUNIFY_UNIFY_HPP_
+
+#include "substitute.hpp"
+
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/arg.hpp>
 #include <boost/mpl/placeholders.hpp>
+#include <boost/mpl/pair.hpp>
+#include <boost/mpl/map.hpp>
+#include <boost/mpl/insert.hpp>
 
 namespace munify
 {
-    template<typename lexpr, typename rexpr>
-    struct unify : boost::mpl::false_
+
+    template<typename lExpr, typename rExpr, typename unifiers = boost::mpl::map<> >
+    struct unify : unify<typename substitute<unifiers, lExpr>::type, typename substitute<unifiers, rExpr>::type>
     {};
 
-    template<typename atom>
-    struct unify<atom, atom> : boost::mpl::true_
+    template<typename lExpr, typename rExpr>
+    struct unify<lExpr, rExpr, boost::mpl::map<> > : boost::mpl::false_
     {
+            typedef boost::mpl::map<> unifiers;
+    };
+
+    template<typename atom>
+    struct unify<atom, atom, boost::mpl::map<> > : boost::mpl::true_
+    {
+            typedef boost::mpl::map<> unifiers;
     };
 
     template<int n, typename expr>
-    struct unify<boost::mpl::arg<n>, expr> : boost::mpl::true_
+    struct unify<boost::mpl::arg<n>, expr, boost::mpl::map<> > : boost::mpl::true_
     {
             //TODO: occurs check
+            typedef boost::mpl::map<boost::mpl::pair<boost::mpl::arg<n>, expr> > unifiers;
     };
 
-    //required to avoid ambiguity
+    template<int n, typename expr>
+    struct unify<expr, boost::mpl::arg<n>, boost::mpl::map<> > : unify<boost::mpl::arg<n>, expr>
+    {};
+
+    template<int m, int n>
+    struct unify<boost::mpl::arg<m>, boost::mpl::arg<n>, boost::mpl::map<> > : boost::mpl::true_
+    {
+            typedef boost::mpl::map<boost::mpl::pair<boost::mpl::arg<m>, boost::mpl::arg<n> > > unifiers;
+    };
+
     template<int n>
-    struct unify<boost::mpl::arg<n>, boost::mpl::arg<n> > : boost::mpl::true_
+    struct unify<boost::mpl::arg<n>, boost::mpl::arg<n>, boost::mpl::map<> > : boost::mpl::true_
     {
+            typedef boost::mpl::map<> unifiers;
     };
 
-    template<template<typename...> class lexpr, typename... largs, template<typename...> class rexpr, typename... rargs>
-    struct unify<lexpr<largs...>, rexpr<rargs...> >
-    {
+//    template<template<typename...> class lRel, typename... lArgs, template<typename...> class rRel, typename... rArgs>
+//    struct unify<lRel<lArgs...>, rRel<rArgs...>, boost::mpl::map<> >
+//    {
 
+
+//    };
+
+    template<template<typename...> class rel, typename... args>
+    struct unify<rel<args...>, rel<args...>, boost::mpl::map<> > : boost::mpl::true_
+    {
+            typedef boost::mpl::map<> unifiers;
     };
 
-    //required to avoid ambiguity
-    template<template<typename...> class expr, typename... args>
-    struct unify<expr<args...>, expr<args...> > : boost::mpl::true_
-    {
-
-    };
 }
+
+#endif
