@@ -7,7 +7,6 @@
 #ifndef _MUNIFY_UNIFY_HPP_
 #define _MUNIFY_UNIFY_HPP_
 
-#include "atom.hpp"
 #include "substitute.hpp"
 
 #include <boost/mpl/bool.hpp>
@@ -87,25 +86,6 @@ namespace munify
 
     template<template<typename...> class rel, typename h, typename t, typename u>
     struct unify<rel<h, t>, rel<h, t>, u> : boost::mpl::true_
-    {
-            typedef u unifiers;
-    };
-
-    //unification of atoms
-    template<typename h, typename t, typename u>
-    struct unify<atom<h, t>, atom<h, t>, u> : boost::mpl::true_
-    {
-            typedef u unifiers;
-    };
-
-    template<typename constant, typename u>
-    struct unify<atom<constant>, constant, u> : boost::mpl::true_
-    {
-            typedef u unifiers;
-    };
-
-    template<typename constant, typename u>
-    struct unify<constant, atom<constant>, u> : boost::mpl::true_
     {
             typedef u unifiers;
     };

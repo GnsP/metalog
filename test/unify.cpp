@@ -25,7 +25,6 @@ int main()
     std::cout << std::endl;
     std::cout << "unifiable:" << std::endl;
     std::cout << "munify::unify<void, void>::value = " << munify::unify<void, void>::value << std::endl;
-    std::cout << "munify::unify<munify::atom<void, int, double>, munify::atom<void, int, double> >::value = " << munify::unify<munify::atom<void, int, double>, munify::atom<void, int, double> >::value << std::endl;
     std::cout << "munify::unify<boost::mpl::_1, void>::value = " << munify::unify<boost::mpl::_1, void>::value << std::endl;
     std::cout << "munify::unify<boost::mpl::_1*, void*>::value = " << munify::unify<boost::mpl::_1*, void*>::value << std::endl;
     std::cout << "munify::unify<boost::mpl::_1, boost::mpl::_1>::value = " << munify::unify<boost::mpl::_1, boost::mpl::_1>::value << std::endl;
