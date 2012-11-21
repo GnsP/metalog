@@ -30,7 +30,7 @@ namespace munify
 
     //{lRel(lExpr_1, lExpr_2, ..., lExpr_n-1, lExpr_n) = rRel(rExpr_1, rExpr_2, ..., rExpr_n-1, rExpr_n)} ==
     //    {lRel(lExpr_1, _(lExpr_2, _(..., _(lExpr_n-1, lExpr_n)))) = rRel(rExpr_1, _(rExpr_2, _(..., _(rExpr_n-1, rExpr_n))))}
-    template<template<typename...> class lRel, typename lH, typename... lT, template<typename...> class rRel, typename rH, typename... rT, typename u>
+    template<template<typename, typename...> class lRel, typename lH, typename... lT, template<typename, typename...> class rRel, typename rH, typename... rT, typename u>
     struct unify<lRel<lH, lT...>, rRel<rH, rT...>, u> : unify<lRel<lH, boost::tuples::tuple<lT...> >, rRel<rH, boost::tuples::tuple<rT...> >, u>
     {};
 
@@ -42,7 +42,7 @@ namespace munify
 //    };
 
     //main recursion
-    template<template<typename...> class rel, typename lH, typename lT, typename rH, typename rT, typename u>
+    template<template<typename, typename...> class rel, typename lH, typename lT, typename rH, typename rT, typename u>
     class unify<rel<lH, lT>, rel<rH, rT>, u> :
             public boost::mpl::if_
             <
@@ -76,15 +76,15 @@ namespace munify
     };
 
     //main recursion shortcuts
-    template<template<typename...> class rel, typename h, typename lT, typename rT, typename u>
+    template<template<typename, typename...> class rel, typename h, typename lT, typename rT, typename u>
     struct unify<rel<h, lT>, rel<h, rT>, u> : unify<lT, rT, u>
     {};
 
-    template<template<typename...> class rel, typename lH, typename rH, typename t, typename u>
+    template<template<typename, typename...> class rel, typename lH, typename rH, typename t, typename u>
     struct unify<rel<lH, t>, rel<rH, t>, u> : unify<lH, rH, u>
     {};
 
-    template<template<typename...> class rel, typename h, typename t, typename u>
+    template<template<typename, typename...> class rel, typename h, typename t, typename u>
     struct unify<rel<h, t>, rel<h, t>, u> : boost::mpl::true_
     {
             typedef u unifiers;
