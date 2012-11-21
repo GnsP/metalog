@@ -92,23 +92,19 @@ namespace munify
     };
 
     //unification of atoms
-    template<typename h, typename t, typename u>
-    struct unify<atom<h, t>, atom<h, t>, u> : boost::mpl::true_
+    template<typename h, typename... t, typename u>
+    struct unify<atom<h, t...>, atom<h, t...>, u> : boost::mpl::true_
     {
             typedef u unifiers;
     };
 
-    template<typename constant, typename u>
-    struct unify<atom<constant>, constant, u> : boost::mpl::true_
-    {
-            typedef u unifiers;
-    };
+    template<typename expr, typename u>
+    struct unify<atom<expr>, expr, u> : unify<atom<expr>, atom<expr>, u>
+    {};
 
-    template<typename constant, typename u>
-    struct unify<constant, atom<constant>, u> : boost::mpl::true_
-    {
-            typedef u unifiers;
-    };
+    template<typename expr, typename u>
+    struct unify<expr, atom<expr>, u> : unify<atom<expr>, expr, u>
+    {};
 
     //variable binding
     template<int n, typename expr>

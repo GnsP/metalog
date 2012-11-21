@@ -12,7 +12,7 @@ namespace munify
     /**
      * Any expression wraped by atom<> is considered to be a constant for the purpose of unification
      */
-    template<typename... expr>
+    template<typename h, typename... t>
     struct atom;
 }
 
