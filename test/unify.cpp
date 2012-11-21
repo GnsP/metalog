@@ -8,6 +8,19 @@
 
 #include <iostream>
 
+#define TEST(expr) \
+    { \
+        bool const result = expr; \
+        if(!result) \
+        { \
+            std::cout << #expr << std::endl; \
+            return 1; \
+        } \
+    }
+
+template<typename>
+struct rel1;
+
 template<typename, typename>
 struct rel2;
 
@@ -18,22 +31,24 @@ struct rel3;
 int main()
 {
     std::cout << std::endl;
-    std::cout << "not unifiable:" << std::endl;
-    std::cout << "munify::unify<int, void>::value = " << munify::unify<int, void>::value << std::endl;
-    std::cout << "munify::unify<rel2<int, int>, rel2<int, int*> >::value = " << munify::unify<rel2<int, int>, rel2<int, int*> >::value << std::endl;
 
-    std::cout << std::endl;
-    std::cout << "unifiable:" << std::endl;
-    std::cout << "munify::unify<void, void>::value = " << munify::unify<void, void>::value << std::endl;
-    std::cout << "munify::unify<boost::mpl::_1, void>::value = " << munify::unify<boost::mpl::_1, void>::value << std::endl;
-    std::cout << "munify::unify<boost::mpl::_1*, void*>::value = " << munify::unify<boost::mpl::_1*, void*>::value << std::endl;
-    std::cout << "munify::unify<boost::mpl::_1, boost::mpl::_1>::value = " << munify::unify<boost::mpl::_1, boost::mpl::_1>::value << std::endl;
-    std::cout << "munify::unify<boost::mpl::_1, boost::mpl::_2>::value = " << munify::unify<boost::mpl::_1, boost::mpl::_2>::value << std::endl;
-    std::cout << "munify::unify<boost::mpl::_1, rel2<int, int*> >::value = " << munify::unify<boost::mpl::_1, rel2<int, int*> >::value << std::endl;
-    std::cout << "munify::unify<rel2<int, int*>, rel2<int, int*> >::value = " << munify::unify<rel2<int, int*>, rel2<int, int*> >::value << std::endl;
-    std::cout << "munify::unify<rel2<boost::mpl::_1, boost::mpl::_2>, rel2<int, int*> >::value = " << munify::unify<rel2<boost::mpl::_1, boost::mpl::_2>, rel2<int, int*> >::value << std::endl;
-    std::cout << "munify::unify<rel2<int, boost::mpl::_1>, rel2<int, int*> >::value = " << munify::unify<rel2<int, boost::mpl::_1>, rel2<int, int*> >::value << std::endl;
-    std::cout << "munify::unify<rel2<boost::mpl::_1, int*>, rel2<int, int*> >::value = " << munify::unify<rel2<boost::mpl::_1, int*>, rel2<int, int*> >::value << std::endl;
-    std::cout << "munify::unify<rel2<boost::mpl::_1, boost::mpl::_1*>, rel2<int, int*> >::value = " << munify::unify<rel2<boost::mpl::_1, boost::mpl::_1*>, rel2<int, int*> >::value << std::endl;
+    //not unifiable
+    TEST((!munify::unify<int, void>::value))
+    TEST((!munify::unify<rel2<int, int>, rel2<int, int*> >::value))
+
+    //unifiable
+    TEST((munify::unify<void, void>::value))
+    TEST((munify::unify<boost::mpl::_1, void>::value))
+//    TEST((munify::unify<boost::mpl::_1*, void*>::value))
+    TEST((munify::unify<boost::mpl::_1, boost::mpl::_1>::value))
+    TEST((munify::unify<boost::mpl::_1, boost::mpl::_2>::value))
+    TEST((munify::unify<boost::mpl::_1, rel2<int, int*> >::value))
+    TEST((munify::unify<rel2<int, int*>, rel2<int, int*> >::value))
+    TEST((munify::unify<rel2<boost::mpl::_1, boost::mpl::_2>, rel2<int, int*> >::value))
+    TEST((munify::unify<rel2<int, boost::mpl::_1>, rel2<int, int*> >::value))
+    TEST((munify::unify<rel2<boost::mpl::_1, int*>, rel2<int, int*> >::value))
+    TEST((munify::unify<rel2<boost::mpl::_1, boost::mpl::_2>, rel2<boost::mpl::_2, int> >::value))
+    TEST((munify::unify<rel2<boost::mpl::_1, rel2<rel1<int>, boost::mpl::_2> >, rel2<rel1<boost::mpl::_2>, rel2<boost::mpl::_1, int> > >::value))
+//    TEST((munify::unify<rel2<boost::mpl::_1, boost::mpl::_1*>, rel2<int, int*> >::value))
     return 0;
 }
