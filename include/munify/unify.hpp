@@ -36,11 +36,29 @@ namespace munify
     {};
 
     //type modifiers forwarding
-//    template<typename lExpr, typename rExpr>
-//    struct unify<lExpr*, rExpr*, boost::mpl::map<> > : public unify<lExpr, rExpr>
-//    {
-//            typedef boost::mpl::map<> unifiers;
-//    };
+    template<typename lExpr, typename rExpr, typename u>
+    struct unify<lExpr*, rExpr*, u > : public unify<lExpr, rExpr, u>
+    {};
+
+    template<typename lExpr, typename rExpr, typename u>
+    struct unify<lExpr&, rExpr&, u > : public unify<lExpr, rExpr, u>
+    {};
+
+    template<typename lExpr, typename rExpr, typename u>
+    struct unify<lExpr&&, rExpr&&, u > : public unify<lExpr, rExpr, u>
+    {};
+
+    template<typename lExpr, typename rExpr, typename u>
+    struct unify<lExpr const, rExpr const, u > : public unify<lExpr, rExpr, u>
+    {};
+
+    template<typename lExpr, typename rExpr, typename u>
+    struct unify<lExpr volatile, rExpr volatile, u > : public unify<lExpr, rExpr, u>
+    {};
+
+    template<typename lExpr, typename rExpr, typename u>
+    struct unify<lExpr const volatile, rExpr  const volatile, u > : public unify<lExpr, rExpr, u>
+    {};
 
     //main recursion
     template<template<typename> class rel, typename lExpr, typename rExpr, typename u>
