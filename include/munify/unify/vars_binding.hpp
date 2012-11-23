@@ -32,12 +32,7 @@ namespace munify
             typedef typename unify<typename substitute<u>::template apply<boost::mpl::arg<n> >::type, typename substitute<u>::template apply<expr>::type>::unifiers tUnifiers;
 
         public:
-            typedef typename boost::mpl::if_
-            <
-                unify,
-                typename boost::mpl::fold<typename unify::tUnifiers, u, boost::mpl::insert<boost::mpl::_1, boost::mpl::_2> >::type,
-                boost::mpl::map<>
-            >::type unifiers;
+            typedef typename boost::mpl::fold<typename unify::tUnifiers, u, boost::mpl::insert<boost::mpl::_1, boost::mpl::_2> >::type unifiers;
     };
 
     template<int n, typename expr, typename u>
@@ -57,12 +52,7 @@ namespace munify
             typedef typename unify<typename substitute<u>::template apply<boost::mpl::arg<m> >::type, typename substitute<u>::template apply<boost::mpl::arg<n> >::type>::unifiers tUnifiers;
 
         public:
-            typedef typename boost::mpl::if_
-            <
-                unify,
-                typename boost::mpl::fold<typename unify::tUnifiers, u, boost::mpl::insert<boost::mpl::_1, boost::mpl::_2> >::type,
-                boost::mpl::map<>
-            >::type unifiers;
+            typedef typename boost::mpl::fold<typename unify::tUnifiers, u, boost::mpl::insert<boost::mpl::_1, boost::mpl::_2> >::type unifiers;
     };
 
     template<int n, typename u>

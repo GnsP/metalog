@@ -49,12 +49,7 @@ namespace munify
             typedef typename unify::template lazy<typename unify::type, unify<lTExpr, rTExpr, typename unify::hUnifiers > >::type tUnifiers;
 
         public:
-            typedef typename boost::mpl::if_
-            <
-                unify,
-                typename boost::mpl::fold<typename unify::tUnifiers, typename unify::hUnifiers, boost::mpl::insert<boost::mpl::_1, boost::mpl::_2> >::type,
-                boost::mpl::map<>
-            >::type unifiers;
+            typedef typename boost::mpl::fold<typename unify::tUnifiers, typename unify::hUnifiers, boost::mpl::insert<boost::mpl::_1, boost::mpl::_2> >::type unifiers;
     };
 
     //shortcuts
