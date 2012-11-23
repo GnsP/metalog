@@ -7,8 +7,6 @@
 #ifndef _MUNIFY_VARS_BINDING_HPP_
 #define _MUNIFY_VARS_BINDING_HPP_
 
-#include "unify.hpp"
-
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/arg.hpp>
 #include <boost/mpl/placeholders.hpp>

@@ -4,10 +4,8 @@
  * See accompanying file LICENSE.txt for its full text.
  */
 
-#ifndef _MUNIFY_MODIFIERS_UNWRAPPING_HPP_
-#define _MUNIFY_MODIFIERS_UNWRAPPING_HPP_
-
-#include "unify.hpp"
+#ifndef _MUNIFY_MODIFIERS_HPP_
+#define _MUNIFY_MODIFIERS_HPP_
 
 namespace munify
 {

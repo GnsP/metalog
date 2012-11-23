@@ -7,8 +7,6 @@
 #ifndef _MUNIFY_EQUIV_TRANSFORM_HPP_
 #define _MUNIFY_EQUIV_TRANSFORM_HPP_
 
-#include "unify.hpp"
-
 #include <boost/tuple/tuple.hpp>
 
 namespace munify

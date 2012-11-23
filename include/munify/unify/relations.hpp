@@ -4,10 +4,8 @@
  * See accompanying file LICENSE.txt for its full text.
  */
 
-#ifndef _MUNIFY_RELS_UNWRAPPING_HPP_
-#define _MUNIFY_RELS_UNWRAPPING_HPP_
-
-#include "unify.hpp"
+#ifndef _MUNIFY_RELATIONS_HPP_
+#define _MUNIFY_RELATIONS_HPP_
 
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/placeholders.hpp>
