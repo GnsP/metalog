@@ -18,73 +18,79 @@
 
 namespace munify
 {
-    template<typename unifiers, typename expr>
+    template<typename unifiers>
     struct substitute
     {
-            typedef expr type;
-    };
-
-    template<typename unifiers, int n>
-    struct substitute<unifiers, boost::mpl::arg<n> >
-    {
-//            boost bug #3982
-//            typedef typename boost::mpl::at<unifiers, boost::mpl::arg<n>, boost::mpl::arg<n> >::type type;
-
-            typedef typename boost::mpl::eval_if
-            <
-                boost::mpl::has_key<unifiers, boost::mpl::arg<n> >,
-                boost::mpl::at<unifiers, boost::mpl::arg<n> >,
-                boost::mpl::identity<boost::mpl::arg<n> >
-            >::type type;
-    };
-
-    template<typename unifiers, template<typename, typename...> class rel, typename... expr>
-    class substitute<unifiers, rel<expr...> >
-    {
-        private:
-            template<typename...>
-            struct pack;
-
-            template<typename, typename>
-            struct cons;
-
-            template<typename h, typename... t>
-            struct cons<h, substitute::pack<t...> >
+            template<typename expr>
+            struct apply
             {
-                    typedef typename substitute::template pack<h, t...> type;
+                    typedef expr type;
             };
 
-            template<typename, template<typename...> class>
-            struct unpack;
-
-            template<typename... args, template<typename...> class receiver>
-            struct unpack<substitute::pack<args...>, receiver>
+            template<int n>
+            struct apply<boost::mpl::arg<n> >
             {
-                    typedef receiver<args...> type;
-            };
+                    //boost bug #3982
+                    //typedef typename boost::mpl::at<unifiers, boost::mpl::arg<n>, boost::mpl::arg<n> >::type type;
 
-            template<typename from, template<typename...> class to>
-            struct rewrap
-            {
-                    typedef typename substitute::template unpack
+                    typedef typename boost::mpl::eval_if
                     <
-                        typename boost::mpl::reverse_fold
-                        <
-                            from,
-                            typename substitute::template pack<>,
-                            typename substitute::template cons<boost::mpl::_2, boost::mpl::_1>
-                        >::type,
-                        to
+                        boost::mpl::has_key<unifiers, boost::mpl::arg<n> >,
+                        boost::mpl::at<unifiers, boost::mpl::arg<n> >,
+                        boost::mpl::identity<boost::mpl::arg<n> >
                     >::type type;
             };
 
-        public:
-            typedef typename substitute::template rewrap
-            <
-                typename boost::mpl::transform<boost::mpl::list<expr...>, substitute<unifiers, boost::mpl::_1> >::type,
-                rel
-            >::type type;
+            template<template<typename, typename...> class rel, typename... expr>
+            class apply<rel<expr...> >
+            {
+                private:
+                    template<typename...>
+                    struct pack;
+
+                    template<typename, typename>
+                    struct cons;
+
+                    template<typename h, typename... t>
+                    struct cons<h, apply::pack<t...> >
+                    {
+                            typedef typename apply::template pack<h, t...> type;
+                    };
+
+                    template<typename, template<typename...> class>
+                    struct unpack;
+
+                    template<typename... args, template<typename...> class receiver>
+                    struct unpack<apply::pack<args...>, receiver>
+                    {
+                            typedef receiver<args...> type;
+                    };
+
+                    template<typename from, template<typename...> class to>
+                    struct rewrap
+                    {
+                            typedef typename apply::template unpack
+                            <
+                                typename boost::mpl::reverse_fold
+                                <
+                                    from,
+                                    typename apply::template pack<>,
+                                    typename apply::template cons<boost::mpl::_2, boost::mpl::_1>
+                                >::type,
+                                to
+                            >::type type;
+                    };
+
+                public:
+                    typedef typename apply::template rewrap
+                    <
+                        typename boost::mpl::transform<boost::mpl::list<expr...>, substitute<unifiers> >::type,
+                        rel
+                    >::type type;
+            };
     };
+
+
 }
 
 #endif
