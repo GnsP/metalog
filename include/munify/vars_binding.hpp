@@ -23,7 +23,7 @@ namespace munify
     template<int n, typename expr>
     struct unify<boost::mpl::arg<n>, expr, boost::mpl::map<> > : public boost::mpl::true_
     {
-            //TODO: occurs check
+#warning occurs check
             typedef boost::mpl::map<boost::mpl::pair<boost::mpl::arg<n>, expr> > unifiers;
     };
 

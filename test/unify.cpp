@@ -35,6 +35,7 @@ int main()
     //not unifiable
     TEST((!munify::unify<int, void>::value))
     TEST((!munify::unify<rel2<int, int>, rel2<int, int*> >::value))
+    TEST((!munify::unify<boost::mpl::_1, rel1<boost::mpl::_1> >::value))
 
     //unifiable
     TEST((munify::unify<void, void>::value))
