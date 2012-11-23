@@ -23,9 +23,9 @@ namespace munify
     };
 }
 
-#include "equiv_transform.hpp"
-#include "modifiers_unwrapping.hpp"
-#include "rels_unwrapping.hpp"
-#include "vars_binding.hpp"
+#include "unify/equiv_transform.hpp"
+#include "unify/modifiers.hpp"
+#include "unify/relations.hpp"
+#include "unify/vars_binding.hpp"
 
 #endif
