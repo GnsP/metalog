@@ -9,11 +9,16 @@
 
 namespace munify
 {
-    //{lRel(lExpr_1, lExpr_2, ..., lExpr_n-1, lExpr_n) = rRel(rExpr_1, rExpr_2, ..., rExpr_n-1, rExpr_n)} ==
-    //    {lRel(lExpr_1, _(lExpr_2, _(..., _(lExpr_n-1, lExpr_n)))) = rRel(rExpr_1, _(rExpr_2, _(..., _(rExpr_n-1, rExpr_n))))}
-    template<template<typename, typename...> class lRel, typename lHExpr, typename... lTExpr, template<typename, typename...> class rRel, typename rHExpr, typename... rTExpr, typename u>
-    struct unify<lRel<lHExpr, lTExpr...>, rRel<rHExpr, rTExpr...>, u> :
-            public unify<lRel<lHExpr, rel<lTExpr...> >, rRel<rHExpr, rel<rTExpr...> >, u>
+    //{lTerm(lExpr_1, lExpr_2, ..., lExpr_n-1, lExpr_n) = rTerm(rExpr_1, rExpr_2, ..., rExpr_n-1, rExpr_n)} ==
+    //    {lTerm(lExpr_1, _(lExpr_2, _(..., _(lExpr_n-1, lExpr_n)))) = rTerm(rExpr_1, _(rExpr_2, _(..., _(rExpr_n-1, rExpr_n))))}
+    template
+    <
+            template<typename, typename, typename...> class lTerm, typename lH1Expr, typename lH2Expr, typename... lTExpr,
+            template<typename, typename, typename...> class rTerm, typename rH1Expr, typename rH2Expr, typename... rTExpr,
+            typename u
+    >
+    struct unify<lTerm<lH1Expr, lH2Expr, lTExpr...>, rTerm<rH1Expr, rH2Expr, rTExpr...>, u> :
+            public unify<lTerm<lH1Expr, term<lH2Expr, lTExpr...> >, rTerm<rH1Expr, term<rH2Expr, rTExpr...> >, u>
     {};
 }
 

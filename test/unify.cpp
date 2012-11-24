@@ -18,28 +18,15 @@
         } \
     }
 
-template<typename...>
-struct rel;
-
-template<typename>
-struct rel1;
-
-template<typename, typename>
-struct rel2;
-
-template<typename, typename, typename>
-struct rel3;
-
-
 int main()
 {
     std::cout << std::endl;
 
     //not unifiable
     TEST((!munify::unify<int, void>::value))
-    TEST((!munify::unify<rel2<int, int>, rel2<int, int*> >::value))
-    TEST((!munify::unify<rel<int>, rel<int, int*> >::value))
-//    TEST((!munify::unify<munify::var<1>, rel1<munify::var<1> > >::value))
+    TEST((!munify::unify<munify::term<int, int>, munify::term<int, int*> >::value))
+    TEST((!munify::unify<munify::term<int>, munify::term<int, int*> >::value))
+    TEST((!munify::unify<munify::var<1>, munify::term<munify::var<1> > >::value))
 
     //unifiable
     TEST((munify::unify<void, void>::value))
@@ -53,17 +40,17 @@ int main()
     TEST((munify::unify<munify::var<1> volatile const* const volatile, volatile const float* const volatile>::value))
     TEST((munify::unify<munify::var<1>, munify::var<1> >::value))
     TEST((munify::unify<munify::var<1>, munify::var<2> >::value))
-    TEST((munify::unify<munify::var<1>, rel2<int, int*> >::value))
-    TEST((munify::unify<rel1<int>, rel1<int> >::value))
-    TEST((munify::unify<rel2<int, int*>, rel2<int, int*> >::value))
-    TEST((munify::unify<rel1<rel2<int, int*> >, rel1<rel2<int, int*> > >::value))
-    TEST((munify::unify<rel<int, int*, float, float*, void, void*>, rel<int, int*, float, float*, void, void*> >::value))
-    TEST((munify::unify<rel2<munify::var<1>, munify::var<2> >, rel2<int, int*> >::value))
-    TEST((munify::unify<rel2<int, munify::var<1> >, rel2<int, int*> >::value))
-    TEST((munify::unify<rel2<munify::var<1>, int*>, rel2<int, int*> >::value))
-    TEST((munify::unify<rel2<munify::var<1>, munify::var<2> >, rel2<munify::var<2>, int> >::value))
-    TEST((munify::unify<rel2<munify::var<1>, rel2<rel1<int>, munify::var<2> > >, rel2<rel1<munify::var<2> >, rel2<munify::var<1>, int> > >::value))
-    TEST((munify::unify<rel2<munify::var<100>, munify::var<100>*>, rel2<int, int*> >::value))
+    TEST((munify::unify<munify::var<1>, munify::term<int, int*> >::value))
+    TEST((munify::unify<munify::term<int>, munify::term<int> >::value))
+    TEST((munify::unify<munify::term<int, int*>, munify::term<int, int*> >::value))
+    TEST((munify::unify<munify::term<munify::term<int, int*> >, munify::term<munify::term<int, int*> > >::value))
+    TEST((munify::unify<munify::term<int, int*, float, float*, void, void*>, munify::term<int, int*, float, float*, void, void*> >::value))
+    TEST((munify::unify<munify::term<munify::var<1>, munify::var<2> >, munify::term<int, int*> >::value))
+    TEST((munify::unify<munify::term<int, munify::var<1> >, munify::term<int, int*> >::value))
+    TEST((munify::unify<munify::term<munify::var<1>, int*>, munify::term<int, int*> >::value))
+    TEST((munify::unify<munify::term<munify::var<1>, munify::var<2> >, munify::term<munify::var<2>, int> >::value))
+    TEST((munify::unify<munify::term<munify::var<1>, munify::term<munify::term<int>, munify::var<2> > >, munify::term<munify::term<munify::var<2> >, munify::term<munify::var<1>, int> > >::value))
+    TEST((munify::unify<munify::term<munify::var<100>, munify::var<100>*>, munify::term<int, int*> >::value))
 
     return 0;
 }

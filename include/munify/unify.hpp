@@ -54,7 +54,7 @@ namespace munify
 
 #include "unify/equiv_transform.hpp"
 #include "unify/modifiers.hpp"
-#include "unify/relations.hpp"
+#include "unify/terms.hpp"
 #include "unify/vars_binding.hpp"
 
 #endif

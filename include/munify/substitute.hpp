@@ -40,10 +40,10 @@ namespace munify
                     >::type type;
             };
 
-            template<template<typename, typename...> class rel, typename... expr>
-            struct apply<rel<expr...> >
+            template<template<typename, typename...> class term, typename... expr>
+            struct apply<term<expr...> >
             {
-                    typedef rel<typename substitute::template apply<expr>::type...> type;
+                    typedef term<typename substitute::template apply<expr>::type...> type;
             };
     };
 }

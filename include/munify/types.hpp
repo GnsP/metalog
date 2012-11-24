@@ -13,8 +13,8 @@ namespace munify
     template<int n>
     struct var;
 
-    template<typename...>
-    struct rel;
+    template<typename, typename...>
+    struct term;
 }
 
 #endif
