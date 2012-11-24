@@ -7,6 +7,7 @@
 #ifndef _MUNIFY_UNIFY_HPP_
 #define _MUNIFY_UNIFY_HPP_
 
+#include "types.hpp"
 #include "substitute.hpp"
 
 #include <boost/mpl/bool.hpp>

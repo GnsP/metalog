@@ -9,14 +9,11 @@
 
 namespace munify
 {
-    template<typename...>
-    struct relation;
-
     //{lRel(lExpr_1, lExpr_2, ..., lExpr_n-1, lExpr_n) = rRel(rExpr_1, rExpr_2, ..., rExpr_n-1, rExpr_n)} ==
     //    {lRel(lExpr_1, _(lExpr_2, _(..., _(lExpr_n-1, lExpr_n)))) = rRel(rExpr_1, _(rExpr_2, _(..., _(rExpr_n-1, rExpr_n))))}
     template<template<typename, typename...> class lRel, typename lHExpr, typename... lTExpr, template<typename, typename...> class rRel, typename rHExpr, typename... rTExpr, typename u>
     struct unify<lRel<lHExpr, lTExpr...>, rRel<rHExpr, rTExpr...>, u> :
-            public unify<lRel<lHExpr, relation<lTExpr...> >, rRel<rHExpr, relation<rTExpr...> >, u>
+            public unify<lRel<lHExpr, rel<lTExpr...> >, rRel<rHExpr, rel<rTExpr...> >, u>
     {};
 }
 

@@ -7,6 +7,8 @@
 #ifndef _MUNIFY_SUBSTITUTE_HPP_
 #define _MUNIFY_SUBSTITUTE_HPP_
 
+#include "types.hpp"
+
 #include <boost/mpl/arg.hpp>
 #include <boost/mpl/map.hpp>
 #include <boost/mpl/at.hpp>
@@ -25,16 +27,16 @@ namespace munify
             };
 
             template<int n>
-            struct apply<boost::mpl::arg<n> >
+            struct apply<var<n> >
             {
                     //boost bug #3982
-                    //typedef typename boost::mpl::at<unifiers, boost::mpl::arg<n>, boost::mpl::arg<n> >::type type;
+                    //typedef typename boost::mpl::at<unifiers, var<n>, var<n> >::type type;
 
                     typedef typename boost::mpl::eval_if
                     <
-                        boost::mpl::has_key<unifiers, boost::mpl::arg<n> >,
-                        boost::mpl::at<unifiers, boost::mpl::arg<n> >,
-                        boost::mpl::identity<boost::mpl::arg<n> >
+                        boost::mpl::has_key<unifiers, var<n> >,
+                        boost::mpl::at<unifiers, var<n> >,
+                        boost::mpl::identity<var<n> >
                     >::type type;
             };
 
