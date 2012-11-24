@@ -18,6 +18,9 @@
         } \
     }
 
+template<typename...>
+struct rel;
+
 template<typename>
 struct rel1;
 
@@ -35,6 +38,7 @@ int main()
     //not unifiable
     TEST((!munify::unify<int, void>::value))
     TEST((!munify::unify<rel2<int, int>, rel2<int, int*> >::value))
+    TEST((!munify::unify<rel<int>, rel<int, int*> >::value))
     TEST((!munify::unify<boost::mpl::_1, rel1<boost::mpl::_1> >::value))
 
     //unifiable
@@ -50,7 +54,10 @@ int main()
     TEST((munify::unify<boost::mpl::_1, boost::mpl::_1>::value))
     TEST((munify::unify<boost::mpl::_1, boost::mpl::_2>::value))
     TEST((munify::unify<boost::mpl::_1, rel2<int, int*> >::value))
+    TEST((munify::unify<rel1<int>, rel1<int> >::value))
     TEST((munify::unify<rel2<int, int*>, rel2<int, int*> >::value))
+    TEST((munify::unify<rel1<rel2<int, int*> >, rel1<rel2<int, int*> > >::value))
+    TEST((munify::unify<rel<int, int*, float, float*, void, void*>, rel<int, int*, float, float*, void, void*> >::value))
     TEST((munify::unify<rel2<boost::mpl::_1, boost::mpl::_2>, rel2<int, int*> >::value))
     TEST((munify::unify<rel2<int, boost::mpl::_1>, rel2<int, int*> >::value))
     TEST((munify::unify<rel2<boost::mpl::_1, int*>, rel2<int, int*> >::value))

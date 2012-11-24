@@ -26,10 +26,10 @@ namespace munify
     };
 
     template<int n, typename expr, typename u>
-    class unify<boost::mpl::arg<n>, expr, u> : public unify<typename substitute<u>::template apply<boost::mpl::arg<n> >::type, typename substitute<u>::template apply<expr>::type >
+    class unify<boost::mpl::arg<n>, expr, u> : public substitute<u>::template apply<unify<boost::mpl::arg<n>, expr> >::type
     {
         private:
-            typedef typename unify<typename substitute<u>::template apply<boost::mpl::arg<n> >::type, typename substitute<u>::template apply<expr>::type>::unifiers tUnifiers;
+            typedef typename substitute<u>::template apply<unify<boost::mpl::arg<n>, expr> >::type::unifiers tUnifiers;
 
         public:
             typedef typename boost::mpl::fold<typename unify::tUnifiers, u, boost::mpl::insert<boost::mpl::_1, boost::mpl::_2> >::type unifiers;
@@ -46,10 +46,10 @@ namespace munify
     };
 
     template<int m, int n, typename u>
-    struct unify<boost::mpl::arg<m>, boost::mpl::arg<n>, u> : public unify<typename substitute<u>::template apply<boost::mpl::arg<m> >::type, typename substitute<u>::template apply<boost::mpl::arg<n> >::type>
+    struct unify<boost::mpl::arg<m>, boost::mpl::arg<n>, u> : public substitute<u>::template apply<unify<boost::mpl::arg<m>, boost::mpl::arg<n> > >::type
     {
         private:
-            typedef typename unify<typename substitute<u>::template apply<boost::mpl::arg<m> >::type, typename substitute<u>::template apply<boost::mpl::arg<n> >::type>::unifiers tUnifiers;
+            typedef typename substitute<u>::template apply<unify<boost::mpl::arg<m>, boost::mpl::arg<n> > >::type::unifiers tUnifiers;
 
         public:
             typedef typename boost::mpl::fold<typename unify::tUnifiers, u, boost::mpl::insert<boost::mpl::_1, boost::mpl::_2> >::type unifiers;
