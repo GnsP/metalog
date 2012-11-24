@@ -10,27 +10,33 @@
 namespace munify
 {
     template<typename lExpr, typename rExpr, typename u>
-    struct unify<lExpr*, rExpr*, u > : public unify<lExpr, rExpr, u>
+    struct unify<lExpr*, rExpr*, u > :
+            public unify<lExpr, rExpr, u>
     {};
 
     template<typename lExpr, typename rExpr, typename u>
-    struct unify<lExpr&, rExpr&, u > : public unify<lExpr, rExpr, u>
+    struct unify<lExpr&, rExpr&, u > :
+            public unify<lExpr, rExpr, u>
     {};
 
     template<typename lExpr, typename rExpr, typename u>
-    struct unify<lExpr&&, rExpr&&, u > : public unify<lExpr, rExpr, u>
+    struct unify<lExpr&&, rExpr&&, u > :
+            public unify<lExpr, rExpr, u>
     {};
 
     template<typename lExpr, typename rExpr, typename u>
-    struct unify<lExpr const, rExpr const, u > : public unify<lExpr, rExpr, u>
+    struct unify<lExpr const, rExpr const, u > :
+            public unify<lExpr, rExpr, u>
     {};
 
     template<typename lExpr, typename rExpr, typename u>
-    struct unify<lExpr volatile, rExpr volatile, u > : public unify<lExpr, rExpr, u>
+    struct unify<lExpr volatile, rExpr volatile, u > :
+            public unify<lExpr, rExpr, u>
     {};
 
     template<typename lExpr, typename rExpr, typename u>
-    struct unify<lExpr const volatile, rExpr  const volatile, u > : public unify<lExpr, rExpr, u>
+    struct unify<lExpr const volatile, rExpr  const volatile, u > :
+            public unify<lExpr, rExpr, u>
     {};
 }
 

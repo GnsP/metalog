@@ -8,67 +8,44 @@
 #define _MUNIFY_RELATIONS_HPP_
 
 #include <boost/mpl/bool.hpp>
-#include <boost/mpl/placeholders.hpp>
-#include <boost/mpl/map.hpp>
-#include <boost/mpl/eval_if.hpp>
-#include <boost/mpl/fold.hpp>
-#include <boost/mpl/insert.hpp>
-#include <boost/mpl/identity.hpp>
+#include <boost/mpl/if.hpp>
 
 namespace munify
 {
     template<template<typename> class rel, typename lExpr, typename rExpr, typename u>
-    struct unify<rel<lExpr>, rel<rExpr>, u> : public unify<lExpr, rExpr, u>
+    struct unify<rel<lExpr>, rel<rExpr>, u> :
+            public unify<lExpr, rExpr, u>
     {};
 
     template<template<typename> class rel, typename expr, typename u>
-    struct unify<rel<expr>, rel<expr>, u> : public boost::mpl::true_
-    {
-            typedef u unifiers;
-    };
+    struct unify<rel<expr>, rel<expr>, u> :
+            public unifiable<boost::mpl::true_, u>
+    {};
 
     template<template<typename, typename...> class rel, typename lHExpr, typename lTExpr, typename rHExpr, typename rTExpr, typename u>
     class unify<rel<lHExpr, lTExpr>, rel<rHExpr, rTExpr>, u> :
-            public boost::mpl::eval_if
+            public boost::mpl::if_
             <
                 unify<lHExpr, rHExpr, u>,
                 unify<lTExpr, rTExpr, typename unify<lHExpr, rHExpr, u>::unifiers>,
-                boost::mpl::false_
+                unify<lHExpr, rHExpr, u>
             >::type
-    {
-        private:
-            template<typename unified>
-            struct getUnifiers
-            {
-                    typedef typename unified::unifiers type;
-            };
-
-            typedef typename unify<lHExpr, rHExpr, u>::unifiers hUnifiers;
-
-            typedef typename boost::mpl::eval_if
-            <
-                unify,
-                typename unify::template getUnifiers<unify<lTExpr, rTExpr, typename unify::hUnifiers > >,
-                boost::mpl::identity<boost::mpl::map<> >
-            >::type tUnifiers;
-
-        public:
-            typedef typename boost::mpl::fold<typename unify::tUnifiers, typename unify::hUnifiers, boost::mpl::insert<boost::mpl::_1, boost::mpl::_2> >::type unifiers;
-    };
+    {};
 
     template<template<typename, typename...> class rel, typename hExpr, typename lTExpr, typename rTExpr, typename u>
-    struct unify<rel<hExpr, lTExpr>, rel<hExpr, rTExpr>, u> : public unify<lTExpr, rTExpr, u>
+    struct unify<rel<hExpr, lTExpr>, rel<hExpr, rTExpr>, u> :
+            public unify<lTExpr, rTExpr, u>
     {};
 
     template<template<typename, typename...> class rel, typename lHExpr, typename rHExpr, typename tExpr, typename u>
-    struct unify<rel<lHExpr, tExpr>, rel<rHExpr, tExpr>, u> : public unify<lHExpr, rHExpr, u>
+    struct unify<rel<lHExpr, tExpr>, rel<rHExpr, tExpr>, u> :
+            public unify<lHExpr, rHExpr, u>
     {};
 
     template<template<typename, typename...> class rel, typename hExpr, typename tExpr, typename u>
-    struct unify<rel<hExpr, tExpr>, rel<hExpr, tExpr>, u> : public boost::mpl::true_
-    {
-            typedef u unifiers;
-    };
+    struct unify<rel<hExpr, tExpr>, rel<hExpr, tExpr>, u> :
+            public unifiable<boost::mpl::true_, u>
+    {};
 }
 
 #endif
