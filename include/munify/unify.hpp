@@ -35,7 +35,7 @@ namespace munify
     {
         typedef typename boost::mpl::fold
         <
-            typename unifiable<typename condition::type, tUnifiers...>::type,
+            typename unifiable<typename condition::type, tUnifiers...>::unifiers,
             hUnifiers,
             boost::mpl::insert<boost::mpl::_1, boost::mpl::_2>
         >::type unifiers;

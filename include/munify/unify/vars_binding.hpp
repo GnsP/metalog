@@ -20,7 +20,7 @@ namespace munify
             <
                 boost::mpl::has_key<u, var<n> >,
                 unify<typename substitute<u>::template apply<var<n> >::type, typename substitute<u>::template apply<expr>::type, u>,
-                unifiable<boost::mpl::not_<occurs<var<n>, expr> >, u, boost::mpl::map<var<n>, expr> >
+                unifiable<boost::mpl::not_<occurs<var<n>, expr> >, u, boost::mpl::map<boost::mpl::pair<var<n>, expr> > >
             >::type
     {};
 
@@ -35,7 +35,7 @@ namespace munify
             <
                 boost::mpl::has_key<u, var<m> >,
                 unify<typename substitute<u>::template apply<var<m> >::type, typename substitute<u>::template apply<var<n> >::type, u>,
-                unifiable<boost::mpl::not_<occurs<var<m>, var<n> > >, u, boost::mpl::map<var<m>, var<n> > >
+                unifiable<boost::mpl::not_<occurs<var<m>, var<n> > >, u, boost::mpl::map<boost::mpl::pair<var<m>, var<n> > > >
             >::type
     {};
 
