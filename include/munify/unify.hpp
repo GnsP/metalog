@@ -19,7 +19,7 @@ namespace munify
 {
     template<typename lExpr, typename rExpr, typename u = boost::mpl::map<> >
     struct unify :
-            public unifiable<boost::is_same<lExpr, rExpr>, boost::mpl::map<> >
+            public unifiable<boost::is_same<lExpr, rExpr>, u>
     {};
 }
 
