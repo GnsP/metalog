@@ -35,8 +35,8 @@ namespace munify
             public boost::mpl::if_
             <
                 boost::mpl::has_key<u, var<m> >,
-                unify<typename substitute<u>::template apply<var<m> >::type, typename substitute<u>::template apply<var<n> >::type, u>,
-                unifiable<boost::mpl::not_<occurs<var<m>, var<n> > >, typename boost::mpl::insert<u, boost::mpl::pair<var<m>, var<n> > >::type>
+                unify<typename substitute<u>::template apply<var<m> >::type, var<n>, u>,
+                unifiable<boost::mpl::true_, typename boost::mpl::insert<u, boost::mpl::pair<var<m>, var<n> > >::type>
             >::type
     {};
 
