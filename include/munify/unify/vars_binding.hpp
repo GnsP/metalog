@@ -10,6 +10,7 @@
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/pair.hpp>
 #include <boost/mpl/map.hpp>
+#include <boost/mpl/insert.hpp>
 #include <boost/mpl/if.hpp>
 
 namespace munify
@@ -20,7 +21,7 @@ namespace munify
             <
                 boost::mpl::has_key<u, var<n> >,
                 unify<typename substitute<u>::template apply<var<n> >::type, typename substitute<u>::template apply<expr>::type, u>,
-                unifiable<boost::mpl::not_<occurs<var<n>, expr> >, u, boost::mpl::map<boost::mpl::pair<var<n>, expr> > >
+                unifiable<boost::mpl::not_<occurs<var<n>, expr> >, typename boost::mpl::insert<u, boost::mpl::pair<var<n>, expr> >::type>
             >::type
     {};
 
@@ -35,7 +36,7 @@ namespace munify
             <
                 boost::mpl::has_key<u, var<m> >,
                 unify<typename substitute<u>::template apply<var<m> >::type, typename substitute<u>::template apply<var<n> >::type, u>,
-                unifiable<boost::mpl::not_<occurs<var<m>, var<n> > >, u, boost::mpl::map<boost::mpl::pair<var<m>, var<n> > > >
+                unifiable<boost::mpl::not_<occurs<var<m>, var<n> > >, typename boost::mpl::insert<u, boost::mpl::pair<var<m>, var<n> > >::type>
             >::type
     {};
 
