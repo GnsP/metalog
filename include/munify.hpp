@@ -4,5 +4,9 @@
  * See accompanying file LICENSE.txt for its full text.
  */
 
-#include "munify/unify.hpp"
+#include "munify/types.hpp"
 #include "munify/substitute.hpp"
+#include "munify/occurs.hpp"
+#include "munify/unify.hpp"
+
+
