@@ -9,9 +9,9 @@
 
 #include "types.hpp"
 #include "substitute.hpp"
+#include "occurs.hpp"
 
 #include <boost/mpl/bool.hpp>
-#include <boost/mpl/placeholders.hpp>
 #include <boost/mpl/map.hpp>
 #include <boost/mpl/fold.hpp>
 #include <boost/mpl/insert.hpp>
@@ -48,7 +48,7 @@ namespace munify
 
     template<typename lExpr, typename rExpr, typename u = boost::mpl::map<> >
     struct unify :
-            public unifiable<boost::mpl::bool_<boost::is_same<lExpr, rExpr>::value> >
+            public unifiable<boost::is_same<lExpr, rExpr> >
     {};
 }
 

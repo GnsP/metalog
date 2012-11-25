@@ -9,7 +9,6 @@
 
 #include "types.hpp"
 
-#include <boost/mpl/arg.hpp>
 #include <boost/mpl/map.hpp>
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/has_key.hpp>
