@@ -167,6 +167,15 @@ namespace munify
     {
             typedef boost::mpl::map<> unifiers;
     };
+
+    template<typename>
+    struct unifiers;
+
+    template<typename lExpr, typename rExpr, typename u>
+    struct unifiers<unify<lExpr, rExpr, u> >
+    {
+            typedef typename boost::mpl::if_<unify<lExpr, rExpr, u>, typename unify<lExpr, rExpr, u>::unifiers, boost::mpl::map<> >::type type;
+    };
 }
 
 #endif
