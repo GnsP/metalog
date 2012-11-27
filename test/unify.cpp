@@ -6,51 +6,62 @@
 
 #include "munify/unify.hpp"
 
+#include <boost/preprocessor/tuple/size.hpp>
+#include <boost/preprocessor/tuple/elem.hpp>
+#include <boost/preprocessor/tuple/enum.hpp>
+#include <boost/preprocessor/control/expr_if.hpp>
+#include <boost/preprocessor/repetition/repeat.hpp>
+#include <boost/preprocessor/stringize.hpp>
+
 #include <iostream>
 
-#define TEST(expr) \
-    { \
-        bool const result = expr; \
-        if(!result) \
-        { \
-            std::cout << #expr << std::endl; \
-            return 1; \
-        } \
-    }
+#define MUNIFY_CHECK(ASSERTION) \
+    (!BOOST_PP_TUPLE_ENUM(ASSERTION)::value ? \
+    std::cout << BOOST_PP_STRINGIZE(ASSERTION) << std::endl, false : true)
+
+#define MUNIFY_FORWARD_CHECK(Z, N, ASSERTIONS) \
+    BOOST_PP_EXPR_IF(N, &&) MUNIFY_CHECK(BOOST_PP_TUPLE_ELEM(N, ASSERTIONS))
+
+#define MUNIFY_CHECK_ALL(ASSERTIONS) \
+    BOOST_PP_REPEAT(BOOST_PP_TUPLE_SIZE(ASSERTIONS), MUNIFY_FORWARD_CHECK, ASSERTIONS)
+
+using namespace munify;
 
 int main()
 {
     std::cout << std::endl;
 
-    //not unifiable
-    TEST((!munify::unify<int, void>::value))
-    TEST((!munify::unify<munify::term<int, int>, munify::term<int, int*> >::value))
-    TEST((!munify::unify<munify::term<int>, munify::term<int, int*> >::value))
-    TEST((!munify::unify<munify::var<1>, munify::term<munify::var<1> > >::value))
+    return !
+    (
+        MUNIFY_CHECK_ALL
+        ((
+            (!unify<int, void>),
+            (!unify<term<int, int>, term<int, int*> >),
+            (!unify<term<int>, term<int, int*> >),
+            (!unify<var<1>, term<var<1> > >),
 
-    //unifiable
-    TEST((munify::unify<void, void>::value))
-    TEST((munify::unify<munify::var<1>, void>::value))
-    TEST((munify::unify<munify::var<1>*, void*>::value))
-    TEST((munify::unify<munify::var<1>*, munify::var<2>*>::value))
-    TEST((munify::unify<const munify::var<1> volatile, munify::var<1> const volatile>::value))
-    TEST((munify::unify<munify::var<1> const&, int const&>::value))
-    TEST((munify::unify<munify::var<1>&&, int&&>::value))
-    TEST((munify::unify<munify::var<1> volatile, void volatile>::value))
-    TEST((munify::unify<munify::var<1> volatile const* const volatile, volatile const float* const volatile>::value))
-    TEST((munify::unify<munify::var<1>, munify::var<1> >::value))
-    TEST((munify::unify<munify::var<1>, munify::var<2> >::value))
-    TEST((munify::unify<munify::var<1>, munify::term<int, int*> >::value))
-    TEST((munify::unify<munify::term<int>, munify::term<int> >::value))
-    TEST((munify::unify<munify::term<int, int*>, munify::term<int, int*> >::value))
-    TEST((munify::unify<munify::term<munify::term<int, int*> >, munify::term<munify::term<int, int*> > >::value))
-    TEST((munify::unify<munify::term<int, int*, float, float*, void, void*>, munify::term<int, int*, float, float*, void, void*> >::value))
-    TEST((munify::unify<munify::term<munify::var<1>, munify::var<2> >, munify::term<int, int*> >::value))
-    TEST((munify::unify<munify::term<int, munify::var<1> >, munify::term<int, int*> >::value))
-    TEST((munify::unify<munify::term<munify::var<1>, int*>, munify::term<int, int*> >::value))
-    TEST((munify::unify<munify::term<munify::var<1>, munify::var<2> >, munify::term<munify::var<2>, int> >::value))
-    TEST((munify::unify<munify::term<munify::var<1>, munify::term<munify::term<int>, munify::var<2> > >, munify::term<munify::term<munify::var<2> >, munify::term<munify::var<1>, int> > >::value))
-    TEST((munify::unify<munify::term<munify::var<100>, munify::var<100>*>, munify::term<int, int*> >::value))
-
-    return 0;
+            (unify<void, void>),
+            (unify<var<1>, void>),
+            (unify<var<1>*, void*>),
+            (unify<var<1>*, var<2>*>),
+            (unify<const var<1> volatile, var<1> const volatile>),
+            (unify<var<1> const&, int const&>),
+            (unify<var<1>&&, int&&>),
+            (unify<var<1> volatile, void volatile>),
+            (unify<var<1> volatile const* const volatile, volatile const float* const volatile>),
+            (unify<var<1>, var<1> >),
+            (unify<var<1>, var<2> >),
+            (unify<var<1>, term<int, int*> >),
+            (unify<term<int>, term<int> >),
+            (unify<term<int, int*>, term<int, int*> >),
+            (unify<term<term<int, int*> >, term<term<int, int*> > >),
+            (unify<term<int, int*, float, float*, void, void*>, term<int, int*, float, float*, void, void*> >),
+            (unify<term<var<1>, var<2> >, term<int, int*> >),
+            (unify<term<int, var<1> >, term<int, int*> >),
+            (unify<term<var<1>, int*>, term<int, int*> >),
+            (unify<term<var<1>, var<2> >, term<var<2>, int> >),
+            (unify<term<var<1>, term<term<int>, var<2> > >, term<term<var<2> >, term<var<1>, int> > >),
+            (unify<term<var<100>, var<100>*>, term<int, int*> >)
+        ))
+    );
 }
