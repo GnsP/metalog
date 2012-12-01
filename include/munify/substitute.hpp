@@ -7,47 +7,43 @@
 #ifndef _MUNIFY_SUBSTITUTE_HPP_
 #define _MUNIFY_SUBSTITUTE_HPP_
 
-#include "unwrap_sequence.hpp"
+#include "types.hpp"
 
-#include <boost/mpl/arg.hpp>
-#include <boost/mpl/transform.hpp>
 #include <boost/mpl/map.hpp>
-#include <boost/mpl/list.hpp>
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/has_key.hpp>
 #include <boost/mpl/eval_if.hpp>
-#include <boost/mpl/identity.hpp>
 
 namespace munify
 {
-    template<typename unifiers, typename expr>
+    template<typename unifiers>
     struct substitute
     {
-            typedef expr type;
-    };
+            template<typename expr>
+            struct apply
+            {
+                    typedef expr type;
+            };
 
-    template<typename unifiers, int n>
-    struct substitute<unifiers, boost::mpl::arg<n> >
-    {
-//            boost bug #3982
-//            typedef typename boost::mpl::at<unifiers, boost::mpl::arg<n>, boost::mpl::arg<n> >::type type;
+            template<int n>
+            struct apply<var<n> >
+            {
+                    //boost bug #3982
+                    //typedef typename boost::mpl::at<unifiers, var<n>, var<n> >::type type;
 
-            typedef typename boost::mpl::eval_if
-            <
-                typename boost::mpl::has_key<unifiers, boost::mpl::arg<n> >::type,
-                boost::mpl::at<unifiers, boost::mpl::arg<n> >,
-                boost::mpl::identity<boost::mpl::arg<n> >
-            >::type type;
-    };
+                    typedef typename boost::mpl::eval_if
+                    <
+                        boost::mpl::has_key<unifiers, var<n> >,
+                        boost::mpl::at<unifiers, var<n> >,
+                        boost::mpl::identity<var<n> >
+                    >::type type;
+            };
 
-    template<typename unifiers, template<typename...> class rel, typename... args>
-    struct substitute<unifiers, rel<args...> >
-    {
-            typedef typename unwrap_sequence
-            <
-                typename boost::mpl::transform<boost::mpl::list<args...>, substitute<unifiers, boost::mpl::_1> >::type,
-                rel
-            >::type type;
+            template<template<typename, typename...> class term, typename... expr>
+            struct apply<term<expr...> >
+            {
+                    typedef term<typename substitute::template apply<expr>::type...> type;
+            };
     };
 }
 
