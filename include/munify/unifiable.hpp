@@ -15,8 +15,7 @@
 #include <boost/mpl/map.hpp>
 #include <boost/mpl/fold.hpp>
 #include <boost/mpl/insert.hpp>
-#include <boost/mpl/protect.hpp>
-#include <boost/mpl/bind.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/placeholders.hpp>
 
 namespace munify
