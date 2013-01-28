@@ -5,7 +5,7 @@
 enable_testing()
 
 include_directories(${MUNIFY_INCLUDE_DIRS})
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -ansi ${MUNIFY_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -ansi -std=c++0x")
 
 file(GLOB_RECURSE MUNIFY_TEST_HEADERS "*.hpp")
 file(GLOB_RECURSE MUNIFY_TEST_SOURCES "*.cpp")
