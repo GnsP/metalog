@@ -100,5 +100,5 @@ int main()
     using namespace munify;
     bool const results[] = {MUNIFY_CHECK_ALL(NOT_UNIFIABLE UNIFIABLE)};
     std::cout << std::endl;
-    return std::accumulate(results, results + sizeof(results), true, [](bool a, bool b) -> bool {return a && b;});
+    return !std::accumulate(results, results + sizeof(results), true, [](bool a, bool b) -> bool {return a && b;});
 }
