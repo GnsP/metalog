@@ -12,6 +12,7 @@
 
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/not.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 #include <boost/type_traits.hpp>
 
 namespace munify
@@ -23,7 +24,7 @@ namespace munify
                 boost::is_same
                 <
                     rExpr,
-                    typename substitute<boost::mpl::map<boost::mpl::pair<lExpr, void> > >::template apply<rExpr>::type
+                    typename boost::mpl::apply_wrap1<substitute<boost::mpl::map<boost::mpl::pair<lExpr, void> > >, rExpr>::type
                 >
             >
     {};

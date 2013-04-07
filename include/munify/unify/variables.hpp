@@ -12,6 +12,8 @@
 #include <boost/mpl/map.hpp>
 #include <boost/mpl/insert.hpp>
 #include <boost/mpl/if.hpp>
+#include <boost/mpl/or.hpp>
+#include <boost/mpl/apply_wrap.hpp>
 
 namespace munify
 {
@@ -20,7 +22,7 @@ namespace munify
             public boost::mpl::if_
             <
                 boost::mpl::has_key<u, var<n> >,
-                unify<typename substitute<u>::template apply<var<n> >::type, typename substitute<u>::template apply<expr>::type, u>,
+                unify<typename boost::mpl::apply_wrap1<substitute<u>, var<n> >::type, typename boost::mpl::apply_wrap1<substitute<u>, expr>::type, u>,
                 unifiable<boost::mpl::not_<occurs<var<n>, expr> >, typename boost::mpl::insert<u, boost::mpl::pair<var<n>, expr> >::type>
             >::type
     {};
@@ -34,8 +36,8 @@ namespace munify
     struct unify<var<m>, var<n>, u> :
             public boost::mpl::if_
             <
-                boost::mpl::has_key<u, var<m> >,
-                unify<typename substitute<u>::template apply<var<m> >::type, var<n>, u>,
+                boost::mpl::or_<boost::mpl::has_key<u, var<m> >, boost::mpl::has_key<u, var<n> > >,
+                unify<typename boost::mpl::apply_wrap1<substitute<u>, var<m> >::type, typename boost::mpl::apply_wrap1<substitute<u>, var<n> >::type, u>,
                 unifiable<boost::mpl::true_, typename boost::mpl::insert<u, boost::mpl::pair<var<m>, var<n> > >::type>
             >::type
     {};

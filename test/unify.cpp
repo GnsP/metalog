@@ -67,7 +67,7 @@
 #define MUNIFY_CHECK_ALL(ASSERTIONS) \
     BOOST_PP_REPEAT(BOOST_PP_SEQ_SIZE(ASSERTIONS), MUNIFY_FORWARD_CHECK, ASSERTIONS)
 
-template<typename, typename...>
+template<typename...>
 class rel;
 
 template<typename... T>
@@ -124,6 +124,9 @@ struct entry : boost::mpl::pair<key, value>
     ((true,     (unify<rel<int, var<1> >, rel<int, int*> >                                                  ), (unifiers<entry<var<1>, int*> >))) \
     ((true,     (unify<rel<var<1>, var<1>*>, rel<int, int*> >                                               ), (unifiers<entry<var<1>, int> >))) \
     ((true,     (unify<rel<var<1>, var<2> >, rel<var<2>, int> >                                             ), (unifiers<entry<var<1>, int>, entry<var<2>, int> >))) \
+    ((true,     (unify<rel<int, var<1>, var<2> >, rel<int, var<2>, int> >                                   ), (unifiers<entry<var<1>, int>, entry<var<2>, int> >))) \
+    ((true,     (unify<rel<var<1>, var<2>, var<3> >, rel<var<2>, var<3>, int> >                             ), (unifiers<entry<var<1>, int>, entry<var<2>, int>, entry<var<3>, int> >))) \
+    ((true,     (unify<rel<var<1>, var<3>, var<2> >, rel<var<2>, int, var<3> > >                            ), (unifiers<entry<var<1>, int>, entry<var<2>, int>, entry<var<3>, int> >))) \
     ((true,     (unify<rel<var<1>, rel<rel<int>, var<2> > >, rel<rel<var<2> >, rel<var<1>, int> > >         ), (unifiers<entry<var<1>, rel<int> >, entry<var<2>, int> >))) \
     ((true,     (unify<atom<int>, atom<int> >                                                               ), (unifiers<>))) \
     ((true,     (unify<var<1>, atom<var<1> > >                                                              ), (unifiers<entry<var<1>, atom<var<1> > > >))) \

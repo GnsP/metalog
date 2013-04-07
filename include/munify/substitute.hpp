@@ -13,43 +13,53 @@
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/has_key.hpp>
 #include <boost/mpl/eval_if.hpp>
+#include <boost/mpl/apply_wrap.hpp>
+#include <boost/type_traits.hpp>
 
 namespace munify
 {
     template<typename unifiers>
     struct substitute
     {
-            template<typename expr>
-            struct apply
-            {
-                    typedef expr type;
-            };
+        template<typename expr>
+        struct apply :
+                public boost::mpl::identity<expr>
+        {};
 
-            template<int n>
-            struct apply<var<n> >
-            {
-                    //boost bug #3982
-                    //typedef typename boost::mpl::at<unifiers, var<n>, var<n> >::type type;
+        template<int n>
+        class apply<var<n> >
+        {
+        private:
+            //boost bug #3982
+            //typedef typename boost::mpl::at<unifiers, var<n>, var<n> >::type lookup;
 
-                    typedef typename boost::mpl::eval_if
-                    <
-                        boost::mpl::has_key<unifiers, var<n> >,
-                        boost::mpl::at<unifiers, var<n> >,
-                        boost::mpl::identity<var<n> >
-                    >::type type;
-            };
+            typedef typename boost::mpl::eval_if
+            <
+                boost::mpl::has_key<unifiers, var<n> >,
+                boost::mpl::at<unifiers, var<n> >,
+                boost::mpl::identity<var<n> >
+            >::type lookup;
 
-            template<template<typename, typename...> class term, typename... expr>
-            struct apply<term<expr...> >
-            {
-                    typedef term<typename substitute::template apply<expr>::type...> type;
-            };
+        public:
+            //recurse until there is nothing left to substitute
+            typedef typename boost::mpl::eval_if
+            <
+                boost::is_same<var<n>, lookup>,
+                boost::mpl::identity<lookup>,
+                boost::mpl::apply_wrap1<substitute<unifiers>, lookup>
+            >::type type;
+        };
 
-            template<typename expr>
-            struct apply<atom<expr> >
-            {
-                    typedef atom<expr> type;
-            };
+        template<template<typename...> class term, typename hExpr, typename... tExpr>
+        struct apply<term<hExpr, tExpr...> > :
+                public boost::mpl::identity<
+                    term<typename substitute<unifiers>::template apply<hExpr>::type, typename substitute<unifiers>::template apply<tExpr>::type...> >
+        {};
+
+        template<typename expr>
+        struct apply<atom<expr> > :
+                public boost::mpl::identity<atom<expr> >
+        {};
     };
 }
 
