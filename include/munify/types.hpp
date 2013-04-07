@@ -10,9 +10,11 @@
 namespace munify
 {
     /**
-     * Any expression wrapped by atom<> is considered to be a constant for the purpose of unification
+     * Any expression wrapped by atom<> is considered to be a constant for the purpose of unification,
+     * i.e. the unification of atom<A> with atom<B> succeeds iff A is literally equal to B,
+     * regardless of variable substitutions or unwrapping of terms.
      */
-    template<typename, typename...>
+    template<typename>
     struct atom;
 
     template<int n>

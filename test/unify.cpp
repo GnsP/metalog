@@ -88,6 +88,10 @@ struct entry : boost::mpl::pair<key, value>
     ((false,    (unify<term<int, int*, int**>, rel<int, int*, int**> >                                      ), (unifiers<>))) \
     ((false,    (unify<var<1>*, int *const >                                                                ), (unifiers<>))) \
     ((false,    (unify<var<1>, rel<var<1> > >                                                               ), (unifiers<>))) \
+    ((false,    (unify<int, atom<int> >                                                                     ), (unifiers<>))) \
+    ((false,    (unify<atom<int>, atom<int*> >                                                              ), (unifiers<>))) \
+    ((false,    (unify<atom<var<1> >, atom<int> >                                                           ), (unifiers<>))) \
+    ((false,    (unify<rel<int, atom<var<1> > >, rel<var<1>, atom<int> > >                                  ), (unifiers<>))) \
 
 #define UNIFIABLE \
     ((true,     (unify<void, void>                                                                          ), (unifiers<>))) \
@@ -121,6 +125,9 @@ struct entry : boost::mpl::pair<key, value>
     ((true,     (unify<rel<var<1>, var<1>*>, rel<int, int*> >                                               ), (unifiers<entry<var<1>, int> >))) \
     ((true,     (unify<rel<var<1>, var<2> >, rel<var<2>, int> >                                             ), (unifiers<entry<var<1>, int>, entry<var<2>, int> >))) \
     ((true,     (unify<rel<var<1>, rel<rel<int>, var<2> > >, rel<rel<var<2> >, rel<var<1>, int> > >         ), (unifiers<entry<var<1>, rel<int> >, entry<var<2>, int> >))) \
+    ((true,     (unify<atom<int>, atom<int> >                                                               ), (unifiers<>))) \
+    ((true,     (unify<var<1>, atom<var<1> > >                                                              ), (unifiers<entry<var<1>, atom<var<1> > > >))) \
+
 
 int main()
 {

@@ -44,6 +44,12 @@ namespace munify
             {
                     typedef term<typename substitute::template apply<expr>::type...> type;
             };
+
+            template<typename expr>
+            struct apply<atom<expr> >
+            {
+                    typedef atom<expr> type;
+            };
     };
 }
 
