@@ -14,7 +14,7 @@ namespace munify
 {
     template<typename lExpr, typename rExpr, typename u>
     struct unify<atom<lExpr>, atom<rExpr>, u> :
-            public unifiable<boost::is_same<lExpr, rExpr>, u>
+            unifiable<boost::is_same<lExpr, rExpr>, u>
     {};
 }
 

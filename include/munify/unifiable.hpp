@@ -22,34 +22,34 @@ namespace munify
 {
     template<typename condition, typename u>
     struct unifiable :
-            public unifiable<typename boost::mpl::if_<typename condition::type, boost::mpl::true_, boost::mpl::false_>::type, u>
+            unifiable<typename boost::mpl::if_<typename condition::type, boost::mpl::true_, boost::mpl::false_>::type, u>
     {};
 
     template<typename u>
     struct unifiable<boost::mpl::true_, u>:
-            public boost::mpl::true_
+            boost::mpl::true_
     {
-            typedef typename boost::mpl::fold
+        typedef typename boost::mpl::fold
+        <
+            u,
+            boost::mpl::map<>,
+            boost::mpl::insert
             <
-                u,
-                boost::mpl::map<>,
-                boost::mpl::insert
+                boost::mpl::_1,
+                boost::mpl::pair
                 <
-                    boost::mpl::_1,
-                    boost::mpl::pair
-                    <
-                        boost::mpl::first<boost::mpl::_2>,
-                        boost::mpl::apply_wrap1<substitute<u>, boost::mpl::second<boost::mpl::_2> >
-                    >
+                    boost::mpl::first<boost::mpl::_2>,
+                    boost::mpl::apply_wrap1<substitute<u>, boost::mpl::second<boost::mpl::_2> >
                 >
-            >::type unifiers;
+            >
+        >::type unifiers;
     };
 
     template<typename u>
     struct unifiable<boost::mpl::false_, u>:
-            public boost::mpl::false_
+            boost::mpl::false_
     {
-            typedef boost::mpl::map<> unifiers;
+        typedef boost::mpl::map<> unifiers;
     };
 }
 

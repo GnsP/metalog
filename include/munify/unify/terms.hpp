@@ -14,12 +14,12 @@ namespace munify
 {
     template<template<typename...> class term, typename lExpr, typename rExpr, typename u>
     struct unify<term<lExpr>, term<rExpr>, u> :
-            public unify<lExpr, rExpr, u>
+            unify<lExpr, rExpr, u>
     {};
 
     template<template<typename...> class term, typename lHExpr, typename lTExpr, typename rHExpr, typename rTExpr, typename u>
-    class unify<term<lHExpr, lTExpr>, term<rHExpr, rTExpr>, u> :
-            public boost::mpl::if_
+    struct unify<term<lHExpr, lTExpr>, term<rHExpr, rTExpr>, u> :
+            boost::mpl::if_
             <
                 unify<lHExpr, rHExpr, u>,
                 unify<lTExpr, rTExpr, typename unify<lHExpr, rHExpr, u>::unifiers>,
@@ -37,7 +37,7 @@ namespace munify
             typename u
     >
     struct unify<term<lH1Expr, lH2Expr, lH3Expr, lTExpr...>, term<rH1Expr, rH2Expr, rH3Expr, rTExpr...>, u> :
-            public unify<munify::term<lH1Expr, term<lH2Expr, lH3Expr, lTExpr...> >, munify::term<rH1Expr, term<rH2Expr, rH3Expr, rTExpr...> >, u>
+            unify<munify::term<lH1Expr, term<lH2Expr, lH3Expr, lTExpr...> >, munify::term<rH1Expr, term<rH2Expr, rH3Expr, rTExpr...> >, u>
     {};
 }
 

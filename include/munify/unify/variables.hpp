@@ -18,8 +18,8 @@
 namespace munify
 {
     template<int n, typename expr, typename u>
-    class unify<var<n>, expr, u> :
-            public boost::mpl::if_
+    struct unify<var<n>, expr, u> :
+            boost::mpl::if_
             <
                 boost::mpl::has_key<u, var<n> >,
                 unify<typename boost::mpl::apply_wrap1<substitute<u>, var<n> >::type, typename boost::mpl::apply_wrap1<substitute<u>, expr>::type, u>,
@@ -29,12 +29,12 @@ namespace munify
 
     template<int n, typename expr, typename u>
     struct unify<expr, var<n>, u> :
-            public unify<var<n>, expr, u>
+            unify<var<n>, expr, u>
     {};
 
     template<int m, int n, typename u>
     struct unify<var<m>, var<n>, u> :
-            public boost::mpl::if_
+            boost::mpl::if_
             <
                 boost::mpl::or_<boost::mpl::has_key<u, var<m> >, boost::mpl::has_key<u, var<n> > >,
                 unify<typename boost::mpl::apply_wrap1<substitute<u>, var<m> >::type, typename boost::mpl::apply_wrap1<substitute<u>, var<n> >::type, u>,
@@ -44,7 +44,7 @@ namespace munify
 
     template<int n, typename u>
     struct unify<var<n>, var<n>, u> :
-            public unifiable<boost::mpl::true_, u>
+            unifiable<boost::mpl::true_, u>
     {};
 }
 

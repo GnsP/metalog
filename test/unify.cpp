@@ -68,7 +68,7 @@
     BOOST_PP_REPEAT(BOOST_PP_SEQ_SIZE(ASSERTIONS), MUNIFY_FORWARD_CHECK, ASSERTIONS)
 
 template<typename...>
-class rel;
+struct rel;
 
 template<typename... T>
 struct unifiers : boost::mpl::map<T...>

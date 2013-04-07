@@ -19,7 +19,7 @@ namespace munify
 {
     template<typename lExpr, typename rExpr>
     struct occurs :
-            public boost::mpl::not_
+            boost::mpl::not_
             <
                 boost::is_same
                 <

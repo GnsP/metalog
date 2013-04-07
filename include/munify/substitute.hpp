@@ -23,7 +23,7 @@ namespace munify
     {
         template<typename expr>
         struct apply :
-                public boost::mpl::identity<expr>
+                boost::mpl::identity<expr>
         {};
 
         template<int n>
@@ -52,13 +52,19 @@ namespace munify
 
         template<template<typename...> class term, typename hExpr, typename... tExpr>
         struct apply<term<hExpr, tExpr...> > :
-                public boost::mpl::identity<
-                    term<typename substitute<unifiers>::template apply<hExpr>::type, typename substitute<unifiers>::template apply<tExpr>::type...> >
+                boost::mpl::identity
+                <
+                    term
+                    <
+                        typename boost::mpl::apply_wrap1<substitute<unifiers>, hExpr>::type,
+                        typename boost::mpl::apply_wrap1<substitute<unifiers>, tExpr>::type...
+                    >
+                >
         {};
 
         template<typename expr>
         struct apply<atom<expr> > :
-                public boost::mpl::identity<atom<expr> >
+                boost::mpl::identity<atom<expr> >
         {};
     };
 }
