@@ -47,17 +47,18 @@
 #define MUNIFY_CHECK_UNIFICATION(ASSERTION) \
     ( \
         std::cout << std::endl << BOOST_PP_STRINGIZE(BOOST_PP_TUPLE_ELEM(1, ASSERTION)), \
-        BOOST_PP_TUPLE_ELEM(0, ASSERTION) != \
-        BOOST_PP_TUPLE_ENUM(BOOST_PP_TUPLE_ELEM(1, ASSERTION))::value && \
-        MUNIFY_COMPARE_UNIFIERS \
         ( \
-            BOOST_PP_TUPLE_ENUM(BOOST_PP_TUPLE_ELEM(2, ASSERTION)), \
-            typename BOOST_PP_TUPLE_ENUM(BOOST_PP_TUPLE_ELEM(1, ASSERTION))::unifiers \
+            BOOST_PP_TUPLE_ELEM(0, ASSERTION) == BOOST_PP_TUPLE_ENUM(BOOST_PP_TUPLE_ELEM(1, ASSERTION))::value && \
+            MUNIFY_COMPARE_UNIFIERS \
+            ( \
+                BOOST_PP_TUPLE_ENUM(BOOST_PP_TUPLE_ELEM(2, ASSERTION)), \
+                typename BOOST_PP_TUPLE_ENUM(BOOST_PP_TUPLE_ELEM(1, ASSERTION))::unifiers \
+            ) \
+            ? (std::cout << " [SUCCEEDED]", true) \
+            : (std::cout << " [FAILED]" << std::endl \
+                         << "    expected result: " << (BOOST_PP_TUPLE_ELEM(0, ASSERTION) ? "success" : "failure") << std::endl \
+                         << "    expected unifiers: " << BOOST_PP_STRINGIZE(BOOST_PP_TUPLE_ELEM(2, ASSERTION)) << std::endl, false) \
         ) \
-        ? (std::cout << " [NOT OK]" << std::endl \
-                     << "    expected result: " << (BOOST_PP_TUPLE_ELEM(0, ASSERTION) ? "success" : "failure") << std::endl \
-                     << "    expected unifiers: " << BOOST_PP_STRINGIZE(BOOST_PP_TUPLE_ELEM(2, ASSERTION)) << std::endl, false) \
-        : (std::cout << " [OK]", true) \
     )
 
 #define MUNIFY_FORWARD_CHECK(Z, N, ASSERTIONS) \
@@ -112,7 +113,7 @@ struct entry : boost::mpl::pair<key, value>
     ((true,     (unify<term<var<1>, term<term<int>, var<2> > >, term<term<var<2> >, term<var<1>, int> > >   ), (unifiers<entry<var<1>, term<int> >, entry<var<2>, int> >))) \
     ((true,     (unify<rel<int>, rel<int> >                                                                 ), (unifiers<>))) \
     ((true,     (unify<rel<int, int*>, rel<int, int*> >                                                     ), (unifiers<>))) \
-    ((true,     (unify<rel<term<int, var<1>*> >, rel<term<int, int**> > >                                   ), (unifiers<>))) \
+    ((true,     (unify<rel<term<int, var<1>*> >, rel<term<int, int**> > >                                   ), (unifiers<entry<var<1>, int*> >))) \
     ((true,     (unify<rel<int, int*, float, float*, void>, rel<int, int*, float, float*, void> >           ), (unifiers<>))) \
     ((true,     (unify<rel<var<1> >, rel<int> >                                                             ), (unifiers<entry<var<1>, int> >))) \
     ((true,     (unify<rel<var<1>, var<2> >, rel<int, int*> >                                               ), (unifiers<entry<var<1>, int>, entry<var<2>, int*> >))) \
