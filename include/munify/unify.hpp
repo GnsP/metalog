@@ -23,10 +23,9 @@ namespace munify
     {};
 }
 
-#include "unify/equiv_transform.hpp"
 #include "unify/modifiers.hpp"
 #include "unify/atoms.hpp"
-#include "unify/vars_binding.hpp"
+#include "unify/variables.hpp"
 #include "unify/terms.hpp"
 
 
