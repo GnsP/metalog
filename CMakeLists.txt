@@ -16,5 +16,7 @@ file(GLOB_RECURSE MUNIFY_HEADERS ${MUNIFY_INCLUDE_DIR}/*.hpp)
 add_custom_target(munify SOURCES ${MUNIFY_HEADERS})
 install(FILES ${MUNIFY_HEADERS} DESTINATION include)
 
-add_subdirectory(test EXCLUDE_FROM_ALL)
+if(BUILD_TESTS)
+    add_subdirectory(test)
+endif()
 
