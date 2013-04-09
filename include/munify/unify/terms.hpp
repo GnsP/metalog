@@ -37,7 +37,7 @@ namespace munify
             typename u
     >
     struct unify<term<lH1Expr, lH2Expr, lH3Expr, lTExpr...>, term<rH1Expr, rH2Expr, rH3Expr, rTExpr...>, u> :
-            unify<munify::term<lH1Expr, term<lH2Expr, lH3Expr, lTExpr...> >, munify::term<rH1Expr, term<rH2Expr, rH3Expr, rTExpr...> >, u>
+            unify<munify::term<lH1Expr, munify::term<lH2Expr, lH3Expr, lTExpr...> >, munify::term<rH1Expr, munify::term<rH2Expr, rH3Expr, rTExpr...> >, u>
     {};
 }
 
