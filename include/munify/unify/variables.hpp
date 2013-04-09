@@ -4,8 +4,8 @@
  * See accompanying file LICENSE.txt for its full text.
  */
 
-#ifndef _MUNIFY_VARIABLES_HPP_
-#define _MUNIFY_VARIABLES_HPP_
+#ifndef _MUNIFY_UNIFY_VARIABLES_HPP_
+#define _MUNIFY_UNIFY_VARIABLES_HPP_
 
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/pair.hpp>

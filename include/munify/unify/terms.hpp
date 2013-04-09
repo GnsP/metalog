@@ -4,8 +4,8 @@
  * See accompanying file LICENSE.txt for its full text.
  */
 
-#ifndef _MUNIFY_TERMS_HPP_
-#define _MUNIFY_TERMS_HPP_
+#ifndef _MUNIFY_UNIFY_TERMS_HPP_
+#define _MUNIFY_UNIFY_TERMS_HPP_
 
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/if.hpp>
