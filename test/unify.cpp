@@ -6,19 +6,22 @@
 
 #include "munify/unify.hpp"
 
+#include <boost/bind.hpp>
+
 #include <boost/mpl/size.hpp>
 #include <boost/mpl/logical.hpp>
 
 #include <boost/preprocessor/seq/elem.hpp>
 #include <boost/preprocessor/seq/size.hpp>
-#include <boost/preprocessor/tuple/size.hpp>
-#include <boost/preprocessor/tuple/elem.hpp>
-#include <boost/preprocessor/tuple/enum.hpp>
+#include <boost/preprocessor/array/size.hpp>
+#include <boost/preprocessor/array/elem.hpp>
+#include <boost/preprocessor/array/enum.hpp>
 #include <boost/preprocessor/control/expr_if.hpp>
 #include <boost/preprocessor/repetition/repeat.hpp>
 #include <boost/preprocessor/stringize.hpp>
 #include <boost/preprocessor/comma_if.hpp>
 
+#include <functional>
 #include <algorithm>
 #include <iostream>
 #include <iomanip>
@@ -46,18 +49,18 @@
 
 #define MUNIFY_CHECK_UNIFICATION(ASSERTION) \
     ( \
-        std::cout << std::endl << BOOST_PP_STRINGIZE(BOOST_PP_TUPLE_ELEM(1, ASSERTION)), \
+        std::cout << std::endl << BOOST_PP_STRINGIZE((BOOST_PP_ARRAY_ENUM(BOOST_PP_SEQ_ELEM(1, ASSERTION)))), \
         ( \
-            BOOST_PP_TUPLE_ELEM(0, ASSERTION) == BOOST_PP_TUPLE_ENUM(BOOST_PP_TUPLE_ELEM(1, ASSERTION))::value && \
+            BOOST_PP_SEQ_ELEM(0, ASSERTION) == BOOST_PP_ARRAY_ENUM(BOOST_PP_SEQ_ELEM(1, ASSERTION))::value && \
             MUNIFY_COMPARE_UNIFIERS \
             ( \
-                BOOST_PP_TUPLE_ENUM(BOOST_PP_TUPLE_ELEM(2, ASSERTION)), \
-                typename BOOST_PP_TUPLE_ENUM(BOOST_PP_TUPLE_ELEM(1, ASSERTION))::unifiers \
+                BOOST_PP_ARRAY_ENUM(BOOST_PP_SEQ_ELEM(2, ASSERTION)), \
+                typename BOOST_PP_ARRAY_ENUM(BOOST_PP_SEQ_ELEM(1, ASSERTION))::unifiers \
             ) \
             ? (std::cout << " [SUCCEEDED]", true) \
             : (std::cout << " [FAILED]" << std::endl \
-                         << "    expected result: " << (BOOST_PP_TUPLE_ELEM(0, ASSERTION) ? "success" : "failure") << std::endl \
-                         << "    expected unifiers: " << BOOST_PP_STRINGIZE(BOOST_PP_TUPLE_ELEM(2, ASSERTION)) << std::endl, false) \
+                         << "    expected result: " << (BOOST_PP_SEQ_ELEM(0, ASSERTION) ? "success" : "failure") << std::endl \
+                         << "    expected unifiers: " << BOOST_PP_STRINGIZE(BOOST_PP_SEQ_ELEM(2, ASSERTION)) << std::endl, false) \
         ) \
     )
 
@@ -79,59 +82,58 @@ struct entry : boost::mpl::pair<key, value>
 {};
 
 #define NOT_UNIFIABLE \
-    ((false,    (unify<int, void>                                                                           ), (unifiers<>))) \
-    ((false,    (unify<rel<int, int>, rel<int, int*> >                                                      ), (unifiers<>))) \
-    ((false,    (unify<rel<int>, rel<int, int*> >                                                           ), (unifiers<>))) \
-    ((false,    (unify<rel<int, void>, rel<int, term<void> > >                                              ), (unifiers<>))) \
-    ((false,    (unify<term<int>, rel<int> >                                                                ), (unifiers<>))) \
-    ((false,    (unify<term<int, int*>, rel<int, int*> >                                                    ), (unifiers<>))) \
-    ((false,    (unify<term<int, int*, int**>, rel<int, int*, int**> >                                      ), (unifiers<>))) \
-    ((false,    (unify<var<1>*, int *const >                                                                ), (unifiers<>))) \
-    ((false,    (unify<var<1>, rel<var<1> > >                                                               ), (unifiers<>))) \
-    ((false,    (unify<int, atom<int> >                                                                     ), (unifiers<>))) \
-    ((false,    (unify<atom<int>, atom<int*> >                                                              ), (unifiers<>))) \
-    ((false,    (unify<atom<var<1> >, atom<int> >                                                           ), (unifiers<>))) \
-    ((false,    (unify<rel<int, atom<var<1> > >, rel<var<1>, atom<int> > >                                  ), (unifiers<>))) \
+    ((false)((02, (unify<int, void>                                                                         )))((01, (unifiers<>)))) \
+    ((false)((04, (unify<rel<int, int>, rel<int, int*> >                                                    )))((01, (unifiers<>)))) \
+    ((false)((03, (unify<rel<int>, rel<int, int*> >                                                         )))((01, (unifiers<>)))) \
+    ((false)((04, (unify<rel<int, void>, rel<int, term<void> > >                                            )))((01, (unifiers<>)))) \
+    ((false)((02, (unify<term<int>, rel<int> >                                                              )))((01, (unifiers<>)))) \
+    ((false)((04, (unify<term<int, int*>, rel<int, int*> >                                                  )))((01, (unifiers<>)))) \
+    ((false)((06, (unify<term<int, int*, int**>, rel<int, int*, int**> >                                    )))((01, (unifiers<>)))) \
+    ((false)((02, (unify<var<1>*, int *const >                                                              )))((01, (unifiers<>)))) \
+    ((false)((02, (unify<var<1>, rel<var<1> > >                                                             )))((01, (unifiers<>)))) \
+    ((false)((02, (unify<int, atom<int> >                                                                   )))((01, (unifiers<>)))) \
+    ((false)((02, (unify<atom<int>, atom<int*> >                                                            )))((01, (unifiers<>)))) \
+    ((false)((02, (unify<atom<var<1> >, atom<int> >                                                         )))((01, (unifiers<>)))) \
+    ((false)((04, (unify<rel<int, atom<var<1> > >, rel<var<1>, atom<int> > >                                )))((01, (unifiers<>)))) \
 
 #define UNIFIABLE \
-    ((true,     (unify<void, void>                                                                          ), (unifiers<>))) \
-    ((true,     (unify<var<1>, void>                                                                        ), (unifiers<entry<var<1>, void> >))) \
-    ((true,     (unify<var<1>*, void*>                                                                      ), (unifiers<entry<var<1>, void> >))) \
-    ((true,     (unify<var<1>*, var<2>*>                                                                    ), (unifiers<entry<var<1>, var<2> > >))) \
-    ((true,     (unify<const var<1> volatile, var<1> const volatile>                                        ), (unifiers<>))) \
-    ((true,     (unify<var<1>&, int const&>                                                                 ), (unifiers<entry<var<1>, int const> >))) \
-    ((true,     (unify<var<1>&&, int&&>                                                                     ), (unifiers<entry<var<1>, int> >))) \
-    ((true,     (unify<var<1> volatile, void volatile>                                                      ), (unifiers<entry<var<1>, void> >))) \
-    ((true,     (unify<var<1> volatile const* const volatile, volatile const float* const volatile>         ), (unifiers<entry<var<1>, float> >))) \
-    ((true,     (unify<var<1>, var<1> >                                                                     ), (unifiers<>))) \
-    ((true,     (unify<var<1>, var<2> >                                                                     ), (unifiers<entry<var<1>, var<2> > >))) \
-    ((true,     (unify<var<1>, term<int, int*> >                                                            ), (unifiers<entry<var<1>, term<int, int*> > >))) \
-    ((true,     (unify<term<int>, term<int> >                                                               ), (unifiers<>))) \
-    ((true,     (unify<term<int, int*>, term<int, int*> >                                                   ), (unifiers<>))) \
-    ((true,     (unify<term<term<int, int*> >, term<term<int, int*> > >                                     ), (unifiers<>))) \
-    ((true,     (unify<term<int, int*, float, float*, void>, term<int, int*, float, float*, void> >         ), (unifiers<>))) \
-    ((true,     (unify<term<var<1>, var<2> >, term<int, int*> >                                             ), (unifiers<entry<var<1>, int>, entry<var<2>, int*> >))) \
-    ((true,     (unify<term<int, var<1> >, term<int, int*> >                                                ), (unifiers<entry<var<1>, int*> >))) \
-    ((true,     (unify<term<var<1>, var<1>*>, term<int, int*> >                                             ), (unifiers<entry<var<1>, int> >))) \
-    ((true,     (unify<term<var<1>, var<2> >, term<var<2>, int> >                                           ), (unifiers<entry<var<1>, int>, entry<var<2>, int> >))) \
-    ((true,     (unify<term<var<1>, term<term<int>, var<2> > >, term<term<var<2> >, term<var<1>, int> > >   ), (unifiers<entry<var<1>, term<int> >, entry<var<2>, int> >))) \
-    ((true,     (unify<rel<int>, rel<int> >                                                                 ), (unifiers<>))) \
-    ((true,     (unify<rel<int, int*>, rel<int, int*> >                                                     ), (unifiers<>))) \
-    ((true,     (unify<rel<term<int, var<1>*> >, rel<term<int, int**> > >                                   ), (unifiers<entry<var<1>, int*> >))) \
-    ((true,     (unify<rel<int, int*, float, float*, void>, rel<int, int*, float, float*, void> >           ), (unifiers<>))) \
-    ((true,     (unify<rel<var<1> >, rel<int> >                                                             ), (unifiers<entry<var<1>, int> >))) \
-    ((true,     (unify<rel<var<1>, var<2> >, rel<int, int*> >                                               ), (unifiers<entry<var<1>, int>, entry<var<2>, int*> >))) \
-    ((true,     (unify<rel<int, var<1> >, rel<int, int*> >                                                  ), (unifiers<entry<var<1>, int*> >))) \
-    ((true,     (unify<rel<var<1>, var<1>*>, rel<int, int*> >                                               ), (unifiers<entry<var<1>, int> >))) \
-    ((true,     (unify<rel<var<1>, var<2> >, rel<var<2>, int> >                                             ), (unifiers<entry<var<1>, int>, entry<var<2>, int> >))) \
-    ((true,     (unify<rel<int, var<1>, var<2> >, rel<int, var<2>, int> >                                   ), (unifiers<entry<var<1>, int>, entry<var<2>, int> >))) \
-    ((true,     (unify<rel<var<1>, var<2>, var<3> >, rel<var<2>, var<3>, int> >                             ), (unifiers<entry<var<1>, int>, entry<var<2>, int>, entry<var<3>, int> >))) \
-    ((true,     (unify<rel<var<1>, var<1>, var<3> >, rel<int, var<3>, var<2> > >                            ), (unifiers<entry<var<1>, int>, entry<var<2>, int>, entry<var<3>, int> >))) \
-    ((true,     (unify<rel<var<1>, var<3>, var<2> >, rel<var<2>, int, var<3> > >                            ), (unifiers<entry<var<1>, int>, entry<var<2>, int>, entry<var<3>, int> >))) \
-    ((true,     (unify<rel<var<1>, rel<rel<int>, var<2> > >, rel<rel<var<2> >, rel<var<1>, int> > >         ), (unifiers<entry<var<1>, rel<int> >, entry<var<2>, int> >))) \
-    ((true,     (unify<atom<int>, atom<int> >                                                               ), (unifiers<>))) \
-    ((true,     (unify<var<1>, atom<var<1> > >                                                              ), (unifiers<entry<var<1>, atom<var<1> > > >))) \
-
+    ((true )((02, (unify<void, void>                                                                        )))((01, (unifiers<>)))) \
+    ((true )((02, (unify<var<1>, void>                                                                      )))((02, (unifiers<entry<var<1>, void> >)))) \
+    ((true )((02, (unify<var<1>*, void*>                                                                    )))((02, (unifiers<entry<var<1>, void> >)))) \
+    ((true )((02, (unify<var<1>*, var<2>*>                                                                  )))((02, (unifiers<entry<var<1>, var<2> > >)))) \
+    ((true )((02, (unify<const var<1> volatile, var<1> const volatile>                                      )))((01, (unifiers<>)))) \
+    ((true )((02, (unify<var<1>&, int const&>                                                               )))((02, (unifiers<entry<var<1>, int const> >)))) \
+    ((true )((02, (unify<var<1>&&, int&&>                                                                   )))((02, (unifiers<entry<var<1>, int> >)))) \
+    ((true )((02, (unify<var<1> volatile, void volatile>                                                    )))((02, (unifiers<entry<var<1>, void> >)))) \
+    ((true )((02, (unify<var<1> volatile const* const volatile, volatile const float* const volatile>       )))((02, (unifiers<entry<var<1>, float> >)))) \
+    ((true )((02, (unify<var<1>, var<1> >                                                                   )))((01, (unifiers<>)))) \
+    ((true )((02, (unify<var<1>, var<2> >                                                                   )))((02, (unifiers<entry<var<1>, var<2> > >)))) \
+    ((true )((03, (unify<var<1>, term<int, int*> >                                                          )))((03, (unifiers<entry<var<1>, term<int, int*> > >)))) \
+    ((true )((02, (unify<term<int>, term<int> >                                                             )))((01, (unifiers<>)))) \
+    ((true )((04, (unify<term<int, int*>, term<int, int*> >                                                 )))((01, (unifiers<>)))) \
+    ((true )((04, (unify<term<term<int, int*> >, term<term<int, int*> > >                                   )))((01, (unifiers<>)))) \
+    ((true )((10, (unify<term<int, int*, float, float*, void>, term<int, int*, float, float*, void> >       )))((01, (unifiers<>)))) \
+    ((true )((04, (unify<term<var<1>, var<2> >, term<int, int*> >                                           )))((04, (unifiers<entry<var<1>, int>, entry<var<2>, int*> >)))) \
+    ((true )((04, (unify<term<int, var<1> >, term<int, int*> >                                              )))((02, (unifiers<entry<var<1>, int*> >)))) \
+    ((true )((04, (unify<term<var<1>, var<1>*>, term<int, int*> >                                           )))((02, (unifiers<entry<var<1>, int> >)))) \
+    ((true )((04, (unify<term<var<1>, var<2> >, term<var<2>, int> >                                         )))((04, (unifiers<entry<var<1>, int>, entry<var<2>, int> >)))) \
+    ((true )((06, (unify<term<var<1>, term<term<int>, var<2> > >, term<term<var<2> >, term<var<1>, int> > > )))((04, (unifiers<entry<var<1>, term<int> >, entry<var<2>, int> >)))) \
+    ((true )((02, (unify<rel<int>, rel<int> >                                                               )))((01, (unifiers<>)))) \
+    ((true )((04, (unify<rel<int, int*>, rel<int, int*> >                                                   )))((01, (unifiers<>)))) \
+    ((true )((04, (unify<rel<term<int, var<1>*> >, rel<term<int, int**> > >                                 )))((02, (unifiers<entry<var<1>, int*> >)))) \
+    ((true )((10, (unify<rel<int, int*, float, float*, void>, rel<int, int*, float, float*, void> >         )))((01, (unifiers<>)))) \
+    ((true )((02, (unify<rel<var<1> >, rel<int> >                                                           )))((02, (unifiers<entry<var<1>, int> >)))) \
+    ((true )((04, (unify<rel<var<1>, var<2> >, rel<int, int*> >                                             )))((04, (unifiers<entry<var<1>, int>, entry<var<2>, int*> >)))) \
+    ((true )((04, (unify<rel<int, var<1> >, rel<int, int*> >                                                )))((02, (unifiers<entry<var<1>, int*> >)))) \
+    ((true )((04, (unify<rel<var<1>, var<1>*>, rel<int, int*> >                                             )))((02, (unifiers<entry<var<1>, int> >)))) \
+    ((true )((04, (unify<rel<var<1>, var<2> >, rel<var<2>, int> >                                           )))((04, (unifiers<entry<var<1>, int>, entry<var<2>, int> >)))) \
+    ((true )((06, (unify<rel<int, var<1>, var<2> >, rel<int, var<2>, int> >                                 )))((04, (unifiers<entry<var<1>, int>, entry<var<2>, int> >)))) \
+    ((true )((06, (unify<rel<var<1>, var<2>, var<3> >, rel<var<2>, var<3>, int> >                           )))((06, (unifiers<entry<var<1>, int>, entry<var<2>, int>, entry<var<3>, int> >)))) \
+    ((true )((06, (unify<rel<var<1>, var<1>, var<3> >, rel<int, var<3>, var<2> > >                          )))((06, (unifiers<entry<var<1>, int>, entry<var<2>, int>, entry<var<3>, int> >)))) \
+    ((true )((06, (unify<rel<var<1>, var<3>, var<2> >, rel<var<2>, int, var<3> > >                          )))((06, (unifiers<entry<var<1>, int>, entry<var<2>, int>, entry<var<3>, int> >)))) \
+    ((true )((06, (unify<rel<var<1>, rel<rel<int>, var<2> > >, rel<rel<var<2> >, rel<var<1>, int> > >       )))((04, (unifiers<entry<var<1>, rel<int> >, entry<var<2>, int> >)))) \
+    ((true )((02, (unify<atom<int>, atom<int> >                                                             )))((01, (unifiers<>)))) \
+    ((true )((02, (unify<var<1>, atom<var<1> > >                                                            )))((02, (unifiers<entry<var<1>, atom<var<1> > > >)))) \
 
 int main()
 {
@@ -140,13 +142,12 @@ int main()
 
     std::cout << std::endl;
 
-    std::size_t const ok = std::count_if(results, results + sizeof(results), [](bool v) -> bool {return v;});
-    std::size_t const not_ok = std::count_if(results, results + sizeof(results), [](bool v) -> bool {return !v;});
+    std::size_t const ok = std::count_if(results, results + sizeof(results), boost::bind(std::equal_to<bool>(), true, _1));
 
     std::cout << std::endl;
     std::cout << std::setw(3) << ok << '/' << sizeof(results) << " SUCCEEDED" << std::endl;
-    std::cout << std::setw(3) << not_ok << '/' << sizeof(results) << " FAILED" << std::endl;
+    std::cout << std::setw(3) << sizeof(results) - ok << '/' << sizeof(results) << " FAILED" << std::endl;
     std::cout << std::endl;
 
-    return !std::accumulate(results, results + sizeof(results), true, [](bool a, bool b) -> bool {return a && b;});
+    return !std::accumulate(results, results + sizeof(results), true, std::logical_and<bool>());
 }
