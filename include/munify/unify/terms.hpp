@@ -7,17 +7,31 @@
 #ifndef _MUNIFY_UNIFY_TERMS_HPP_
 #define _MUNIFY_UNIFY_TERMS_HPP_
 
+#include "munify/detail/preprocessor.hpp"
+
+#include <boost/config.hpp>
+#include <boost/preprocessor/arithmetic/sub.hpp>
+#include <boost/preprocessor/comma_if.hpp>
+#include <boost/preprocessor/repetition/repeat_from_to.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/if.hpp>
 
 namespace munify
 {
-    template<template<typename...> class term, typename lExpr, typename rExpr, typename u>
+    template<template<MUNIFY_VARIADIC_PARAMS(BOOST_PP_SUB(MUNIFY_MAX_VARIADIC_ARGS, 1), _)> class term, typename lExpr, typename rExpr, typename u>
     struct unify<term<lExpr>, term<rExpr>, u> :
             unify<lExpr, rExpr, u>
     {};
 
-    template<template<typename...> class term, typename lHExpr, typename lTExpr, typename rHExpr, typename rTExpr, typename u>
+#ifdef BOOST_NO_CXX11_VARIADIC_TEMPLATES
+    template<typename lExpr, typename rExpr, typename u>
+    struct unify<term<lExpr, MUNIFY_EMPTY_VARIADIC_ARGS(1)>, term<rExpr, MUNIFY_EMPTY_VARIADIC_ARGS(1)>, u> :
+            unify<lExpr, rExpr, u>
+    {};
+#endif
+
+    template<template<MUNIFY_VARIADIC_PARAMS(BOOST_PP_SUB(MUNIFY_MAX_VARIADIC_ARGS, 2), _)> class term,
+             typename lHExpr, typename lTExpr, typename rHExpr, typename rTExpr, typename u>
     struct unify<term<lHExpr, lTExpr>, term<rHExpr, rTExpr>, u> :
             boost::mpl::if_
             <
@@ -27,18 +41,48 @@ namespace munify
             >::type
     {};
 
-    //{term(lExpr_1, lExpr_2, ..., lExpr_n-1, lExpr_n) = term(rExpr_1, rExpr_2, ..., rExpr_n-1, rExpr_n)} ==
-    //    {_(lExpr_1, _(lExpr_2, _(..., _(lExpr_n-1, lExpr_n)))) = _(rExpr_1, _(rExpr_2, _(..., _(rExpr_n-1, rExpr_n))))}
-    template
-    <
-            template<typename...> class term,
-            typename lH1Expr, typename lH2Expr, typename lH3Expr, typename... lTExpr,
-            typename rH1Expr, typename rH2Expr, typename rH3Expr, typename... rTExpr,
-            typename u
-    >
-    struct unify<term<lH1Expr, lH2Expr, lH3Expr, lTExpr...>, term<rH1Expr, rH2Expr, rH3Expr, rTExpr...>, u> :
-            unify<munify::term<lH1Expr, munify::term<lH2Expr, lH3Expr, lTExpr...> >, munify::term<rH1Expr, munify::term<rH2Expr, rH3Expr, rTExpr...> >, u>
+#ifdef BOOST_NO_CXX11_VARIADIC_TEMPLATES
+    template<typename lHExpr, typename lTExpr, typename rHExpr, typename rTExpr, typename u>
+    struct unify<term<lHExpr, lTExpr, MUNIFY_EMPTY_VARIADIC_ARGS(2)>, term<rHExpr, rTExpr, MUNIFY_EMPTY_VARIADIC_ARGS(2)>, u> :
+            boost::mpl::if_
+            <
+                unify<lHExpr, rHExpr, u>,
+                unify<lTExpr, rTExpr, typename unify<lHExpr, rHExpr, u>::unifiers>,
+                unify<lHExpr, rHExpr, u>
+            >::type
     {};
+#endif
+
+//{term(lExpr_1, lExpr_2, ..., lExpr_n-1, lExpr_n) = term(rExpr_1, rExpr_2, ..., rExpr_n-1, rExpr_n)} ==
+//    {_(lExpr_1, _(lExpr_2, _(..., _(lExpr_n-1, lExpr_n)))) = _(rExpr_1, _(rExpr_2, _(..., _(rExpr_n-1, rExpr_n))))}
+#define MUNIFY_DEFINE_EQUIVALENCE_TRANSFORM(Z, N, MAX) \
+    template \
+    < \
+            template<MUNIFY_VARIADIC_PARAMS(BOOST_PP_SUB(N, 3), _)> class term, \
+            typename lH1Expr, typename lH2Expr, typename lH3Expr BOOST_PP_COMMA_IF(BOOST_PP_SUB(MAX, N)) MUNIFY_VARIADIC_PARAMS(N, lTExpr), \
+            typename rH1Expr, typename rH2Expr, typename rH3Expr BOOST_PP_COMMA_IF(BOOST_PP_SUB(MAX, N)) MUNIFY_VARIADIC_PARAMS(N, rTExpr), \
+            typename u \
+    > \
+    struct unify \
+    < \
+        term<lH1Expr, lH2Expr, lH3Expr BOOST_PP_COMMA_IF(BOOST_PP_SUB(MAX, N)) MUNIFY_VARIADIC_ARGS(N, lTExpr)>, \
+        term<rH1Expr, rH2Expr, rH3Expr BOOST_PP_COMMA_IF(BOOST_PP_SUB(MAX, N)) MUNIFY_VARIADIC_ARGS(N, rTExpr)>, \
+        u \
+    > : \
+            unify \
+            < \
+                munify::term<lH1Expr, munify::term<lH2Expr, lH3Expr BOOST_PP_COMMA_IF(BOOST_PP_SUB(MAX, N)) MUNIFY_VARIADIC_ARGS(N, lTExpr)> >, \
+                munify::term<rH1Expr, munify::term<rH2Expr, rH3Expr BOOST_PP_COMMA_IF(BOOST_PP_SUB(MAX, N)) MUNIFY_VARIADIC_ARGS(N, rTExpr)> >, \
+                u \
+            > \
+    {};
+
+#ifdef BOOST_NO_CXX11_VARIADIC_TEMPLATES
+    BOOST_PP_REPEAT_FROM_TO(3, MUNIFY_MAX_VARIADIC_ARGS, MUNIFY_DEFINE_EQUIVALENCE_TRANSFORM, MUNIFY_MAX_VARIADIC_ARGS)
+    MUNIFY_DEFINE_EQUIVALENCE_TRANSFORM(_, MUNIFY_MAX_VARIADIC_ARGS, MUNIFY_MAX_VARIADIC_ARGS)
+#else
+    MUNIFY_DEFINE_EQUIVALENCE_TRANSFORM(_, 0, 1)
+#endif
 }
 
 #endif

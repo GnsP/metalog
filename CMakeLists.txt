@@ -6,7 +6,7 @@ project(munify CXX)
 
 cmake_minimum_required(VERSION 2.8.3)
 
-find_package(Boost 1.50.0 REQUIRED)
+find_package(Boost 1.51 REQUIRED)
 
 set(MUNIFY_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set(MUNIFY_INCLUDE_DIRS ${MUNIFY_INCLUDE_DIR} ${Boost_INCLUDE_DIRS})

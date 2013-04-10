@@ -7,6 +7,10 @@
 #ifndef _MUNIFY_TYPES_HPP_
 #define _MUNIFY_TYPES_HPP_
 
+#include "detail/preprocessor.hpp"
+
+#include <boost/mpl/map.hpp>
+
 namespace munify
 {
     /**
@@ -20,7 +24,7 @@ namespace munify
     template<int n>
     struct var;
 
-    template<typename, typename...>
+    template<typename, MUNIFY_VARIADIC_PARAMS_DECL(1)>
     struct term;
 }
 

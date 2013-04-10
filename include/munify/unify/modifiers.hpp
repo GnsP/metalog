@@ -7,6 +7,8 @@
 #ifndef _MUNIFY_UNIFY_MODIFIERS_HPP_
 #define _MUNIFY_UNIFY_MODIFIERS_HPP_
 
+#include <boost/config.hpp>
+
 namespace munify
 {
     template<typename lExpr, typename rExpr, typename u>
@@ -19,10 +21,12 @@ namespace munify
             unify<lExpr, rExpr, u>
     {};
 
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     template<typename lExpr, typename rExpr, typename u>
     struct unify<lExpr&&, rExpr&&, u > :
             unify<lExpr, rExpr, u>
     {};
+#endif
 
     template<typename lExpr, typename rExpr, typename u>
     struct unify<lExpr const, rExpr const, u > :
