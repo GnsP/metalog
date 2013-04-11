@@ -23,6 +23,7 @@
 
 #include <functional>
 #include <algorithm>
+#include <numeric>
 #include <iostream>
 #include <iomanip>
 
