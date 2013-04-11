@@ -11,6 +11,8 @@
 
 #include <boost/config.hpp>
 #include <boost/preprocessor/arithmetic/sub.hpp>
+#include <boost/preprocessor/arithmetic/add.hpp>
+#include <boost/preprocessor/comparison/greater.hpp>
 #include <boost/preprocessor/comma_if.hpp>
 #include <boost/preprocessor/repetition/repeat_from_to.hpp>
 #include <boost/mpl/bool.hpp>
@@ -58,21 +60,21 @@ namespace munify
 #define MUNIFY_DEFINE_EQUIVALENCE_TRANSFORM(Z, N, MAX) \
     template \
     < \
-            template<MUNIFY_VARIADIC_PARAMS(BOOST_PP_SUB(N, 3), _)> class term, \
-            typename lH1Expr, typename lH2Expr, typename lH3Expr BOOST_PP_COMMA_IF(BOOST_PP_SUB(MAX, N)) MUNIFY_VARIADIC_PARAMS(N, lTExpr), \
-            typename rH1Expr, typename rH2Expr, typename rH3Expr BOOST_PP_COMMA_IF(BOOST_PP_SUB(MAX, N)) MUNIFY_VARIADIC_PARAMS(N, rTExpr), \
+            template<MUNIFY_VARIADIC_PARAMS(BOOST_PP_SUB(MAX, N), _)> class term, \
+            typename lH1Expr, typename lH2Expr, typename lH3Expr BOOST_PP_COMMA_IF(BOOST_PP_GREATER(N, 3)) MUNIFY_VARIADIC_PARAMS(BOOST_PP_ADD(BOOST_PP_SUB(MAX, N), 3), lTExpr), \
+            typename rH1Expr, typename rH2Expr, typename rH3Expr BOOST_PP_COMMA_IF(BOOST_PP_GREATER(N, 3)) MUNIFY_VARIADIC_PARAMS(BOOST_PP_ADD(BOOST_PP_SUB(MAX, N), 3), rTExpr), \
             typename u \
     > \
     struct unify \
     < \
-        term<lH1Expr, lH2Expr, lH3Expr BOOST_PP_COMMA_IF(BOOST_PP_SUB(MAX, N)) MUNIFY_VARIADIC_ARGS(N, lTExpr)>, \
-        term<rH1Expr, rH2Expr, rH3Expr BOOST_PP_COMMA_IF(BOOST_PP_SUB(MAX, N)) MUNIFY_VARIADIC_ARGS(N, rTExpr)>, \
+        term<lH1Expr, lH2Expr, lH3Expr BOOST_PP_COMMA_IF(BOOST_PP_GREATER(N, 3)) MUNIFY_VARIADIC_ARGS(BOOST_PP_ADD(BOOST_PP_SUB(MAX, N), 3), lTExpr)>, \
+        term<rH1Expr, rH2Expr, rH3Expr BOOST_PP_COMMA_IF(BOOST_PP_GREATER(N, 3)) MUNIFY_VARIADIC_ARGS(BOOST_PP_ADD(BOOST_PP_SUB(MAX, N), 3), rTExpr)>, \
         u \
     > : \
             unify \
             < \
-                munify::term<lH1Expr, munify::term<lH2Expr, lH3Expr BOOST_PP_COMMA_IF(BOOST_PP_SUB(MAX, N)) MUNIFY_VARIADIC_ARGS(N, lTExpr)> >, \
-                munify::term<rH1Expr, munify::term<rH2Expr, rH3Expr BOOST_PP_COMMA_IF(BOOST_PP_SUB(MAX, N)) MUNIFY_VARIADIC_ARGS(N, rTExpr)> >, \
+                munify::term<lH1Expr, munify::term<lH2Expr, lH3Expr BOOST_PP_COMMA_IF(BOOST_PP_GREATER(N, 3)) MUNIFY_VARIADIC_ARGS(BOOST_PP_ADD(BOOST_PP_SUB(MAX, N), 3), lTExpr)> >, \
+                munify::term<rH1Expr, munify::term<rH2Expr, rH3Expr BOOST_PP_COMMA_IF(BOOST_PP_GREATER(N, 3)) MUNIFY_VARIADIC_ARGS(BOOST_PP_ADD(BOOST_PP_SUB(MAX, N), 3), rTExpr)> >, \
                 u \
             > \
     {};
@@ -81,7 +83,7 @@ namespace munify
     BOOST_PP_REPEAT_FROM_TO(3, MUNIFY_MAX_VARIADIC_ARGS, MUNIFY_DEFINE_EQUIVALENCE_TRANSFORM, MUNIFY_MAX_VARIADIC_ARGS)
     MUNIFY_DEFINE_EQUIVALENCE_TRANSFORM(_, MUNIFY_MAX_VARIADIC_ARGS, MUNIFY_MAX_VARIADIC_ARGS)
 #else
-    MUNIFY_DEFINE_EQUIVALENCE_TRANSFORM(_, 0, 1)
+    MUNIFY_DEFINE_EQUIVALENCE_TRANSFORM(_, 4, 4)
 #endif
 }
 
