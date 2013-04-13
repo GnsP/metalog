@@ -23,7 +23,11 @@ namespace munify
             <
                 boost::mpl::has_key<u, var<n> >,
                 unify<typename boost::mpl::apply_wrap1<substitute<u>, var<n> >::type, typename boost::mpl::apply_wrap1<substitute<u>, expr>::type, u>,
-                unifiable<boost::mpl::not_<occurs<var<n>, expr> >, typename boost::mpl::insert<u, boost::mpl::pair<var<n>, expr> >::type>
+                unifiable
+                <
+                    boost::mpl::not_<occurs<var<n>, typename boost::mpl::apply_wrap1<substitute<u>, expr>::type> >,
+                    typename boost::mpl::insert<u, boost::mpl::pair<var<n>, expr> >::type
+                >
             >::type
     {};
 
