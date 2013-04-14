@@ -9,6 +9,7 @@
 
 #include "detail/preprocessor.hpp"
 
+#include <boost/preprocessor/arithmetic/sub.hpp>
 #include <boost/mpl/map.hpp>
 
 namespace munify
@@ -24,7 +25,7 @@ namespace munify
     template<int n>
     struct var;
 
-    template<typename, MUNIFY_VARIADIC_PARAMS_DECL(1)>
+    template<typename, MUNIFY_VARIADIC_PARAMS_DECLARATION(BOOST_PP_SUB(MUNIFY_MAX_VARIADIC_ARGS, 1), _)>
     struct term;
 }
 

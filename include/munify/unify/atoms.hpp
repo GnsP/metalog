@@ -7,6 +7,8 @@
 #ifndef _MUNIFY_UNIFY_ATOMS_HPP_
 #define _MUNIFY_UNIFY_ATOMS_HPP_
 
+#include "../types.hpp"
+
 #include <boost/mpl/bool.hpp>
 #include <boost/type_traits.hpp>
 

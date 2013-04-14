@@ -31,7 +31,7 @@ function(add_test_target_for_each SOURCES HEADERS CXX_FLAGS DEPENDENCIES LIBS SU
 endfunction()
 
 add_test_target_for_each("${MUNIFY_TEST_SOURCES}" "${MUNIFY_TEST_HEADERS}" "-std=c++11" munify "" "_test_11" TEST_TARGETS_11)
-#add_test_target_for_each("${MUNIFY_TEST_SOURCES}" "${MUNIFY_TEST_HEADERS}" "-std=c++03" munify "" "_test_03" TEST_TARGETS_03)
+add_test_target_for_each("${MUNIFY_TEST_SOURCES}" "${MUNIFY_TEST_HEADERS}" "-std=c++03" munify "" "_test_03" TEST_TARGETS_03)
 
 set(TEST_TARGETS ${TEST_TARGETS_11} ${TEST_TARGETS_03})
 add_custom_target(ctest COMMAND ${CMAKE_CTEST_COMMAND} DEPENDS ${TEST_TARGETS})
