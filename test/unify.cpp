@@ -56,7 +56,7 @@
             MUNIFY_COMPARE_UNIFIERS \
             ( \
                 BOOST_PP_ARRAY_ENUM(BOOST_PP_SEQ_ELEM(2, ASSERTION)), \
-                typename BOOST_PP_ARRAY_ENUM(BOOST_PP_SEQ_ELEM(1, ASSERTION))::unifiers \
+                BOOST_PP_ARRAY_ENUM(BOOST_PP_SEQ_ELEM(1, ASSERTION))::unifiers \
             ) \
             ? (std::cout << " [SUCCEEDED]", true) \
             : (std::cout << " [FAILED]" << std::endl \
