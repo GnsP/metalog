@@ -2,9 +2,11 @@
 # Use, modification and distribution is subject to the BSD 2-clause license.
 # See accompanying file LICENSE.txt for its full text.
 
-project(munify CXX)
-
 cmake_minimum_required(VERSION 2.8.3)
+
+option(BUILD_TESTS "build test scripts" ON)
+
+project(munify CXX)
 
 find_package(Boost 1.51 REQUIRED)
 
