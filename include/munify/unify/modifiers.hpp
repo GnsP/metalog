@@ -18,6 +18,16 @@ namespace munify
             unify<lExpr, rExpr, u>
     {};
 
+    template<typename lExpr, typename rExpr, std::size_t N, typename u>
+    struct unify<lExpr[N], rExpr[N], u > :
+            unify<lExpr, rExpr, u>
+    {};
+
+    template<typename lExpr, typename rExpr, typename u>
+    struct unify<lExpr[], rExpr[], u > :
+            unify<lExpr, rExpr, u>
+    {};
+
     template<typename lExpr, typename rExpr, typename u>
     struct unify<lExpr&, rExpr&, u > :
             unify<lExpr, rExpr, u>
