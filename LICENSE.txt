@@ -1,4 +1,4 @@
-Copyright (c) The contributors of the munify project
+Copyright (c) munify team (refer to AUTHORS.txt)
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
