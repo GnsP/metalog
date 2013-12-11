@@ -2,40 +2,11 @@
 # Use, modification and distribution is subject to the BSD 2-clause license.
 # See accompanying file LICENSE.txt for its full text.
 
-enable_testing()
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
-include_directories(${MUNIFY_INCLUDE_DIRS})
-
-if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic-errors")
-    set(SUPPORTED_STANDARDS "03" "11")
-elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Weverything -pedantic-errors")
-    set(SUPPORTED_STANDARDS "03" "11")
-endif()
-
-file(GLOB_RECURSE MUNIFY_TEST_HEADERS "*.hpp")
-file(GLOB_RECURSE MUNIFY_TEST_SOURCES "*.cpp")
-
-function(add_test_target_for_each SOURCES HEADERS ADITIONAL_CXX_FLAGS DEPENDENCIES LIBS SUFIX RESULT)
-    set(TEST_TARGETS "")
-    foreach(SOURCE ${SOURCES})
-        string(REGEX REPLACE ".*[/\\](.*\)[.]cpp" "\\1${SUFIX}" TEST_TARGET ${SOURCE})
-        add_executable(${TEST_TARGET} ${SOURCE} ${HEADERS})
-        if(ADITIONAL_CXX_FLAGS)
-            set_target_properties(${TEST_TARGET} PROPERTIES COMPILE_FLAGS ${ADITIONAL_CXX_FLAGS})
-        endif()
-        if(DEPENDENCIES)
-            add_dependencies(${TEST_TARGET} ${DEPENDENCIES})
-        endif()
-        if(LIBS)
-            target_link_libraries(${TEST_TARGET} ${LIBS})
-        endif()
-        add_test(${TEST_TARGET} ${CMAKE_CURRENT_BINARY_DIR}/${TEST_TARGET})
-        set(TEST_TARGETS ${TEST_TARGETS} ${TEST_TARGET})
-    endforeach()
-    set(${RESULT} ${TEST_TARGETS} PARENT_SCOPE)
-endfunction()
+include(EnableExtraCompilerWarnings)
+include(DisableCompilerExtensions)
+include(TargetUtils)
 
 function(standard_flag COMPILER STANDARD RESULT)
     if(${COMPILER} STREQUAL "GNU" OR ${COMPILER} STREQUAL "CLANG")
@@ -43,11 +14,34 @@ function(standard_flag COMPILER STANDARD RESULT)
     endif()
 endfunction()
 
-set(TEST_TARGETS "")
+enable_testing()
+
+globally_disable_compiler_extensions()
+globally_enable_extra_compiler_warnings()
+string(REGEX REPLACE "-Weffc\\+\\+" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
+
+file(GLOB_RECURSE MUNIFY_TEST_HEADERS "*.hpp")
+file(GLOB_RECURSE MUNIFY_TEST_SOURCES "*.cpp")
+
+include_directories(${MUNIFY_INCLUDE_DIRS})
+link_directories(${MUNIFY_LIBRARY_DIRS})
+
+set(SUPPORTED_STANDARDS "03;11")
 foreach(STANDARD ${SUPPORTED_STANDARDS})
     standard_flag("${CMAKE_CXX_COMPILER_ID}" ${STANDARD} STANDARD_FLAG)
-    add_test_target_for_each("${MUNIFY_TEST_SOURCES}" "${MUNIFY_TEST_HEADERS}" "${STANDARD_FLAG}" munify "" "_test_cxx${STANDARD}" RESULT)
-    set(TEST_TARGETS "${TEST_TARGETS} ${RESULT}")
+    foreach(SOURCE ${MUNIFY_TEST_SOURCES})
+        string(REGEX REPLACE ".*[/\\](.*\)[.]cpp" "\\1_test_CXX${STANDARD}" TARGET ${SOURCE})
+        add_binary_target(
+            EXECUTABLE ${TARGET}
+            LANGUAGE "CXX"
+            SOURCES ${SOURCE} ${MUNIFY_TEST_HEADERS}
+            LIBRARIES ${MUNIFY_LIBRARIES}
+            ADITIONAL_FLAGS ${STANDARD_FLAG}
+            DEPENDENCIES munify
+        )
+        add_test(${TARGET} ${CMAKE_CURRENT_BINARY_DIR}/${TARGET})
+    endforeach()
+    set(TEST_TARGETS ${TEST_TARGETS} ${TARGET})
 endforeach()
 
 add_custom_target(tests DEPENDS ${TEST_TARGETS})
