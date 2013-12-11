@@ -19,6 +19,6 @@ add_custom_target(munify SOURCES ${MUNIFY_HEADERS})
 install(FILES ${MUNIFY_HEADERS} DESTINATION include)
 
 if(BUILD_TESTS)
-    add_subdirectory(test)
+    add_subdirectory(test EXCLUDE_FROM_ALL)
 endif()
 

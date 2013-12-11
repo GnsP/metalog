@@ -50,4 +50,12 @@ foreach(STANDARD ${SUPPORTED_STANDARDS})
     set(TEST_TARGETS "${TEST_TARGETS} ${RESULT}")
 endforeach()
 
-add_custom_target(ctest COMMAND ${CMAKE_CTEST_COMMAND} DEPENDS ${TEST_TARGETS})
+add_custom_target(tests DEPENDS ${TEST_TARGETS})
+add_custom_command(
+    TARGET tests
+    COMMENT "unity tests"
+    POST_BUILD
+    COMMAND ${CMAKE_CTEST_COMMAND}
+    ARGS --output-on-failure
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+)
