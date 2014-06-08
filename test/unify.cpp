@@ -116,7 +116,7 @@ struct rel3;
     ((true )((2, (unify<term<int>, term<int> >                                                              )))((1, (boost::mpl::map<>)))) \
     ((true )((4, (unify<term<int, int*>, term<int, int*> >                                                  )))((1, (boost::mpl::map<>)))) \
     ((true )((4, (unify<term<term<int, int*> >, term<term<int, int*> > >                                    )))((1, (boost::mpl::map<>)))) \
-    ((true )((8, (unify<term<int, int*, float, float*>, term<int, int*, float, float*> >                    )))((1, (boost::mpl::map<>)))) \
+    ((true )((8, (unify<term<int*, int[], int[1], int&>, term<int*, int[], int[1], int&> >                  )))((1, (boost::mpl::map<>)))) \
     ((true )((4, (unify<term<var<1>, var<2> >, term<int, int*> >                                            )))((4, (boost::mpl::map<boost::mpl::pair<var<1>, int>, boost::mpl::pair<var<2>, int*> >)))) \
     ((true )((4, (unify<term<int, var<1> >, term<int, int*> >                                               )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, int*> >)))) \
     ((true )((4, (unify<term<var<1>, var<1>*>, term<int, int*> >                                            )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, int> >)))) \
@@ -137,6 +137,7 @@ struct rel3;
     ((true )((6, (unify<rel2<var<1>, rel2<rel1<int>, var<2> > >, rel2<rel1<var<2> >, rel2<var<1>, int> > >  )))((4, (boost::mpl::map<boost::mpl::pair<var<1>, rel1<int> >, boost::mpl::pair<var<2>, int> >)))) \
     ((true )((2, (unify<atom<int>, atom<int> >                                                              )))((1, (boost::mpl::map<>)))) \
     ((true )((2, (unify<var<1>, atom<var<1> > >                                                             )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, atom<var<1> > > >)))) \
+
 
 int main()
 {
