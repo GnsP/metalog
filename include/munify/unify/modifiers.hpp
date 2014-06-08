@@ -13,45 +13,24 @@
 
 namespace munify
 {
-    template<typename lExpr, typename rExpr, typename u>
-    struct unify<lExpr*, rExpr*, u > :
-            unify<lExpr, rExpr, u>
+#define MUNIFY_DEFINE_MODIFIER_UNIFICATION(MODIFIER) \
+    template<typename lExpr, typename rExpr, typename u> \
+    struct unify<lExpr MODIFIER, rExpr MODIFIER, u> : \
+            unify<lExpr, rExpr, u> \
     {};
+
+    MUNIFY_DEFINE_MODIFIER_UNIFICATION(const)
+    MUNIFY_DEFINE_MODIFIER_UNIFICATION(volatile)
+    MUNIFY_DEFINE_MODIFIER_UNIFICATION(const volatile)
+    MUNIFY_DEFINE_MODIFIER_UNIFICATION(*)
+    MUNIFY_DEFINE_MODIFIER_UNIFICATION([])
+    MUNIFY_DEFINE_MODIFIER_UNIFICATION(&)
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+    MUNIFY_DEFINE_MODIFIER_UNIFICATION(&&)
+#endif
 
     template<typename lExpr, typename rExpr, std::size_t N, typename u>
     struct unify<lExpr[N], rExpr[N], u > :
-            unify<lExpr, rExpr, u>
-    {};
-
-    template<typename lExpr, typename rExpr, typename u>
-    struct unify<lExpr[], rExpr[], u > :
-            unify<lExpr, rExpr, u>
-    {};
-
-    template<typename lExpr, typename rExpr, typename u>
-    struct unify<lExpr&, rExpr&, u > :
-            unify<lExpr, rExpr, u>
-    {};
-
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
-    template<typename lExpr, typename rExpr, typename u>
-    struct unify<lExpr&&, rExpr&&, u > :
-            unify<lExpr, rExpr, u>
-    {};
-#endif
-
-    template<typename lExpr, typename rExpr, typename u>
-    struct unify<lExpr const, rExpr const, u > :
-            unify<lExpr, rExpr, u>
-    {};
-
-    template<typename lExpr, typename rExpr, typename u>
-    struct unify<lExpr volatile, rExpr volatile, u > :
-            unify<lExpr, rExpr, u>
-    {};
-
-    template<typename lExpr, typename rExpr, typename u>
-    struct unify<lExpr const volatile, rExpr  const volatile, u > :
             unify<lExpr, rExpr, u>
     {};
 }
