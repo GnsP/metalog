@@ -26,7 +26,7 @@ namespace munify
     {};
 
     template<typename u>
-    struct unifiable<boost::mpl::true_, u>:
+    struct unifiable<boost::mpl::true_, u> :
             boost::mpl::true_
     {
         typedef typename boost::mpl::fold
@@ -46,7 +46,7 @@ namespace munify
     };
 
     template<typename u>
-    struct unifiable<boost::mpl::false_, u>:
+    struct unifiable<boost::mpl::false_, u> :
             boost::mpl::false_
     {
         typedef boost::mpl::map<> unifiers;

@@ -27,11 +27,11 @@
 #include <iostream>
 #include <iomanip>
 
-#define MUNIFY_COMPARE_UNIFIERS(EXPECTED, FOUND) \
-    boost::mpl::size<FOUND>::value == boost::mpl::size<EXPECTED>::value && \
+#define MUNIFY_COMPARE_UNIFIERS(EXPECTED, DEDUCED) \
+    boost::mpl::size<DEDUCED>::value == boost::mpl::size<EXPECTED>::value && \
     boost::mpl::fold \
     < \
-        FOUND, \
+        DEDUCED, \
         boost::mpl::true_, \
         boost::mpl::and_ \
         < \
