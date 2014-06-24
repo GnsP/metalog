@@ -4,21 +4,15 @@
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
+include(CompilerUtils)
 include(EnableExtraCompilerWarnings)
 include(DisableCompilerExtensions)
 include(TargetUtils)
-
-function(standard_flag STANDARD RESULT)
-    if(${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" OR ${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
-        set(${RESULT} "-std=c++${STANDARD}" PARENT_SCOPE)
-    endif()
-endfunction()
 
 enable_testing()
 
 globally_disable_compiler_extensions()
 globally_enable_extra_compiler_warnings()
-string(REGEX REPLACE "-Weffc\\+\\+" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
 
 file(GLOB_RECURSE MUNIFY_TEST_HEADERS "*.hpp")
 file(GLOB_RECURSE MUNIFY_TEST_SOURCES "*.cpp")
@@ -26,17 +20,17 @@ file(GLOB_RECURSE MUNIFY_TEST_SOURCES "*.cpp")
 include_directories(${MUNIFY_INCLUDE_DIRS})
 link_directories(${MUNIFY_LIBRARY_DIRS})
 
-set(SUPPORTED_STANDARDS "03;11")
-foreach(STANDARD ${SUPPORTED_STANDARDS})
-    standard_flag(${STANDARD} STANDARD_FLAG)
+set(SUPPORTED_STANDARDS "C++03;C++11")
+foreach(DIALECT ${SUPPORTED_STANDARDS})
+    language_dialect_flags("CXX" ${DIALECT} DIALECT_FLAG)
     foreach(SOURCE ${MUNIFY_TEST_SOURCES})
-        string(REGEX REPLACE ".*[/\\](.*\)[.]cpp" "\\1_test_CXX${STANDARD}" TARGET ${SOURCE})
+        string(REGEX REPLACE ".*[/\\](.*\)[.]cpp" "\\1_test_${DIALECT}" TARGET ${SOURCE})
         add_binary_target(
             EXECUTABLE ${TARGET}
             LANGUAGE "CXX"
             SOURCES ${SOURCE} ${MUNIFY_TEST_HEADERS}
             LIBRARIES ${MUNIFY_LIBRARIES}
-            ADITIONAL_FLAGS ${STANDARD_FLAG}
+            ADITIONAL_FLAGS ${DIALECT_FLAG}
             DEPENDENCIES munify
         )
         add_test(${TARGET} ${CMAKE_CURRENT_BINARY_DIR}/${TARGET})
