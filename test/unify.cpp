@@ -104,9 +104,9 @@ struct rel3;
     ((true )((2, (unify<var<1>*, void*>                                                                     )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, void> >)))) \
     ((true )((2, (unify<var<1>*, var<2> >                                                                   )))((2, (boost::mpl::map<boost::mpl::pair<var<2>, var<1>*> >)))) \
     ((true )((2, (unify<var<1>&, int const&>                                                                )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, int const> >)))) \
-    ((true )((2, (unify<var<1>[], int[]>                                                                    )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, int> >)))) \
+    ((true )((2, (unify<var<1>&, int(&)[]>                                                                  )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, int[]> >)))) \
     ((true )((2, (unify<var<1> const, int const[10]>                                                        )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, int[10]> >)))) \
-    ((true )((2, (unify<var<1>[][5], int[][5][3]>                                                           )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, int[3]> >)))) \
+    ((true )((2, (unify<var<1>(*)[5], int(*)[5][3]>                                                           )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, int[3]> >)))) \
     ((true )((2, (unify<var<1> volatile, void volatile>                                                     )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, void> >)))) \
     ((true )((2, (unify<var<1> volatile const* const volatile, volatile const float* const volatile>        )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, float> >)))) \
     ((true )((2, (unify<const var<1> volatile, var<2> const>                                                )))((2, (boost::mpl::map<boost::mpl::pair<var<2>, var<1> volatile> >)))) \
