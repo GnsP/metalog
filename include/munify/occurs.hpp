@@ -9,6 +9,7 @@
 
 #include "types.hpp"
 #include "substitute.hpp"
+#include "munify/detail/empty.hpp"
 
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/not.hpp>
@@ -18,13 +19,16 @@
 namespace munify
 {
     template<typename lExpr, typename rExpr>
-    struct occurs :
+    struct occurs;
+
+    template<int n, typename expr>
+    struct occurs<var<n>, expr> :
             boost::mpl::not_
             <
                 boost::is_same
                 <
-                    rExpr,
-                    typename boost::mpl::apply_wrap1<substitute<boost::mpl::map<boost::mpl::pair<lExpr, void> > >, rExpr>::type
+                    expr,
+                    typename boost::mpl::apply_wrap1<substitute<boost::mpl::map<boost::mpl::pair<var<n>, detail::empty> > >, expr>::type
                 >
             >
     {};
