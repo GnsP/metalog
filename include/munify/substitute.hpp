@@ -28,14 +28,10 @@ namespace munify
     struct substitute
     {
         template<typename expr>
-        struct apply;
+        struct apply:
+                boost::mpl::identity<expr>
+        {};
     };
-
-    template<typename unifiers>
-    template<typename expr>
-    struct substitute<unifiers>::apply :
-            boost::mpl::identity<expr>
-    {};
 
     template<typename unifiers>
     template<int n>
