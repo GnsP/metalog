@@ -7,8 +7,6 @@
 #ifndef _MUNIFY_UNIFY_MODIFIERS_HPP_
 #define _MUNIFY_UNIFY_MODIFIERS_HPP_
 
-#include "../types.hpp"
-
 #include <boost/config.hpp>
 
 namespace munify

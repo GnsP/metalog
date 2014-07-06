@@ -7,7 +7,6 @@
 #ifndef _MUNIFY_UNIFY_TERMS_HPP_
 #define _MUNIFY_UNIFY_TERMS_HPP_
 
-#include "../types.hpp"
 #include "../detail/preprocessor.hpp"
 
 #include <boost/config.hpp>

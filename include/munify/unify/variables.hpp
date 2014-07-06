@@ -7,7 +7,6 @@
 #ifndef _MUNIFY_UNIFY_VARIABLES_HPP_
 #define _MUNIFY_UNIFY_VARIABLES_HPP_
 
-#include "../types.hpp"
 #include "../detail/empty.hpp"
 
 #include <boost/mpl/bool.hpp>

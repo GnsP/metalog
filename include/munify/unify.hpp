@@ -8,7 +8,6 @@
 #define _MUNIFY_UNIFY_HPP_
 
 #include "types.hpp"
-#include "unifiable.hpp"
 #include "substitute.hpp"
 
 #include <boost/mpl/map.hpp>
