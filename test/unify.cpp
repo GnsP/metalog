@@ -80,6 +80,10 @@ struct rel2;
 template<typename, typename, typename>
 struct rel3;
 
+struct A;
+struct B;
+struct C;
+
 #define TEST_SAMPLES \
     ((false)((2, (unify<int, void>                                                                          )))((1, (boost::mpl::map<>)))) \
     ((false)((4, (unify<rel2<int, int>, rel2<int, int*> >                                                   )))((1, (boost::mpl::map<>)))) \
@@ -88,55 +92,55 @@ struct rel3;
     ((false)((2, (unify<term<int>, rel1<int> >                                                              )))((1, (boost::mpl::map<>)))) \
     ((false)((4, (unify<term<int, int*>, rel2<int, int*> >                                                  )))((1, (boost::mpl::map<>)))) \
     ((false)((6, (unify<term<int, int*, int**>, rel3<int, int*, int**> >                                    )))((1, (boost::mpl::map<>)))) \
-    ((false)((2, (unify<var<1>*, int *const >                                                               )))((1, (boost::mpl::map<>)))) \
-    ((false)((2, (unify<var<1>[1], int[]>                                                                   )))((1, (boost::mpl::map<>)))) \
-    ((false)((2, (unify<var<1>[2][1], int[][2][1]>                                                          )))((1, (boost::mpl::map<>)))) \
+    ((false)((2, (unify<var<A>*, int *const >                                                               )))((1, (boost::mpl::map<>)))) \
+    ((false)((2, (unify<var<A>[1], int[]>                                                                   )))((1, (boost::mpl::map<>)))) \
+    ((false)((2, (unify<var<A>[2][1], int[][2][1]>                                                          )))((1, (boost::mpl::map<>)))) \
     ((false)((2, (unify<int *const, int[]>                                                                  )))((1, (boost::mpl::map<>)))) \
-    ((false)((2, (unify<var<1>, rel1<var<1> > >                                                             )))((1, (boost::mpl::map<>)))) \
-    ((false)((6, (unify<term<var<1>, term<term<int>, var<2> > >, term<term<var<2> >, term<var<1>, char> > > )))((1, (boost::mpl::map<>)))) \
-    ((false)((6, (unify<rel3<var<1>, var<2>, var<3> >, rel3<var<2>, var<3>, rel1<var<1> > > >               )))((1, (boost::mpl::map<>)))) \
+    ((false)((2, (unify<var<A>, rel1<var<A> > >                                                             )))((1, (boost::mpl::map<>)))) \
+    ((false)((6, (unify<term<var<A>, term<term<int>, var<B> > >, term<term<var<B> >, term<var<A>, char> > > )))((1, (boost::mpl::map<>)))) \
+    ((false)((6, (unify<rel3<var<A>, var<B>, var<C> >, rel3<var<B>, var<C>, rel1<var<A> > > >               )))((1, (boost::mpl::map<>)))) \
     ((false)((2, (unify<int, atom<int> >                                                                    )))((1, (boost::mpl::map<>)))) \
     ((false)((2, (unify<atom<int>, atom<int*> >                                                             )))((1, (boost::mpl::map<>)))) \
-    ((false)((2, (unify<atom<var<1> >, atom<int> >                                                          )))((1, (boost::mpl::map<>)))) \
-    ((false)((4, (unify<rel2<int, atom<var<1> > >, rel2<var<1>, atom<int> > >                               )))((1, (boost::mpl::map<>)))) \
+    ((false)((2, (unify<atom<var<A> >, atom<int> >                                                          )))((1, (boost::mpl::map<>)))) \
+    ((false)((4, (unify<rel2<int, atom<var<A> > >, rel2<var<A>, atom<int> > >                               )))((1, (boost::mpl::map<>)))) \
     ((true )((2, (unify<void, void>                                                                         )))((1, (boost::mpl::map<>)))) \
-    ((true )((2, (unify<var<1>, void>                                                                       )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, void> >)))) \
-    ((true )((2, (unify<var<1>*, void*>                                                                     )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, void> >)))) \
-    ((true )((2, (unify<var<1>*, var<2> >                                                                   )))((2, (boost::mpl::map<boost::mpl::pair<var<2>, var<1>*> >)))) \
-    ((true )((2, (unify<var<1>&, int const&>                                                                )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, int const> >)))) \
-    ((true )((2, (unify<var<1>&, int(&)[]>                                                                  )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, int[]> >)))) \
-    ((true )((2, (unify<var<1> const, int const[10]>                                                        )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, int[10]> >)))) \
-    ((true )((2, (unify<var<1>(*)[5], int(*)[5][3]>                                                           )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, int[3]> >)))) \
-    ((true )((2, (unify<var<1> volatile, void volatile>                                                     )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, void> >)))) \
-    ((true )((2, (unify<var<1> volatile const* const volatile, volatile const float* const volatile>        )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, float> >)))) \
-    ((true )((2, (unify<const var<1> volatile, var<2> const>                                                )))((2, (boost::mpl::map<boost::mpl::pair<var<2>, var<1> volatile> >)))) \
-    ((true )((2, (unify<var<1>, var<1> >                                                                    )))((1, (boost::mpl::map<>)))) \
-    ((true )((2, (unify<var<1>, var<2> >                                                                    )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, var<2> > >)))) \
-    ((true )((3, (unify<var<1>, term<int, int*> >                                                           )))((3, (boost::mpl::map<boost::mpl::pair<var<1>, term<int, int*> > >)))) \
+    ((true )((2, (unify<var<A>, void>                                                                       )))((2, (boost::mpl::map<boost::mpl::pair<var<A>, void> >)))) \
+    ((true )((2, (unify<var<A>*, void*>                                                                     )))((2, (boost::mpl::map<boost::mpl::pair<var<A>, void> >)))) \
+    ((true )((2, (unify<var<A>*, var<B> >                                                                   )))((2, (boost::mpl::map<boost::mpl::pair<var<B>, var<A>*> >)))) \
+    ((true )((2, (unify<var<A>&, int const&>                                                                )))((2, (boost::mpl::map<boost::mpl::pair<var<A>, int const> >)))) \
+    ((true )((2, (unify<var<A>&, int(&)[]>                                                                  )))((2, (boost::mpl::map<boost::mpl::pair<var<A>, int[]> >)))) \
+    ((true )((2, (unify<var<A> const, int const[10]>                                                        )))((2, (boost::mpl::map<boost::mpl::pair<var<A>, int[10]> >)))) \
+    ((true )((2, (unify<var<A>(*)[5], int(*)[5][3]>                                                           )))((2, (boost::mpl::map<boost::mpl::pair<var<A>, int[3]> >)))) \
+    ((true )((2, (unify<var<A> volatile, void volatile>                                                     )))((2, (boost::mpl::map<boost::mpl::pair<var<A>, void> >)))) \
+    ((true )((2, (unify<var<A> volatile const* const volatile, volatile const float* const volatile>        )))((2, (boost::mpl::map<boost::mpl::pair<var<A>, float> >)))) \
+    ((true )((2, (unify<const var<A> volatile, var<B> const>                                                )))((2, (boost::mpl::map<boost::mpl::pair<var<B>, var<A> volatile> >)))) \
+    ((true )((2, (unify<var<A>, var<A> >                                                                    )))((1, (boost::mpl::map<>)))) \
+    ((true )((2, (unify<var<A>, var<B> >                                                                    )))((2, (boost::mpl::map<boost::mpl::pair<var<A>, var<B> > >)))) \
+    ((true )((3, (unify<var<A>, term<int, int*> >                                                           )))((3, (boost::mpl::map<boost::mpl::pair<var<A>, term<int, int*> > >)))) \
     ((true )((2, (unify<term<int>, term<int> >                                                              )))((1, (boost::mpl::map<>)))) \
     ((true )((4, (unify<term<int, int*>, term<int, int*> >                                                  )))((1, (boost::mpl::map<>)))) \
     ((true )((4, (unify<term<term<int, int*> >, term<term<int, int*> > >                                    )))((1, (boost::mpl::map<>)))) \
     ((true )((8, (unify<term<int*, int[], int[1], int&>, term<int*, int[], int[1], int&> >                  )))((1, (boost::mpl::map<>)))) \
-    ((true )((4, (unify<term<var<1>, var<2> >, term<int, int*> >                                            )))((4, (boost::mpl::map<boost::mpl::pair<var<1>, int>, boost::mpl::pair<var<2>, int*> >)))) \
-    ((true )((4, (unify<term<int, var<1> >, term<int, int*> >                                               )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, int*> >)))) \
-    ((true )((4, (unify<term<var<1>, var<1>*>, term<int, int*> >                                            )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, int> >)))) \
-    ((true )((4, (unify<term<var<1>, var<2> >, term<var<2>, int> >                                          )))((4, (boost::mpl::map<boost::mpl::pair<var<1>, int>, boost::mpl::pair<var<2>, int> >)))) \
-    ((true )((6, (unify<term<var<1>, term<term<int>, var<2> > >, term<term<var<2> >, term<var<1>, int> > >  )))((4, (boost::mpl::map<boost::mpl::pair<var<1>, term<int> >, boost::mpl::pair<var<2>, int> >)))) \
+    ((true )((4, (unify<term<var<A>, var<B> >, term<int, int*> >                                            )))((4, (boost::mpl::map<boost::mpl::pair<var<A>, int>, boost::mpl::pair<var<B>, int*> >)))) \
+    ((true )((4, (unify<term<int, var<A> >, term<int, int*> >                                               )))((2, (boost::mpl::map<boost::mpl::pair<var<A>, int*> >)))) \
+    ((true )((4, (unify<term<var<A>, var<A>*>, term<int, int*> >                                            )))((2, (boost::mpl::map<boost::mpl::pair<var<A>, int> >)))) \
+    ((true )((4, (unify<term<var<A>, var<B> >, term<var<B>, int> >                                          )))((4, (boost::mpl::map<boost::mpl::pair<var<A>, int>, boost::mpl::pair<var<B>, int> >)))) \
+    ((true )((6, (unify<term<var<A>, term<term<int>, var<B> > >, term<term<var<B> >, term<var<A>, int> > >  )))((4, (boost::mpl::map<boost::mpl::pair<var<A>, term<int> >, boost::mpl::pair<var<B>, int> >)))) \
     ((true )((2, (unify<rel1<int>, rel1<int> >                                                              )))((1, (boost::mpl::map<>)))) \
     ((true )((4, (unify<rel2<int, int*>, rel2<int, int*> >                                                  )))((1, (boost::mpl::map<>)))) \
-    ((true )((4, (unify<rel1<term<int, var<1>*> >, rel1<term<int, int**> > >                                )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, int*> >)))) \
-    ((true )((2, (unify<rel1<var<1> >, rel1<int> >                                                          )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, int> >)))) \
-    ((true )((4, (unify<rel2<var<1>, var<2> >, rel2<int, int*> >                                            )))((4, (boost::mpl::map<boost::mpl::pair<var<1>, int>, boost::mpl::pair<var<2>, int*> >)))) \
-    ((true )((4, (unify<rel2<int, var<1> >, rel2<int, int*> >                                               )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, int*> >)))) \
-    ((true )((4, (unify<rel2<var<1>, var<1>*>, rel2<int, int*> >                                            )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, int> >)))) \
-    ((true )((4, (unify<rel2<var<1>, var<2> >, rel2<var<2>, int> >                                          )))((4, (boost::mpl::map<boost::mpl::pair<var<1>, int>, boost::mpl::pair<var<2>, int> >)))) \
-    ((true )((6, (unify<rel3<int, var<1>, var<2> >, rel3<int, var<2>, int> >                                )))((4, (boost::mpl::map<boost::mpl::pair<var<1>, int>, boost::mpl::pair<var<2>, int> >)))) \
-    ((true )((6, (unify<rel3<var<1>, var<2>, var<3> >, rel3<var<2>, var<3>, int> >                          )))((6, (boost::mpl::map<boost::mpl::pair<var<1>, int>, boost::mpl::pair<var<2>, int>, boost::mpl::pair<var<3>, int> >)))) \
-    ((true )((6, (unify<rel3<var<1>, var<1>, var<3> >, rel3<int, var<3>, var<2> > >                         )))((6, (boost::mpl::map<boost::mpl::pair<var<1>, int>, boost::mpl::pair<var<2>, int>, boost::mpl::pair<var<3>, int> >)))) \
-    ((true )((6, (unify<rel3<var<1>, var<3>, var<2> >, rel3<var<2>, int, var<3> > >                         )))((6, (boost::mpl::map<boost::mpl::pair<var<1>, int>, boost::mpl::pair<var<2>, int>, boost::mpl::pair<var<3>, int> >)))) \
-    ((true )((6, (unify<rel2<var<1>, rel2<rel1<int>, var<2> > >, rel2<rel1<var<2> >, rel2<var<1>, int> > >  )))((4, (boost::mpl::map<boost::mpl::pair<var<1>, rel1<int> >, boost::mpl::pair<var<2>, int> >)))) \
+    ((true )((4, (unify<rel1<term<int, var<A>*> >, rel1<term<int, int**> > >                                )))((2, (boost::mpl::map<boost::mpl::pair<var<A>, int*> >)))) \
+    ((true )((2, (unify<rel1<var<A> >, rel1<int> >                                                          )))((2, (boost::mpl::map<boost::mpl::pair<var<A>, int> >)))) \
+    ((true )((4, (unify<rel2<var<A>, var<B> >, rel2<int, int*> >                                            )))((4, (boost::mpl::map<boost::mpl::pair<var<A>, int>, boost::mpl::pair<var<B>, int*> >)))) \
+    ((true )((4, (unify<rel2<int, var<A> >, rel2<int, int*> >                                               )))((2, (boost::mpl::map<boost::mpl::pair<var<A>, int*> >)))) \
+    ((true )((4, (unify<rel2<var<A>, var<A>*>, rel2<int, int*> >                                            )))((2, (boost::mpl::map<boost::mpl::pair<var<A>, int> >)))) \
+    ((true )((4, (unify<rel2<var<A>, var<B> >, rel2<var<B>, int> >                                          )))((4, (boost::mpl::map<boost::mpl::pair<var<A>, int>, boost::mpl::pair<var<B>, int> >)))) \
+    ((true )((6, (unify<rel3<int, var<A>, var<B> >, rel3<int, var<B>, int> >                                )))((4, (boost::mpl::map<boost::mpl::pair<var<A>, int>, boost::mpl::pair<var<B>, int> >)))) \
+    ((true )((6, (unify<rel3<var<A>, var<B>, var<C> >, rel3<var<B>, var<C>, int> >                          )))((6, (boost::mpl::map<boost::mpl::pair<var<A>, int>, boost::mpl::pair<var<B>, int>, boost::mpl::pair<var<C>, int> >)))) \
+    ((true )((6, (unify<rel3<var<A>, var<A>, var<C> >, rel3<int, var<C>, var<B> > >                         )))((6, (boost::mpl::map<boost::mpl::pair<var<A>, int>, boost::mpl::pair<var<B>, int>, boost::mpl::pair<var<C>, int> >)))) \
+    ((true )((6, (unify<rel3<var<A>, var<C>, var<B> >, rel3<var<B>, int, var<C> > >                         )))((6, (boost::mpl::map<boost::mpl::pair<var<A>, int>, boost::mpl::pair<var<B>, int>, boost::mpl::pair<var<C>, int> >)))) \
+    ((true )((6, (unify<rel2<var<A>, rel2<rel1<int>, var<B> > >, rel2<rel1<var<B> >, rel2<var<A>, int> > >  )))((4, (boost::mpl::map<boost::mpl::pair<var<A>, rel1<int> >, boost::mpl::pair<var<B>, int> >)))) \
     ((true )((2, (unify<atom<int>, atom<int> >                                                              )))((1, (boost::mpl::map<>)))) \
-    ((true )((2, (unify<var<1>, atom<var<1> > >                                                             )))((2, (boost::mpl::map<boost::mpl::pair<var<1>, atom<var<1> > > >)))) \
+    ((true )((2, (unify<var<A>, atom<var<A> > >                                                             )))((2, (boost::mpl::map<boost::mpl::pair<var<A>, atom<var<A> > > >)))) \
 
 
 int main()

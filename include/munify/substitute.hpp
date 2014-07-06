@@ -40,7 +40,7 @@ namespace munify
     {};
 
     template<typename unifiers>
-    template<int n>
+    template<typename n>
     class substitute<unifiers>::apply<var<n> >
     {
     private:

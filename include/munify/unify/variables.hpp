@@ -19,7 +19,7 @@
 
 namespace munify
 {
-    template<int n, typename expr, typename u>
+    template<typename n, typename expr, typename u>
     struct unify<var<n>, expr, u> :
             boost::mpl::if_
             <
@@ -34,12 +34,12 @@ namespace munify
             >::type
     {};
 
-    template<int n, typename expr, typename u>
+    template<typename n, typename expr, typename u>
     struct unify<expr, var<n>, u> :
             unify<var<n>, expr, u>
     {};
 
-    template<int m, int n, typename u>
+    template<typename m, typename n, typename u>
     struct unify<var<m>, var<n>, u> :
             boost::mpl::if_
             <
@@ -49,7 +49,7 @@ namespace munify
             >::type
     {};
 
-    template<int n, typename u>
+    template<typename n, typename u>
     struct unify<var<n>, var<n>, u> :
             unify<atom<var<n> >, atom<var<n> >, u>
     {};

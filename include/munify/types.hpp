@@ -15,14 +15,14 @@
 namespace munify
 {
     /**
-     * Any expression wrapped by atom<> is considered to be a constant for the purpose of unification,
-     * i.e. the unification of atom<A> with atom<B> succeeds iff A is literally equal to B,
-     * regardless of variable substitutions or unwrapping of terms.
+     * An atom is considered to be a constant for the purpose of unification.
+     * The unification of atom<A> with atom<B> succeeds iff A is literally equal to B,
+     * regardless of variable substitutions.
      */
     template<typename>
     struct atom;
 
-    template<int n>
+    template<typename>
     struct var;
 
     template<typename, MUNIFY_VARIADIC_PARAMS_DECLARATION(BOOST_PP_SUB(MUNIFY_MAX_VARIADIC_ARGS, 1), _)>
