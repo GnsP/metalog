@@ -10,16 +10,14 @@
 #include "types.hpp"
 #include "unifiable.hpp"
 #include "substitute.hpp"
-#include "occurs.hpp"
 
 #include <boost/mpl/map.hpp>
-#include <boost/type_traits.hpp>
 
 namespace munify
 {
     template<typename lExpr, typename rExpr, typename u = boost::mpl::map<> >
     struct unify :
-            unifiable<boost::is_same<lExpr, rExpr>, u>
+            unify<atom<lExpr>, atom<rExpr>, u>
     {};
 }
 
@@ -27,6 +25,5 @@ namespace munify
 #include "unify/atoms.hpp"
 #include "unify/variables.hpp"
 #include "unify/terms.hpp"
-
 
 #endif

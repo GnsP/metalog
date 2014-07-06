@@ -8,6 +8,7 @@
 #define _MUNIFY_UNIFY_VARIABLES_HPP_
 
 #include "../types.hpp"
+#include "../detail/empty.hpp"
 
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/pair.hpp>
@@ -25,9 +26,10 @@ namespace munify
             <
                 boost::mpl::has_key<u, var<n> >,
                 unify<typename boost::mpl::apply_wrap1<substitute<u>, var<n> >::type, typename boost::mpl::apply_wrap1<substitute<u>, expr>::type, u>,
-                unifiable
+                unify //occurs check
                 <
-                    boost::mpl::not_<occurs<var<n>, typename boost::mpl::apply_wrap1<substitute<u>, expr>::type> >,
+                    atom<typename boost::mpl::apply_wrap1<substitute<u>, expr>::type>,
+                    atom<typename boost::mpl::apply_wrap1<substitute<typename boost::mpl::insert<u, boost::mpl::pair<var<n>, detail::_> >::type>, expr>::type>,
                     typename boost::mpl::insert<u, boost::mpl::pair<var<n>, expr> >::type
                 >
             >::type
@@ -44,13 +46,13 @@ namespace munify
             <
                 boost::mpl::or_<boost::mpl::has_key<u, var<m> >, boost::mpl::has_key<u, var<n> > >,
                 unify<typename boost::mpl::apply_wrap1<substitute<u>, var<m> >::type, typename boost::mpl::apply_wrap1<substitute<u>, var<n> >::type, u>,
-                unifiable<boost::mpl::true_, typename boost::mpl::insert<u, boost::mpl::pair<var<m>, var<n> > >::type>
+                unify<var<n>, var<n>, typename boost::mpl::insert<u, boost::mpl::pair<var<m>, var<n> > >::type>
             >::type
     {};
 
     template<int n, typename u>
     struct unify<var<n>, var<n>, u> :
-            unifiable<boost::mpl::true_, u>
+            unify<atom<var<n> >, atom<var<n> >, u>
     {};
 }
 

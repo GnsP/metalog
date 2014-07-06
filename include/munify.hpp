@@ -6,7 +6,6 @@
 
 #include "munify/types.hpp"
 #include "munify/substitute.hpp"
-#include "munify/occurs.hpp"
 #include "munify/unify.hpp"
 
 
