@@ -34,6 +34,12 @@ namespace munify
     };
 
     template<typename unifiers>
+    template<typename expr>
+    struct substitute<unifiers>::apply<atom<expr> > :
+            boost::mpl::identity<atom<expr> >
+    {};
+
+    template<typename unifiers>
     template<int n>
     class substitute<unifiers>::apply<var<n> >
     {
@@ -57,12 +63,6 @@ namespace munify
             boost::mpl::apply_wrap1<substitute<unifiers>, lookup>
         >::type type;
     };
-
-    template<typename unifiers>
-    template<typename expr>
-    struct substitute<unifiers>::apply<atom<expr> > :
-            boost::mpl::identity<atom<expr> >
-    {};
 
 #define MUNIFY_FORWARD_SUBSTITUTION_TO_ARG(ARG) \
     typename boost::mpl::apply_wrap1<substitute<unifiers>, ARG>::type

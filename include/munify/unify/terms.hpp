@@ -8,7 +8,7 @@
 #define _MUNIFY_UNIFY_TERMS_HPP_
 
 #include "../types.hpp"
-#include "munify/detail/preprocessor.hpp"
+#include "../detail/preprocessor.hpp"
 
 #include <boost/config.hpp>
 #include <boost/preprocessor/debug/assert.hpp>
@@ -26,8 +26,7 @@ namespace munify
     {};
 
     template<typename lExpr, typename rExpr, typename u>
-    struct
-            unify
+    struct unify
             <
                 term<lExpr MUNIFY_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(MUNIFY_MAX_VARIADIC_ARGS, 1))>,
                 term<rExpr MUNIFY_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(MUNIFY_MAX_VARIADIC_ARGS, 1))>,
