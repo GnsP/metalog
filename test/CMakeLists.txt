@@ -22,7 +22,7 @@ link_directories(${MUNIFY_LIBRARY_DIRS})
 
 set(SUPPORTED_STANDARDS "C++03;C++11")
 foreach(DIALECT ${SUPPORTED_STANDARDS})
-    language_dialect_flags("CXX" ${DIALECT} DIALECT_FLAG)
+    language_dialect_flags("CXX" ${DIALECT} DIALECT_FLAGS)
     foreach(SOURCE ${MUNIFY_TEST_SOURCES})
         string(REGEX REPLACE ".*[/\\](.*\)[.]cpp" "\\1_test_${DIALECT}" TARGET ${SOURCE})
         add_binary_target(
@@ -30,7 +30,7 @@ foreach(DIALECT ${SUPPORTED_STANDARDS})
             LANGUAGE "CXX"
             SOURCES ${SOURCE} ${MUNIFY_TEST_HEADERS}
             LIBRARIES ${MUNIFY_LIBRARIES}
-            ADITIONAL_FLAGS ${DIALECT_FLAG}
+            ADITIONAL_FLAGS ${DIALECT_FLAGS}
             DEPENDENCIES munify
         )
         add_test(${TARGET} ${CMAKE_CURRENT_BINARY_DIR}/${TARGET})
