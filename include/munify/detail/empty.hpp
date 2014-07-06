@@ -11,7 +11,7 @@ namespace munify
 {
     namespace detail
     {
-        struct empty;
+        struct _;
     }
 }
 

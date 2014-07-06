@@ -9,7 +9,7 @@
 
 #include "types.hpp"
 #include "substitute.hpp"
-#include "munify/detail/empty.hpp"
+#include "detail/empty.hpp"
 
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/not.hpp>
@@ -28,7 +28,7 @@ namespace munify
                 boost::is_same
                 <
                     expr,
-                    typename boost::mpl::apply_wrap1<substitute<boost::mpl::map<boost::mpl::pair<var<n>, detail::empty> > >, expr>::type
+                    typename boost::mpl::apply_wrap1<substitute<boost::mpl::map<boost::mpl::pair<var<n>, detail::_> > >, expr>::type
                 >
             >
     {};
