@@ -4,6 +4,7 @@
  * See accompanying file LICENSE.txt for its full text.
  */
 
+#define MUNIFY_MAX_VARIADIC_ARGS 4
 #include "munify/unify.hpp"
 
 #include <boost/bind.hpp>
@@ -110,7 +111,7 @@ struct C;
     ((true )((2, (unify<var<A>&, int const&>                                                                )))((2, (boost::mpl::map<boost::mpl::pair<var<A>, int const> >)))) \
     ((true )((2, (unify<var<A>&, int(&)[]>                                                                  )))((2, (boost::mpl::map<boost::mpl::pair<var<A>, int[]> >)))) \
     ((true )((2, (unify<var<A> const, int const[10]>                                                        )))((2, (boost::mpl::map<boost::mpl::pair<var<A>, int[10]> >)))) \
-    ((true )((2, (unify<var<A>(*)[5], int(*)[5][3]>                                                           )))((2, (boost::mpl::map<boost::mpl::pair<var<A>, int[3]> >)))) \
+    ((true )((2, (unify<var<A>(*)[5], int(*)[5][3]>                                                         )))((2, (boost::mpl::map<boost::mpl::pair<var<A>, int[3]> >)))) \
     ((true )((2, (unify<var<A> volatile, void volatile>                                                     )))((2, (boost::mpl::map<boost::mpl::pair<var<A>, void> >)))) \
     ((true )((2, (unify<var<A> volatile const* const volatile, volatile const float* const volatile>        )))((2, (boost::mpl::map<boost::mpl::pair<var<A>, float> >)))) \
     ((true )((2, (unify<const var<A> volatile, var<B> const>                                                )))((2, (boost::mpl::map<boost::mpl::pair<var<B>, var<A> volatile> >)))) \

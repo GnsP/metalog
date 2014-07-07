@@ -12,7 +12,9 @@
 #include <boost/preprocessor/comparison/less_equal.hpp>
 #include <boost/preprocessor/comma_if.hpp>
 
-#define MUNIFY_MAX_VARIADIC_ARGS 8
+#ifndef MUNIFY_MAX_VARIADIC_ARGS
+#define MUNIFY_MAX_VARIADIC_ARGS 16
+#endif
 
 #ifdef BOOST_NO_CXX11_VARIADIC_TEMPLATES
 
