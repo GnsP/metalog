@@ -1,11 +1,11 @@
 /*
- * This file is part of munify, a free software.
+ * This file is part of metalog, a free software.
  * Use, modification and distribution is subject to the BSD 2-clause license.
  * See accompanying file LICENSE.txt for its full text.
  */
 
-#ifndef _MUNIFY_UNIFY_VARIABLES_HPP_
-#define _MUNIFY_UNIFY_VARIABLES_HPP_
+#ifndef _METALOG_UNIFY_VARIABLES_HPP_
+#define _METALOG_UNIFY_VARIABLES_HPP_
 
 #include "../detail/empty.hpp"
 
@@ -17,7 +17,7 @@
 #include <boost/mpl/or.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 
-namespace munify
+namespace metalog
 {
     template<typename n, typename expr, typename u>
     struct unify<var<n>, expr, u> :

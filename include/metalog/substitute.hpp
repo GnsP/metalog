@@ -1,11 +1,11 @@
 /*
- * This file is part of munify, a free software.
+ * This file is part of metalog, a free software.
  * Use, modification and distribution is subject to the BSD 2-clause license.
  * See accompanying file LICENSE.txt for its full text.
  */
 
-#ifndef _MUNIFY_SUBSTITUTE_HPP_
-#define _MUNIFY_SUBSTITUTE_HPP_
+#ifndef _METALOG_SUBSTITUTE_HPP_
+#define _METALOG_SUBSTITUTE_HPP_
 
 #include "types.hpp"
 #include "detail/preprocessor.hpp"
@@ -22,7 +22,7 @@
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/type_traits.hpp>
 
-namespace munify
+namespace metalog
 {
     template<typename unifiers>
     struct substitute
@@ -64,29 +64,29 @@ namespace munify
         >::type type;
     };
 
-#define MUNIFY_FORWARD_SUBSTITUTION_TO_ARG(ARG) \
+#define METALOG_FORWARD_SUBSTITUTION_TO_ARG(ARG) \
     typename boost::mpl::apply_wrap1<substitute<unifiers>, ARG>::type
 
-#define MUNIFY_DEFINE_TERM_SUBSTITUTION(N) \
+#define METALOG_DEFINE_TERM_SUBSTITUTION(N) \
     BOOST_PP_ASSERT(BOOST_PP_LESS_EQUAL(1, N)) \
     template<typename unifiers> \
-    template<template<MUNIFY_VARIADIC_PARAMS(N, _)> class term, typename hExpr MUNIFY_TRAILING_VARIADIC_PARAMS(BOOST_PP_SUB(N, 1), tExpr)> \
-    struct substitute<unifiers>::apply<term<hExpr MUNIFY_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(N, 1), tExpr)> > : \
+    template<template<METALOG_VARIADIC_PARAMS(N, _)> class term, typename hExpr METALOG_TRAILING_VARIADIC_PARAMS(BOOST_PP_SUB(N, 1), tExpr)> \
+    struct substitute<unifiers>::apply<term<hExpr METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(N, 1), tExpr)> > : \
             boost::mpl::identity \
             < \
-                term<MUNIFY_FORWARD_SUBSTITUTION_TO_ARG(hExpr) MUNIFY_FOR_EACH_TRAILING_VARIADIC_ARG(BOOST_PP_SUB(N, 1), tExpr, MUNIFY_FORWARD_SUBSTITUTION_TO_ARG)> \
+                term<METALOG_FORWARD_SUBSTITUTION_TO_ARG(hExpr) METALOG_FOR_EACH_TRAILING_VARIADIC_ARG(BOOST_PP_SUB(N, 1), tExpr, METALOG_FORWARD_SUBSTITUTION_TO_ARG)> \
             > \
     {};
 
 #ifdef BOOST_NO_CXX11_VARIADIC_TEMPLATES
 
-#define MUNIFY_FORWARD_DEFINE_TERM_SUBSTITUTION(Z, N, DATA) \
-    MUNIFY_DEFINE_TERM_SUBSTITUTION(N)
+#define METALOG_FORWARD_DEFINE_TERM_SUBSTITUTION(Z, N, DATA) \
+    METALOG_DEFINE_TERM_SUBSTITUTION(N)
 
-    BOOST_PP_REPEAT_FROM_TO(1, MUNIFY_MAX_VARIADIC_ARGS, MUNIFY_FORWARD_DEFINE_TERM_SUBSTITUTION, _)
+    BOOST_PP_REPEAT_FROM_TO(1, METALOG_MAX_VARIADIC_ARGS, METALOG_FORWARD_DEFINE_TERM_SUBSTITUTION, _)
 #endif
 
-MUNIFY_DEFINE_TERM_SUBSTITUTION(MUNIFY_MAX_VARIADIC_ARGS)
+METALOG_DEFINE_TERM_SUBSTITUTION(METALOG_MAX_VARIADIC_ARGS)
 
 }
 

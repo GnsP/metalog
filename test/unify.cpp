@@ -1,11 +1,11 @@
 /*
- * This file is part of munify, a free software.
+ * This file is part of metalog, a free software.
  * Use, modification and distribution is subject to the BSD 2-clause license.
  * See accompanying file LICENSE.txt for its full text.
  */
 
-#define MUNIFY_MAX_VARIADIC_ARGS 4
-#include "munify/unify.hpp"
+#define METALOG_MAX_VARIADIC_ARGS 4
+#include "metalog/unify.hpp"
 
 #include <boost/bind.hpp>
 
@@ -28,7 +28,7 @@
 #include <iostream>
 #include <iomanip>
 
-#define MUNIFY_COMPARE_UNIFIERS(EXPECTED, DEDUCED) \
+#define METALOG_COMPARE_UNIFIERS(EXPECTED, DEDUCED) \
     boost::mpl::size<DEDUCED>::value == boost::mpl::size<EXPECTED>::value && \
     boost::mpl::fold \
     < \
@@ -49,12 +49,12 @@
         > \
     >::type::value
 
-#define MUNIFY_CHECK_UNIFICATION(ASSERTION) \
+#define METALOG_CHECK_UNIFICATION(ASSERTION) \
     ( \
         std::cout << std::endl << BOOST_PP_STRINGIZE((BOOST_PP_ARRAY_ENUM(BOOST_PP_SEQ_ELEM(1, ASSERTION)))), \
         ( \
             BOOST_PP_SEQ_ELEM(0, ASSERTION) == BOOST_PP_ARRAY_ENUM(BOOST_PP_SEQ_ELEM(1, ASSERTION))::value && \
-            MUNIFY_COMPARE_UNIFIERS \
+            METALOG_COMPARE_UNIFIERS \
             ( \
                 BOOST_PP_ARRAY_ENUM(BOOST_PP_SEQ_ELEM(2, ASSERTION)), \
                 BOOST_PP_ARRAY_ENUM(BOOST_PP_SEQ_ELEM(1, ASSERTION))::unifiers \
@@ -66,11 +66,11 @@
         ) \
     )
 
-#define MUNIFY_FORWARD_CHECK(Z, N, ASSERTIONS) \
-    BOOST_PP_COMMA_IF(N) MUNIFY_CHECK_UNIFICATION(BOOST_PP_SEQ_ELEM(N, ASSERTIONS))
+#define METALOG_FORWARD_CHECK(Z, N, ASSERTIONS) \
+    BOOST_PP_COMMA_IF(N) METALOG_CHECK_UNIFICATION(BOOST_PP_SEQ_ELEM(N, ASSERTIONS))
 
-#define MUNIFY_CHECK_ALL(ASSERTIONS) \
-    BOOST_PP_REPEAT(BOOST_PP_SEQ_SIZE(ASSERTIONS), MUNIFY_FORWARD_CHECK, ASSERTIONS)
+#define METALOG_CHECK_ALL(ASSERTIONS) \
+    BOOST_PP_REPEAT(BOOST_PP_SEQ_SIZE(ASSERTIONS), METALOG_FORWARD_CHECK, ASSERTIONS)
 
 template<typename>
 struct rel1;
@@ -146,8 +146,8 @@ struct C;
 
 int main()
 {
-    using namespace munify;
-    bool const results[] = {MUNIFY_CHECK_ALL(TEST_SAMPLES)};
+    using namespace metalog;
+    bool const results[] = {METALOG_CHECK_ALL(TEST_SAMPLES)};
 
     std::cout << std::endl;
 

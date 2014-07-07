@@ -1,4 +1,4 @@
-# This file is part of munify, a free software.
+# This file is part of metalog, a free software.
 # Use, modification and distribution is subject to the BSD 2-clause license.
 # See accompanying file LICENSE.txt for its full text.
 
@@ -14,24 +14,24 @@ enable_testing()
 globally_disable_compiler_extensions()
 globally_enable_extra_compiler_warnings()
 
-file(GLOB_RECURSE MUNIFY_TEST_HEADERS "*.hpp")
-file(GLOB_RECURSE MUNIFY_TEST_SOURCES "*.cpp")
+file(GLOB_RECURSE METALOG_TEST_HEADERS "*.hpp")
+file(GLOB_RECURSE METALOG_TEST_SOURCES "*.cpp")
 
-include_directories(${MUNIFY_INCLUDE_DIRS})
-link_directories(${MUNIFY_LIBRARY_DIRS})
+include_directories(${METALOG_INCLUDE_DIRS})
+link_directories(${METALOG_LIBRARY_DIRS})
 
 set(SUPPORTED_STANDARDS "C++03;C++11")
 foreach(DIALECT ${SUPPORTED_STANDARDS})
     language_dialect_flags("CXX" ${DIALECT} DIALECT_FLAGS)
-    foreach(SOURCE ${MUNIFY_TEST_SOURCES})
+    foreach(SOURCE ${METALOG_TEST_SOURCES})
         string(REGEX REPLACE ".*[/\\](.*\)[.]cpp" "\\1_test_${DIALECT}" TARGET ${SOURCE})
         add_binary_target(
             EXECUTABLE ${TARGET}
             LANGUAGE "CXX"
-            SOURCES ${SOURCE} ${MUNIFY_TEST_HEADERS}
-            LIBRARIES ${MUNIFY_LIBRARIES}
+            SOURCES ${SOURCE} ${METALOG_TEST_HEADERS}
+            LIBRARIES ${METALOG_LIBRARIES}
             ADITIONAL_FLAGS ${DIALECT_FLAGS}
-            DEPENDENCIES munify
+            DEPENDENCIES metalog
         )
         add_test(${TARGET} ${CMAKE_CURRENT_BINARY_DIR}/${TARGET})
     endforeach()
