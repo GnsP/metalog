@@ -5,7 +5,7 @@
  */
 
 #define METALOG_MAX_VARIADIC_ARGS 4
-#include "metalog/unify.hpp"
+#include "metalog.hpp"
 
 #include <boost/bind.hpp>
 
