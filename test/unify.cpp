@@ -6,6 +6,7 @@
 
 #define METALOG_MAX_VARIADIC_ARGS 4
 #include "metalog/unify.hpp"
+#include "metalog/detail/preprocessor.hpp"
 
 #include <boost/bind.hpp>
 
@@ -72,13 +73,13 @@
 #define METALOG_CHECK_ALL(ASSERTIONS) \
     BOOST_PP_REPEAT(BOOST_PP_SEQ_SIZE(ASSERTIONS), METALOG_FORWARD_CHECK, ASSERTIONS)
 
-template<typename>
+template<METALOG_VARIADIC_PARAMS(1, _)>
 struct rel1;
 
 template<typename, typename>
 struct rel2;
 
-template<typename, typename, typename>
+template<METALOG_VARIADIC_PARAMS(3, _)>
 struct rel3;
 
 struct A;
