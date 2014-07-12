@@ -5,13 +5,10 @@
  */
 
 #define METALOG_MAX_VARIADIC_ARGS 4
-#include "metalog/unify.hpp"
+#include "metalog.hpp"
 #include "metalog/detail/preprocessor.hpp"
 
 #include <boost/bind.hpp>
-
-#include <boost/mpl/size.hpp>
-#include <boost/mpl/logical.hpp>
 
 #include <boost/preprocessor/seq/elem.hpp>
 #include <boost/preprocessor/seq/size.hpp>
@@ -29,41 +26,40 @@
 #include <iostream>
 #include <iomanip>
 
-#define METALOG_COMPARE_UNIFIERS(EXPECTED, DEDUCED) \
-    boost::mpl::size<DEDUCED>::value == boost::mpl::size<EXPECTED>::value && \
-    boost::mpl::fold \
-    < \
-        DEDUCED, \
-        boost::mpl::true_, \
-        boost::mpl::and_ \
-        < \
-            boost::mpl::_1, \
-            boost::mpl::and_ \
-            < \
-                boost::mpl::has_key<EXPECTED, boost::mpl::first<boost::mpl::_2> >, \
-                boost::is_same \
-                < \
-                    boost::mpl::at<EXPECTED, boost::mpl::first<boost::mpl::_2> >, \
-                    boost::mpl::second<boost::mpl::_2> \
-                > \
-            > \
-        > \
-    >::type::value
-
 #define METALOG_CHECK_UNIFICATION(ASSERTION) \
     ( \
-        std::cout << std::endl << BOOST_PP_STRINGIZE((BOOST_PP_ARRAY_ENUM(BOOST_PP_SEQ_ELEM(1, ASSERTION)))), \
+        std::cout << std::endl << std::setw(120) << std::left << BOOST_PP_STRINGIZE((BOOST_PP_ARRAY_ENUM(BOOST_PP_SEQ_ELEM(1, ASSERTION)))), \
         ( \
-            BOOST_PP_SEQ_ELEM(0, ASSERTION) == BOOST_PP_ARRAY_ENUM(BOOST_PP_SEQ_ELEM(1, ASSERTION))::value && \
-            METALOG_COMPARE_UNIFIERS \
             ( \
-                BOOST_PP_ARRAY_ENUM(BOOST_PP_SEQ_ELEM(2, ASSERTION)), \
-                BOOST_PP_ARRAY_ENUM(BOOST_PP_SEQ_ELEM(1, ASSERTION))::unifiers \
+                ( \
+                    BOOST_PP_SEQ_ELEM(0, ASSERTION) == BOOST_PP_ARRAY_ENUM(BOOST_PP_SEQ_ELEM(1, ASSERTION))::value \
+                    ? true \
+                    : \
+                    ( \
+                        std::cout << std::endl << std::setw(120) << std::left \
+                                  << std::string("    ::value != ") + BOOST_PP_STRINGIZE(BOOST_PP_SEQ_ELEM(0, ASSERTION)) \
+                                  << "[FAILED]", \
+                        false \
+                    ) \
+                ) && \
+                ( \
+                    metalog::equivalent \
+                    < \
+                        BOOST_PP_ARRAY_ENUM(BOOST_PP_SEQ_ELEM(2, ASSERTION)), \
+                        BOOST_PP_ARRAY_ENUM(BOOST_PP_SEQ_ELEM(1, ASSERTION))::unifiers \
+                    >::type::value \
+                    ? true \
+                    : \
+                    ( \
+                        std::cout << std::endl << std::setw(120) << std::left \
+                                  << std::string("    ::unifiers != ") + BOOST_PP_STRINGIZE((BOOST_PP_ARRAY_ENUM(BOOST_PP_SEQ_ELEM(2, ASSERTION)))) \
+                                  << "[FAILED]", \
+                        false \
+                    ) \
+                ) \
             ) \
-            ? (std::cout << " [SUCCEEDED]", true) \
-            : (std::cout << " [FAILED]" << std::endl \
-                         << "    expected result: " << (BOOST_PP_SEQ_ELEM(0, ASSERTION) ? "success" : "failure") << std::endl \
-                         << "    expected unifiers: " << BOOST_PP_STRINGIZE((BOOST_PP_ARRAY_ENUM(BOOST_PP_SEQ_ELEM(2, ASSERTION)))) << std::endl, false) \
+            ? (std::cout << "[SUCCEEDED]", true) \
+            : false \
         ) \
     )
 
