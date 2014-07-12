@@ -10,11 +10,12 @@
 #include "../detail/preprocessor.hpp"
 
 #include <boost/config.hpp>
+
 #include <boost/preprocessor/debug/assert.hpp>
 #include <boost/preprocessor/comparison/less_equal.hpp>
 #include <boost/preprocessor/arithmetic/sub.hpp>
 #include <boost/preprocessor/repetition/repeat_from_to.hpp>
-#include <boost/mpl/bool.hpp>
+
 #include <boost/mpl/if.hpp>
 
 namespace metalog

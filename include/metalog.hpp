@@ -5,6 +5,7 @@
  */
 
 #include "metalog/types.hpp"
+#include "metalog/minimize.hpp"
 #include "metalog/substitute.hpp"
 #include "metalog/unify.hpp"
 

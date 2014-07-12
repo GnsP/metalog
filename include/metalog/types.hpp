@@ -10,6 +10,7 @@
 #include "detail/preprocessor.hpp"
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
+
 #include <boost/mpl/map.hpp>
 
 namespace metalog

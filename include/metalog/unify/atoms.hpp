@@ -9,6 +9,9 @@
 
 #include "../minimize.hpp"
 
+#include <boost/mpl/bool.hpp>
+#include <boost/mpl/map.hpp>
+
 namespace metalog
 {
     template<typename lExpr, typename rExpr, typename u>

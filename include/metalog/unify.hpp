@@ -8,7 +8,6 @@
 #define _METALOG_UNIFY_HPP_
 
 #include "types.hpp"
-#include "substitute.hpp"
 
 #include <boost/mpl/map.hpp>
 
