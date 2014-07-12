@@ -9,6 +9,7 @@
 
 #include "substitute.hpp"
 
+#include <boost/mpl/identity.hpp>
 #include <boost/mpl/pair.hpp>
 #include <boost/mpl/map.hpp>
 #include <boost/mpl/fold.hpp>
@@ -19,23 +20,24 @@
 namespace metalog
 {
     template<typename unifiers>
-    struct minimize
-    {
-        typedef typename boost::mpl::fold
-        <
-            unifiers,
-            boost::mpl::map<>,
-            boost::mpl::insert
-            <
-                boost::mpl::_1,
-                boost::mpl::pair
+    struct minimize :
+            boost::mpl::identity
+            <   typename boost::mpl::fold
                 <
-                    boost::mpl::first<boost::mpl::_2>,
-                    boost::mpl::apply_wrap1<substitute<unifiers>, boost::mpl::second<boost::mpl::_2> >
-                >
+                    unifiers,
+                    boost::mpl::map<>,
+                    boost::mpl::insert
+                    <
+                        boost::mpl::_1,
+                        boost::mpl::pair
+                        <
+                            boost::mpl::first<boost::mpl::_2>,
+                            boost::mpl::apply_wrap1<substitute<unifiers>, boost::mpl::second<boost::mpl::_2> >
+                        >
+                    >
+                >::type
             >
-        >::type type;
-    };
+    {};
 }
 
 #endif
