@@ -9,7 +9,6 @@
 
 #include "../detail/empty.hpp"
 
-#include <boost/mpl/bool.hpp>
 #include <boost/mpl/pair.hpp>
 #include <boost/mpl/map.hpp>
 #include <boost/mpl/insert.hpp>

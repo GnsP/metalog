@@ -11,6 +11,7 @@
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
 
+
 namespace metalog
 {
     /**

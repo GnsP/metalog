@@ -8,19 +8,23 @@
 #define _METALOG_SUBSTITUTE_HPP_
 
 #include "types.hpp"
+
 #include "detail/preprocessor.hpp"
 
 #include <boost/config.hpp>
+#include <boost/type_traits.hpp>
+
 #include <boost/preprocessor/debug/assert.hpp>
 #include <boost/preprocessor/comparison/less_equal.hpp>
 #include <boost/preprocessor/arithmetic/sub.hpp>
 #include <boost/preprocessor/repetition/repeat_from_to.hpp>
+
 #include <boost/mpl/map.hpp>
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/has_key.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/apply_wrap.hpp>
-#include <boost/type_traits.hpp>
+
 
 namespace metalog
 {
