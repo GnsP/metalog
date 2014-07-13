@@ -15,37 +15,39 @@
 
 namespace metalog
 {
-    template<typename, typename>
+    template<typename, METALOG_VARIADIC_PARAMS_DECLARATION(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), cT)>
     struct join;
 
-    template<>
-    struct join
-            <
-                conjunction<METALOG_VARIADIC_EMPTY_ARGS(METALOG_MAX_VARIADIC_ARGS)>,
-                conjunction<METALOG_VARIADIC_EMPTY_ARGS(METALOG_MAX_VARIADIC_ARGS)>
-            > :
-        boost::mpl::identity<conjunction<> >
+    template<typename c>
+    struct join<c METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))> :
+        boost::mpl::identity<c>
     {};
 
-    template<METALOG_VARIADIC_PARAMS(METALOG_MAX_VARIADIC_ARGS, _)>
+    template<METALOG_VARIADIC_PARAMS(METALOG_MAX_VARIADIC_ARGS, _) METALOG_TRAILING_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 2), cT)>
     struct join
             <
                 conjunction<METALOG_VARIADIC_EMPTY_ARGS(METALOG_MAX_VARIADIC_ARGS)>,
                 conjunction<METALOG_VARIADIC_ARGS(METALOG_MAX_VARIADIC_ARGS, _)>
+                METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 2), cT)
             > :
-        boost::mpl::identity<conjunction<METALOG_VARIADIC_ARGS(METALOG_MAX_VARIADIC_ARGS, _)> >
+        join
+        <
+            conjunction<METALOG_VARIADIC_ARGS(METALOG_MAX_VARIADIC_ARGS, _)>
+            METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 2), cT)
+        >
     {};
 
-    template<METALOG_VARIADIC_PARAMS(METALOG_MAX_VARIADIC_ARGS, _)>
+    template<METALOG_VARIADIC_PARAMS(METALOG_MAX_VARIADIC_ARGS, _) METALOG_TRAILING_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 2), cT)>
     struct join
             <
                 conjunction<METALOG_VARIADIC_ARGS(METALOG_MAX_VARIADIC_ARGS, _)>,
                 conjunction<METALOG_VARIADIC_EMPTY_ARGS(METALOG_MAX_VARIADIC_ARGS)>
+                METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 2), cT)
             > :
         join
         <
-            conjunction<>,
             conjunction<METALOG_VARIADIC_ARGS(METALOG_MAX_VARIADIC_ARGS, _)>
+            METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 2), cT)
         >
     {};
 
@@ -54,16 +56,19 @@ namespace metalog
             typename lH,
             METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), lT),
             METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), rH)
+            METALOG_TRAILING_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 2), cT)
     >
     struct join
             <
                 conjunction<lH, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), lT)>,
                 conjunction<METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), rH) METALOG_TRAILING_VARIADIC_EMPTY_ARGS(1)>
+                METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 2), cT)
             > :
         join
         <
             conjunction<METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), lT)>,
             conjunction<lH, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), rH)>
+            METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 2), cT)
         >
     {};
 }
