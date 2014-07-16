@@ -19,6 +19,7 @@ namespace metalog
     {};
 }
 
+#include "unify/lazy.hpp"
 #include "unify/modifiers.hpp"
 #include "unify/atoms.hpp"
 #include "unify/variables.hpp"
