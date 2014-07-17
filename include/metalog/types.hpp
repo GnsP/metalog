@@ -11,7 +11,6 @@
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
 
-#include <boost/mpl/map.hpp>
 
 namespace metalog
 {
@@ -28,6 +27,15 @@ namespace metalog
 
     template<typename, METALOG_VARIADIC_PARAMS_DECLARATION(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), _)>
     struct term;
+
+    template<METALOG_VARIADIC_PARAMS_DECLARATION(METALOG_MAX_VARIADIC_ARGS, _)>
+    struct conjunction;
+
+    template<typename, typename = conjunction<> >
+    struct clause;
 }
+
+#include "types/clause.hpp"
+#include "types/conjunction.hpp"
 
 #endif

@@ -9,5 +9,5 @@
 #include "metalog/minimize.hpp"
 #include "metalog/substitute.hpp"
 #include "metalog/unify.hpp"
-
+#include "metalog/resolve.hpp"
 

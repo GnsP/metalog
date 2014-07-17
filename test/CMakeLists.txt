@@ -34,8 +34,8 @@ foreach(DIALECT ${SUPPORTED_STANDARDS})
             DEPENDENCIES metalog
         )
         add_test(${TARGET} ${CMAKE_CURRENT_BINARY_DIR}/${TARGET})
+        set(TEST_TARGETS ${TEST_TARGETS} ${TARGET})
     endforeach()
-    set(TEST_TARGETS ${TEST_TARGETS} ${TARGET})
 endforeach()
 
 add_custom_target(tests DEPENDS ${TEST_TARGETS})
