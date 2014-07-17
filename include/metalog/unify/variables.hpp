@@ -15,7 +15,7 @@
 #include <boost/mpl/insert.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/or.hpp>
-#include <boost/mpl/apply_wrap.hpp>
+#include <boost/mpl/bind.hpp>
 
 namespace metalog
 {
@@ -29,7 +29,7 @@ namespace metalog
             boost::mpl::if_
             <
                 boost::mpl::or_<boost::mpl::has_key<u, var<m> >, boost::mpl::has_key<u, var<n> > >,
-                unify<detail::lazy<boost::mpl::apply_wrap1<substitute<u>, var<m> > >, detail::lazy<boost::mpl::apply_wrap1<substitute<u>, var<n> > >, u>,
+                unify<detail::lazy<boost::mpl::bind1<substitute<u>, var<m> > >, detail::lazy<boost::mpl::bind1<substitute<u>, var<n> > >, u>,
                 unify<atom<detail::_>, atom<detail::_>, typename boost::mpl::insert<u, boost::mpl::pair<var<m>, var<n> > >::type>
             >::type
     {};
@@ -39,11 +39,11 @@ namespace metalog
             boost::mpl::if_
             <
                 boost::mpl::has_key<u, var<n> >,
-                unify<detail::lazy<boost::mpl::apply_wrap1<substitute<u>, var<n> > >, detail::lazy<boost::mpl::apply_wrap1<substitute<u>, expr> >, u>,
+                unify<detail::lazy<boost::mpl::bind1<substitute<u>, var<n> > >, detail::lazy<boost::mpl::bind1<substitute<u>, expr> >, u>,
                 unify //occurs check
                 <
-                    atom<detail::lazy<boost::mpl::apply_wrap1<substitute<u>, expr> > >,
-                    atom<detail::lazy<boost::mpl::apply_wrap1<substitute<typename boost::mpl::insert<u, boost::mpl::pair<var<n>, detail::_> >::type>, expr> > >,
+                    atom<detail::lazy<boost::mpl::bind1<substitute<u>, expr> > >,
+                    atom<detail::lazy<boost::mpl::bind1<substitute<typename boost::mpl::insert<u, boost::mpl::pair<var<n>, detail::_> >::type>, expr> > >,
                     typename boost::mpl::insert<u, boost::mpl::pair<var<n>, expr> >::type
                 >
             >::type
