@@ -7,6 +7,8 @@
 #ifndef _METALOG_CONJUNCTION_HPP_
 #define _METALOG_CONJUNCTION_HPP_
 
+#include "../join.hpp"
+
 #include "../detail/preprocessor.hpp"
 
 #include <boost/config.hpp>
@@ -22,9 +24,6 @@
 
 namespace metalog
 {
-    template<typename, METALOG_VARIADIC_PARAMS_DECLARATION(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), cT)>
-    struct join;
-
 #define METALOG_DEFINE_JOIN(X, Y) \
     BOOST_PP_ASSERT(BOOST_PP_LESS_EQUAL(0, X)) \
     BOOST_PP_ASSERT(BOOST_PP_LESS_EQUAL(X, METALOG_MAX_VARIADIC_ARGS)) \
