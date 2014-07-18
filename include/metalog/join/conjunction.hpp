@@ -7,7 +7,7 @@
 #ifndef _METALOG_CONJUNCTION_HPP_
 #define _METALOG_CONJUNCTION_HPP_
 
-#include "../join.hpp"
+#include "../types.hpp"
 
 #include "../detail/preprocessor.hpp"
 

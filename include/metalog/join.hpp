@@ -11,9 +11,11 @@
 
 namespace metalog
 {
-    template<typename, METALOG_VARIADIC_PARAMS_DECLARATION(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), _)>
+    template<typename, typename, METALOG_VARIADIC_PARAMS_DECLARATION(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 2), _)>
     struct join;
-
 }
+
+#include "join/conjunction.hpp"
+#include "join/sequences.hpp"
 
 #endif

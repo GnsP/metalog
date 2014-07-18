@@ -36,6 +36,5 @@ namespace metalog
 }
 
 #include "types/clause.hpp"
-#include "types/conjunction.hpp"
 
 #endif
