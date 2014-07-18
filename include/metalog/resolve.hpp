@@ -9,6 +9,7 @@
 
 #include "types.hpp"
 #include "unify.hpp"
+#include "join.hpp"
 
 #include "detail/preprocessor.hpp"
 
@@ -27,8 +28,6 @@
 #include <boost/mpl/push_back.hpp>
 #include <boost/mpl/next.hpp>
 #include <boost/mpl/deref.hpp>
-#include <boost/mpl/copy.hpp>
-#include <boost/mpl/back_inserter.hpp>
 
 namespace metalog
 {
@@ -90,7 +89,7 @@ namespace metalog
                 typename boost::mpl::if_
                 <
                     unify<hG, typename consequence<typename boost::mpl::deref<it>::type>::type, typename boost::mpl::front<solution>::type>,
-                    typename boost::mpl::copy
+                    typename join
                     <
                         typename resolve
                         <
@@ -108,7 +107,7 @@ namespace metalog
                                 typename unify<hG, typename consequence<typename boost::mpl::deref<it>::type>::type, typename boost::mpl::front<solution>::type>::unifiers
                             >::type
                         >::solution,
-                        boost::mpl::back_inserter<solution>
+                        solution
                     >::type,
                     solution
                 >::type
