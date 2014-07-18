@@ -15,7 +15,6 @@
 
 #include <boost/mpl/pair.hpp>
 #include <boost/mpl/map.hpp>
-#include <boost/mpl/insert.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/or.hpp>
 #include <boost/mpl/bind.hpp>
@@ -46,7 +45,7 @@ namespace metalog
                 unify //occurs check
                 <
                     atom<detail::lazy<boost::mpl::bind1<substitute<u>, expr> > >,
-                    atom<detail::lazy<boost::mpl::bind1<substitute<typename boost::mpl::insert<u, boost::mpl::pair<var<n>, detail::_> >::type>, expr> > >,
+                    atom<detail::lazy<boost::mpl::bind1<substitute<u, boost::mpl::map<boost::mpl::pair<var<n>, detail::_> > >, expr> > >,
                     u, boost::mpl::map<boost::mpl::pair<var<n>, expr> >
                 >
             >::type
