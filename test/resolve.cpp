@@ -62,11 +62,11 @@ namespace genealogy
         clause<father<randy, shelly> >,
         clause<spouse<randy, sharon> >,
         clause<sibling<randy, jimbo> >,
-        clause<aunt<flo, sharon> >/*,
+        clause<aunt<flo, sharon> >,
         clause<sibling<var<A>, var<B> >, conjunction<parent<var<C>, var<A> >, parent<var<C>, var<B> > > >,
         clause<parent<var<D>, var<E> >, conjunction<father<var<D>, var<E> > > >,
         clause<parent<var<F>, var<G> >, conjunction<mother<var<F>, var<G> > > >,
-        clause<grandparent<var<H>, var<I> >, conjunction<parent<var<J>, var<I> >, parent<var<H>, var<J> > > >*/
+        clause<grandparent<var<H>, var<I> >, conjunction<parent<var<J>, var<I> >, parent<var<H>, var<J> > > >
     > clauses;
 
 }

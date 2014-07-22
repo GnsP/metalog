@@ -99,7 +99,7 @@ namespace metalog
                 typename boost::mpl::if_
                 <
                     unify<hG, typename consequence<typename boost::mpl::deref<it>::type>::type, typename boost::mpl::front<s>::type>,
-                    typename resolve
+                    resolve
                     <
                         typename join
                         <
@@ -114,7 +114,7 @@ namespace metalog
                             typename unify<hG, typename consequence<typename boost::mpl::deref<it>::type>::type, typename boost::mpl::front<s>::type>::unifiers
                         >,
                         typename boost::mpl::pop_front<s>::type
-                    >::solution,
+                    >,
                     boost::mpl::vector<>
                 >::type,
                 s
