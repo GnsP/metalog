@@ -7,6 +7,8 @@
 #ifndef _METALOG_UNIFY_HPP_
 #define _METALOG_UNIFY_HPP_
 
+#include "types.hpp"
+
 #include "detail/preprocessor.hpp"
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
