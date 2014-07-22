@@ -17,5 +17,6 @@ namespace metalog
 
 #include "join/conjunction.hpp"
 #include "join/sequences.hpp"
+#include "join/solutions.hpp"
 
 #endif
