@@ -8,6 +8,7 @@
 #define _METALOG_SUBSTITUTE_HPP_
 
 #include "types.hpp"
+#include "join.hpp"
 
 #include "detail/preprocessor.hpp"
 
@@ -28,8 +29,13 @@
 
 namespace metalog
 {
-    template<typename unifiers>
-    struct substitute
+    template<typename u, METALOG_VARIADIC_PARAMS_DECLARATION(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)>
+    struct substitute :
+            substitute<typename join<u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)>::type>
+    {};
+
+    template<typename u>
+    struct substitute<u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))>
     {
         template<typename expr>
         struct apply:
@@ -37,24 +43,24 @@ namespace metalog
         {};
     };
 
-    template<typename unifiers>
+    template<typename u>
     template<typename expr>
-    struct substitute<unifiers>::apply<atom<expr> > :
+    struct substitute<u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))>::apply<atom<expr> > :
             boost::mpl::identity<atom<expr> >
     {};
 
-    template<typename unifiers>
+    template<typename u>
     template<typename n>
-    class substitute<unifiers>::apply<var<n> >
+    class substitute<u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))>::apply<var<n> >
     {
     private:
         //boost bug #3982
-        //typedef typename boost::mpl::at<unifiers, var<n>, var<n> >::type lookup;
+        //typedef typename boost::mpl::at<u, var<n>, var<n> >::type lookup;
 
         typedef typename boost::mpl::eval_if
         <
-            boost::mpl::has_key<unifiers, var<n> >,
-            boost::mpl::at<unifiers, var<n> >,
+            boost::mpl::has_key<u, var<n> >,
+            boost::mpl::at<u, var<n> >,
             boost::mpl::identity<var<n> >
         >::type lookup;
 
@@ -64,18 +70,19 @@ namespace metalog
         <
             boost::is_same<var<n>, lookup>,
             boost::mpl::identity<lookup>,
-            boost::mpl::apply_wrap1<substitute<unifiers>, lookup>
+            boost::mpl::apply_wrap1<substitute<u>, lookup>
         >::type type;
     };
 
 #define METALOG_FORWARD_SUBSTITUTION_TO_ARG(ARG) \
-    typename boost::mpl::apply_wrap1<substitute<unifiers>, ARG>::type
+    typename boost::mpl::apply_wrap1<substitute<u>, ARG>::type
 
 #define METALOG_DEFINE_TERM_SUBSTITUTION(N) \
     BOOST_PP_ASSERT(BOOST_PP_LESS_EQUAL(1, N)) \
-    template<typename unifiers> \
+    template<typename u> \
     template<template<METALOG_VARIADIC_PARAMS(N, _)> class term, typename hExpr METALOG_TRAILING_VARIADIC_PARAMS(BOOST_PP_SUB(N, 1), tExpr)> \
-    struct substitute<unifiers>::apply<term<hExpr METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(N, 1), tExpr)> > : \
+    struct substitute<u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))>:: \
+        apply<term<hExpr METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(N, 1), tExpr)> > : \
             boost::mpl::identity \
             < \
                 term<METALOG_FORWARD_SUBSTITUTION_TO_ARG(hExpr) METALOG_FOR_EACH_TRAILING_VARIADIC_ARG(BOOST_PP_SUB(N, 1), tExpr, METALOG_FORWARD_SUBSTITUTION_TO_ARG)> \

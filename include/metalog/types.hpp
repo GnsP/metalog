@@ -14,6 +14,13 @@
 
 namespace metalog
 {
+    template
+    <
+            typename lExpr, typename rExpr, typename u,
+            METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)
+    >
+    struct unify;
+
     /**
      * An atom is considered to be a constant for the purpose of unification.
      * The unification of atom<A> with atom<B> succeeds iff A is literally equal to B,
@@ -28,6 +35,13 @@ namespace metalog
     template<typename, METALOG_VARIADIC_PARAMS_DECLARATION(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), _)>
     struct term;
 
+    template
+    <
+            typename goal, typename clauses, typename begin, typename end, typename s,
+            METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), sT)
+    >
+    struct resolve;
+
     template<METALOG_VARIADIC_PARAMS_DECLARATION(METALOG_MAX_VARIADIC_ARGS, _)>
     struct conjunction;
 
@@ -36,6 +50,5 @@ namespace metalog
 }
 
 #include "types/clause.hpp"
-#include "types/conjunction.hpp"
 
 #endif
