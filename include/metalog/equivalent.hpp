@@ -7,6 +7,8 @@
 #ifndef _METALOG_EQUIVALENT_HPP_
 #define _METALOG_EQUIVALENT_HPP_
 
+#include "types.hpp"
+
 #include <boost/type_traits.hpp>
 
 #include <boost/mpl/logical.hpp>
@@ -14,10 +16,6 @@
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/fold.hpp>
 #include <boost/mpl/placeholders.hpp>
-#include <boost/mpl/pair.hpp>
-#include <boost/mpl/map.hpp>
-#include <boost/mpl/has_key.hpp>
-#include <boost/mpl/at.hpp>
 
 namespace metalog
 {
@@ -33,14 +31,10 @@ namespace metalog
                     boost::mpl::and_
                     <
                         boost::mpl::_1,
-                        boost::mpl::and_
+                        boost::is_same
                         <
-                            boost::mpl::has_key<rUnifiers, boost::mpl::first<boost::mpl::_2> >,
-                            boost::is_same
-                            <
-                                boost::mpl::at<rUnifiers, boost::mpl::first<boost::mpl::_2> >,
-                                boost::mpl::second<boost::mpl::_2>
-                            >
+                            lookup<rUnifiers, boost::mpl::first<boost::mpl::_2> >,
+                            boost::mpl::second<boost::mpl::_2>
                         >
                     >
                 >

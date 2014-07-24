@@ -19,10 +19,7 @@
 #include <boost/preprocessor/arithmetic/sub.hpp>
 #include <boost/preprocessor/repetition/repeat_from_to.hpp>
 
-#include <boost/mpl/map.hpp>
-#include <boost/mpl/at.hpp>
-#include <boost/mpl/has_key.hpp>
-#include <boost/mpl/eval_if.hpp>
+#include <boost/mpl/if.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 
 
@@ -45,28 +42,14 @@ namespace metalog
 
     template<typename unifiers>
     template<typename n>
-    class substitute<unifiers>::apply<var<n> >
-    {
-    private:
-        //boost bug #3982
-        //typedef typename boost::mpl::at<unifiers, var<n>, var<n> >::type lookup;
-
-        typedef typename boost::mpl::eval_if
+    struct substitute<unifiers>::apply<var<n> > :
+        boost::mpl::if_
         <
-            boost::mpl::has_key<unifiers, var<n> >,
-            boost::mpl::at<unifiers, var<n> >,
-            boost::mpl::identity<var<n> >
-        >::type lookup;
-
-    public:
-        //recurse until there is nothing left to substitute
-        typedef typename boost::mpl::eval_if
-        <
-            boost::is_same<var<n>, lookup>,
-            boost::mpl::identity<lookup>,
-            boost::mpl::apply_wrap1<substitute<unifiers>, lookup>
-        >::type type;
-    };
+            boost::is_same<var<n>, typename lookup<unifiers, var<n> >::type>,
+            lookup<unifiers, var<n> >,
+            boost::mpl::apply_wrap1<substitute<unifiers>, typename lookup<unifiers, var<n> >::type>
+        >::type
+    {};
 
 #define METALOG_FORWARD_SUBSTITUTION_TO_ARG(ARG) \
     typename boost::mpl::apply_wrap1<substitute<unifiers>, ARG>::type

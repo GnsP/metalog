@@ -7,10 +7,11 @@
 #ifndef _METALOG_UNIFY_VARIABLES_HPP_
 #define _METALOG_UNIFY_VARIABLES_HPP_
 
+#include "../types/var.hpp"
+
 #include "../detail/empty.hpp"
 
 #include <boost/mpl/pair.hpp>
-#include <boost/mpl/map.hpp>
 #include <boost/mpl/insert.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/or.hpp>
@@ -22,7 +23,7 @@ namespace metalog
     struct unify<var<n>, expr, u> :
             boost::mpl::if_
             <
-                boost::mpl::has_key<u, var<n> >,
+                bound<u, var<n> >,
                 unify<typename boost::mpl::apply_wrap1<substitute<u>, var<n> >::type, typename boost::mpl::apply_wrap1<substitute<u>, expr>::type, u>,
                 unify //occurs check
                 <
@@ -42,7 +43,7 @@ namespace metalog
     struct unify<var<m>, var<n>, u> :
             boost::mpl::if_
             <
-                boost::mpl::or_<boost::mpl::has_key<u, var<m> >, boost::mpl::has_key<u, var<n> > >,
+                boost::mpl::or_<bound<u, var<m> >, bound<u, var<n> > >,
                 unify<typename boost::mpl::apply_wrap1<substitute<u>, var<m> >::type, typename boost::mpl::apply_wrap1<substitute<u>, var<n> >::type, u>,
                 unify<var<n>, var<n>, typename boost::mpl::insert<u, boost::mpl::pair<var<m>, var<n> > >::type>
             >::type
