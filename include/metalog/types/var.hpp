@@ -12,7 +12,6 @@
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/pair.hpp>
-#include <boost/mpl/map.hpp>
 #include <boost/mpl/has_key.hpp>
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/insert.hpp>
