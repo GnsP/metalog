@@ -13,16 +13,15 @@
 
 #include "detail/preprocessor.hpp"
 
-#include <boost/mpl/bool.hpp>
-#include <boost/mpl/size.hpp>
 #include <boost/type_traits.hpp>
+
+#include <boost/mpl/not.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/map.hpp>
-#include <boost/mpl/set.hpp>
+#include <boost/mpl/empty.hpp>
 #include <boost/mpl/begin.hpp>
 #include <boost/mpl/end.hpp>
 #include <boost/mpl/front.hpp>
-#include <boost/mpl/empty.hpp>
 #include <boost/mpl/pop_front.hpp>
 #include <boost/mpl/push_back.hpp>
 #include <boost/mpl/next.hpp>
@@ -54,7 +53,7 @@ namespace metalog
                 conjunction<hG METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), tG)>,
                 clauses, it, it, s METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))
             > :
-            boost::mpl::bool_<(boost::mpl::size<s>::value > 1)>
+            boost::mpl::not_<boost::mpl::empty<typename boost::mpl::pop_front<s>::type> >
     {
         typedef typename boost::mpl::pop_front<s>::type solution;
     };
@@ -96,6 +95,7 @@ namespace metalog
                 clauses,
                 typename boost::mpl::next<it>::type,
                 end,
+                s,
                 typename boost::mpl::if_
                 <
                     unify<hG, typename consequence<typename boost::mpl::deref<it>::type>::type, typename boost::mpl::front<s>::type>,
@@ -112,12 +112,10 @@ namespace metalog
                         boost::mpl::vector
                         <
                             typename unify<hG, typename consequence<typename boost::mpl::deref<it>::type>::type, typename boost::mpl::front<s>::type>::unifiers
-                        >,
-                        typename boost::mpl::pop_front<s>::type
+                        >
                     >,
                     boost::mpl::vector<>
-                >::type,
-                s
+                >::type
             >
     {};
 }
