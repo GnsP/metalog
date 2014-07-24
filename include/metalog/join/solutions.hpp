@@ -38,7 +38,7 @@ namespace metalog
                 seq2, resolve<g, c, b, e, s, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), sT)>
                 METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 2))
             > :
-            join<typename resolve<g, c, b, e, s, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), sT)>::solution, seq2>
+            join<seq2, typename resolve<g, c, b, e, s, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), sT)>::solution>
     {};
 
     template
@@ -88,8 +88,8 @@ namespace metalog
             > :
             join
             <
-                typename resolve<g, c, b, e, s, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), sT)>::solution,
-                seq2, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 2), seqT)
+                seq2, typename resolve<g, c, b, e, s, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), sT)>::solution,
+                METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 2), seqT)
             >
     {};
 
