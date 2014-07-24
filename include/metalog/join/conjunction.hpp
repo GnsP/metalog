@@ -32,7 +32,6 @@ namespace metalog
     {
         template<METALOG_VARIADIC_PARAMS_DECLARATION(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), _)>
         struct join_conjunction_impl;
-    }
 
 #define METALOG_DEFINE_JOIN_CONJUNCTION_IMPL(X, Y, Z) \
     BOOST_PP_ASSERT(BOOST_PP_LESS_EQUAL(0, X)) \
@@ -41,21 +40,19 @@ namespace metalog
     BOOST_PP_ASSERT(BOOST_PP_LESS_EQUAL(Y, METALOG_MAX_VARIADIC_ARGS)) \
     BOOST_PP_ASSERT(BOOST_PP_LESS_EQUAL(2, Z)) \
     BOOST_PP_ASSERT(BOOST_PP_LESS_EQUAL(Z, METALOG_MAX_VARIADIC_ARGS)) \
-namespace detail \
-{ \
     template \
     < \
-        METALOG_VARIADIC_PARAMS(Y, rH) \
-        BOOST_PP_COMMA_IF(BOOST_PP_AND(Y, BOOST_PP_SUB(Z, 2))) \
+        METALOG_VARIADIC_PARAMS(X, lH) \
+        BOOST_PP_COMMA_IF(BOOST_PP_AND(X, BOOST_PP_SUB(Z, 2))) \
         METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(Z, 2), t) \
     > \
     struct join_conjunction_impl \
     < \
         conjunction \
         < \
-            METALOG_VARIADIC_ARGS(Y, rH) \
-            BOOST_PP_COMMA_IF(BOOST_PP_AND(Y, BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, Y))) \
-            METALOG_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, Y)) \
+            METALOG_VARIADIC_ARGS(X, lH) \
+            BOOST_PP_COMMA_IF(BOOST_PP_AND(X, BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, X))) \
+            METALOG_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, X)) \
         > \
         METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(Z, 2), t) \
         METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, Z)) \
@@ -63,18 +60,14 @@ namespace detail \
     { \
         template<typename, typename = _> \
         struct apply; \
-        template \
-        < \
-            METALOG_LEADING_VARIADIC_PARAMS(X, lH) \
-            typename _ \
-        > \
+        template<METALOG_LEADING_VARIADIC_PARAMS(Y, rH) typename _> \
         struct apply \
         < \
             conjunction \
             < \
-                METALOG_VARIADIC_ARGS(X, lH) \
-                BOOST_PP_COMMA_IF(BOOST_PP_AND(X, BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, X))) \
-                METALOG_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, X)) \
+                METALOG_VARIADIC_ARGS(Y, rH) \
+                BOOST_PP_COMMA_IF(BOOST_PP_AND(Y, BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, Y))) \
+                METALOG_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, Y)) \
             >, \
             _ \
         > : \
@@ -84,8 +77,7 @@ namespace detail \
                 METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(Z, 2), t) \
             > \
         {};\
-    }; \
-}
+    };
 
 #ifdef BOOST_NO_CXX11_VARIADIC_TEMPLATES
 
@@ -99,6 +91,8 @@ namespace detail \
     METALOG_DEFINE_JOIN_CONJUNCTION_IMPL(METALOG_MAX_VARIADIC_ARGS, METALOG_MAX_VARIADIC_ARGS, 2)
     METALOG_DEFINE_JOIN_CONJUNCTION_IMPL(METALOG_MAX_VARIADIC_ARGS, METALOG_MAX_VARIADIC_ARGS, METALOG_MAX_VARIADIC_ARGS)
 #endif
+
+    }
 
 #define METALOG_DEFINE_JOIN_CONJUNCTION(N) \
     BOOST_PP_ASSERT(BOOST_PP_LESS_EQUAL(0, N)) \
@@ -118,9 +112,9 @@ namespace detail \
     > : \
         detail::join_conjunction_impl \
         < \
-            conjunction<METALOG_VARIADIC_ARGS(METALOG_MAX_VARIADIC_ARGS, rArgs)> \
+            conjunction<METALOG_VARIADIC_ARGS(METALOG_MAX_VARIADIC_ARGS, lArgs)> \
             METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(N, 2), t) \
-        >::template apply<conjunction<METALOG_VARIADIC_ARGS(METALOG_MAX_VARIADIC_ARGS, lArgs)> > \
+        >::template apply<conjunction<METALOG_VARIADIC_ARGS(METALOG_MAX_VARIADIC_ARGS, rArgs)> > \
     {};
 
     METALOG_DEFINE_JOIN_CONJUNCTION(2)
