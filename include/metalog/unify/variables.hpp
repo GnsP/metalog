@@ -23,7 +23,7 @@ namespace metalog
     struct unify<var<n>, expr, u> :
             boost::mpl::if_
             <
-                bound<u, var<n> >,
+                bond<u, var<n> >,
                 unify<typename boost::mpl::apply_wrap1<substitute<u>, var<n> >::type, typename boost::mpl::apply_wrap1<substitute<u>, expr>::type, u>,
                 unify //occurs check
                 <
@@ -43,7 +43,7 @@ namespace metalog
     struct unify<var<m>, var<n>, u> :
             boost::mpl::if_
             <
-                boost::mpl::or_<bound<u, var<m> >, bound<u, var<n> > >,
+                boost::mpl::or_<bond<u, var<m> >, bond<u, var<n> > >,
                 unify<typename boost::mpl::apply_wrap1<substitute<u>, var<m> >::type, typename boost::mpl::apply_wrap1<substitute<u>, var<n> >::type, u>,
                 unify<var<n>, var<n>, typename boost::mpl::insert<u, boost::mpl::pair<var<m>, var<n> > >::type>
             >::type

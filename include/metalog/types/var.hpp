@@ -20,10 +20,10 @@
 namespace metalog
 {
     template<typename unifiers, typename key>
-    struct bound;
+    struct bond;
 
     template<typename unifiers, typename n>
-    struct bound<unifiers, var<n> > :
+    struct bond<unifiers, var<n> > :
             boost::mpl::has_key<unifiers, var<n> >
     {};
 
@@ -37,7 +37,7 @@ namespace metalog
     struct bind<unifiers, var<n>, value> :
             boost::mpl::if_
             <
-                bound<unifiers, var<n> >,
+                bond<unifiers, var<n> >,
                 detail::_,
                 boost::mpl::insert<unifiers, boost::mpl::pair<var<n>, value> >
             >::type
@@ -50,7 +50,7 @@ namespace metalog
     struct unbind<unifiers, var<n> > :
             boost::mpl::if_
             <
-                bound<unifiers, var<n> >,
+                bond<unifiers, var<n> >,
                 boost::mpl::erase_key<unifiers, var<n> >,
                 boost::mpl::identity<unifiers>
             >::type
@@ -63,7 +63,7 @@ namespace metalog
     struct lookup<unifiers, var<n> > :
             boost::mpl::if_
             <
-                bound<unifiers, var<n> >,
+                bond<unifiers, var<n> >,
                 boost::mpl::at<unifiers, var<n> >,
                 boost::mpl::identity<var<n> >
             >::type
