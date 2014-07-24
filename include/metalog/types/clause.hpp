@@ -7,6 +7,8 @@
 #ifndef _METALOG_CLAUSE_HPP_
 #define _METALOG_CLAUSE_HPP_
 
+#include "../detail/preprocessor.hpp"
+
 #include <boost/mpl/identity.hpp>
 
 namespace metalog
@@ -14,17 +16,17 @@ namespace metalog
     template<typename>
     struct consequence;
 
-    template<typename csqc, typename prms>
-    struct consequence<clause<csqc, prms> > :
+    template<typename csqc, METALOG_VARIADIC_PARAMS(METALOG_MAX_VARIADIC_ARGS, prms)>
+    struct consequence<clause<csqc, conjunction<METALOG_VARIADIC_ARGS(METALOG_MAX_VARIADIC_ARGS, prms)> > > :
             boost::mpl::identity<csqc>
     {};
 
     template<typename>
     struct premise;
 
-    template<typename csqc, typename prms>
-    struct premise<clause<csqc, prms> > :
-            boost::mpl::identity<prms>
+    template<typename csqc, METALOG_VARIADIC_PARAMS(METALOG_MAX_VARIADIC_ARGS, prms)>
+    struct premise<clause<csqc, conjunction<METALOG_VARIADIC_ARGS(METALOG_MAX_VARIADIC_ARGS, prms)> > > :
+            boost::mpl::identity<conjunction<METALOG_VARIADIC_ARGS(METALOG_MAX_VARIADIC_ARGS, prms)> >
     {};
 }
 
