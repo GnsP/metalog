@@ -30,4 +30,6 @@ namespace metalog
     struct term;
 }
 
+#include "types/var.hpp"
+
 #endif
