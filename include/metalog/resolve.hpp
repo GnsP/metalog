@@ -111,7 +111,7 @@ namespace metalog
                         end,
                         boost::mpl::vector
                         <
-                            typename unify<hG, typename consequence<typename boost::mpl::deref<it>::type>::type, typename boost::mpl::front<s>::type>::unifiers
+                            typename unifiers<unify<hG, typename consequence<typename boost::mpl::deref<it>::type>::type, typename boost::mpl::front<s>::type> >::type
                         >,
                         typename boost::mpl::pop_front<s>::type
                     >,

@@ -50,5 +50,7 @@ namespace metalog
 }
 
 #include "types/clause.hpp"
+#include "types/resolve.hpp"
+#include "types/unify.hpp"
 
 #endif
