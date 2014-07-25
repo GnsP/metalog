@@ -4,8 +4,8 @@
  * See accompanying file LICENSE.txt for its full text.
  */
 
-#ifndef _METALOG_SOLUTIONS_HPP_
-#define _METALOG_SOLUTIONS_HPP_
+#ifndef _METALOG_JOIN_SOLUTIONS_HPP_
+#define _METALOG_JOIN_SOLUTIONS_HPP_
 
 #include "../types.hpp"
 
