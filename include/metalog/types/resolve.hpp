@@ -13,7 +13,7 @@
 
 namespace metalog
 {
-    template<typename unify>
+    template<typename>
     struct solution;
 
     template
@@ -23,6 +23,11 @@ namespace metalog
     >
     struct solution<resolve<goal, clauses, begin, end, s, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), sT)> > :
         boost::mpl::identity<typename resolve<goal, clauses, begin, end, s, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), sT)>::solution>
+    {};
+
+    template<typename s>
+    struct solution<solution<s> > :
+            solution<s>
     {};
 }
 

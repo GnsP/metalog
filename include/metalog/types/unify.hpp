@@ -13,7 +13,7 @@
 
 namespace metalog
 {
-    template<typename unify>
+    template<typename>
     struct unifiers;
 
     template
@@ -23,6 +23,11 @@ namespace metalog
     >
     struct unifiers<unify<lExpr, rExpr, u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)> > :
         boost::mpl::identity<typename unify<lExpr, rExpr, u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)>::unifiers>
+    {};
+
+    template<typename u>
+    struct unifiers<unifiers<u> > :
+            unifiers<u>
     {};
 }
 
