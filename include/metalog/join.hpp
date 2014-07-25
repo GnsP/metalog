@@ -18,5 +18,6 @@ namespace metalog
 #include "join/conjunction.hpp"
 #include "join/sequences.hpp"
 #include "join/solutions.hpp"
+#include "join/variadic.hpp"
 
 #endif
