@@ -4,8 +4,8 @@
  * See accompanying file LICENSE.txt for its full text.
  */
 
-#ifndef _METALOG_CONJUNCTION_HPP_
-#define _METALOG_CONJUNCTION_HPP_
+#ifndef _METALOG_JOIN_CONJUNCTION_HPP_
+#define _METALOG_JOIN_CONJUNCTION_HPP_
 
 #include "../types.hpp"
 

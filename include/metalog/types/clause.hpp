@@ -4,8 +4,8 @@
  * See accompanying file LICENSE.txt for its full text.
  */
 
-#ifndef _METALOG_CLAUSE_HPP_
-#define _METALOG_CLAUSE_HPP_
+#ifndef _METALOG_TYPES_CLAUSE_HPP_
+#define _METALOG_TYPES_CLAUSE_HPP_
 
 #include "../detail/preprocessor.hpp"
 
