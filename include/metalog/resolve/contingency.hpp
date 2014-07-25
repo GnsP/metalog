@@ -7,6 +7,8 @@
 #ifndef _METALOG_RESOLVE_CONTINGENCY_HPP_
 #define _METALOG_RESOLVE_CONTINGENCY_HPP_
 
+#include "../types.hpp"
+
 #include "../detail/preprocessor.hpp"
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
@@ -17,7 +19,8 @@
 #include <boost/mpl/front.hpp>
 #include <boost/mpl/next.hpp>
 #include <boost/mpl/deref.hpp>
-
+#include <boost/mpl/eval_if.hpp>
+#include <boost/mpl/identity.hpp>
 
 namespace metalog
 {
@@ -44,25 +47,28 @@ namespace metalog
                 typename boost::mpl::next<it>::type,
                 end,
                 s,
-                typename boost::mpl::if_
+                typename boost::mpl::eval_if
                 <
                     unify<hG, typename consequence<typename boost::mpl::deref<it>::type>::type, typename boost::mpl::front<s>::type>,
-                    resolve
+                    solution
                     <
-                        typename join
+                        resolve
                         <
-                            typename premise<typename boost::mpl::deref<it>::type>::type,
-                            conjunction<METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), tG)>
-                        >::type,
-                        clauses,
-                        typename boost::mpl::begin<clauses>::type,
-                        end,
-                        boost::mpl::vector
-                        <
-                            typename unifiers<unify<hG, typename consequence<typename boost::mpl::deref<it>::type>::type, typename boost::mpl::front<s>::type> >::type
+                            typename join
+                            <
+                                typename premise<typename boost::mpl::deref<it>::type>::type,
+                                conjunction<METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), tG)>
+                            >::type,
+                            clauses,
+                            typename boost::mpl::begin<clauses>::type,
+                            end,
+                            boost::mpl::vector
+                            <
+                                typename unifiers<unify<hG, typename consequence<typename boost::mpl::deref<it>::type>::type, typename boost::mpl::front<s>::type> >::type
+                            >
                         >
                     >,
-                    boost::mpl::vector<>
+                    boost::mpl::identity<boost::mpl::vector<> >
                 >::type
             >
     {};
