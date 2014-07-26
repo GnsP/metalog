@@ -7,12 +7,16 @@
 #ifndef _METALOG_DETAIL_LAZY_HPP_
 #define _METALOG_DETAIL_LAZY_HPP_
 
+#include <boost/mpl/apply_wrap.hpp>
+
 namespace metalog
 {
     namespace detail
     {
-        template<typename>
-        struct lazy;
+        template<typename f>
+        struct lazy :
+                boost::mpl::apply_wrap0<f>
+        {};
     }
 }
 

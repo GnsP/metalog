@@ -31,7 +31,7 @@ namespace metalog
             boost::mpl::if_
             <
                 boost::mpl::or_<boost::mpl::has_key<u, var<m> >, boost::mpl::has_key<u, var<n> > >,
-                unify<detail::lazy<boost::mpl::bind1<substitute<u>, var<m> > >, detail::lazy<boost::mpl::bind1<substitute<u>, var<n> > >, u>,
+                unify<detail::lazy<boost::mpl::bind<substitute<u>, var<m> > >, detail::lazy<boost::mpl::bind<substitute<u>, var<n> > >, u>,
                 unify<atom<detail::_>, atom<detail::_>, u, boost::mpl::map<boost::mpl::pair<var<m>, var<n> > > >
             >::type
     {};
@@ -41,11 +41,11 @@ namespace metalog
             boost::mpl::if_
             <
                 boost::mpl::has_key<u, var<n> >,
-                unify<detail::lazy<boost::mpl::bind1<substitute<u>, var<n> > >, detail::lazy<boost::mpl::bind1<substitute<u>, expr> >, u>,
+                unify<detail::lazy<boost::mpl::bind<substitute<u>, var<n> > >, detail::lazy<boost::mpl::bind<substitute<u>, expr> >, u>,
                 unify //occurs check
                 <
-                    atom<detail::lazy<boost::mpl::bind1<substitute<u>, expr> > >,
-                    atom<detail::lazy<boost::mpl::bind1<substitute<u, boost::mpl::map<boost::mpl::pair<var<n>, detail::_> > >, expr> > >,
+                    atom<detail::lazy<boost::mpl::bind<substitute<u>, expr> > >,
+                    atom<detail::lazy<boost::mpl::bind<substitute<u, boost::mpl::map<boost::mpl::pair<var<n>, detail::_> > >, expr> > >,
                     u, boost::mpl::map<boost::mpl::pair<var<n>, expr> >
                 >
             >::type

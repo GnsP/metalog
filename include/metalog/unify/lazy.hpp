@@ -12,8 +12,6 @@
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
 
-#include <boost/mpl/apply_wrap.hpp>
-
 namespace metalog
 {
     template<typename lExpr, typename rExpr, typename u>
