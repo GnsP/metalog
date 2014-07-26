@@ -25,15 +25,6 @@ namespace metalog
     struct join<seq1, seq2 METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 2))> :
             boost::mpl::fold<seq2, seq1, boost::mpl::insert<boost::mpl::_1, boost::mpl::end<boost::mpl::_1>, boost::mpl::_2> >
     {};
-
-    template<typename seq1, typename seq2, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 2), seqT)>
-    struct join :
-            join
-            <
-                typename boost::mpl::fold<seq2, seq1, boost::mpl::insert<boost::mpl::_1, boost::mpl::end<boost::mpl::_1>, boost::mpl::_2> >::type,
-                METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 2), seqT)
-            >
-    {};
 }
 
 #endif

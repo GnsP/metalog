@@ -4,6 +4,7 @@
  * See accompanying file LICENSE.txt for its full text.
  */
 
+#define METALOG_MAX_VARIADIC_ARGS 10
 #include "metalog.hpp"
 
 #include <boost/mpl/vector.hpp>
@@ -75,5 +76,18 @@ struct X;
 
 int main()
 {
-    return (resolve<genealogy::father<var<X>, genealogy::stan>, genealogy::clauses>::value ? 0 : 1);
+    typedef resolve<genealogy::father<var<X>, genealogy::stan>, genealogy::clauses> sample;
+
+    return !boost::mpl::and_
+            <
+                boost::mpl::true_,
+                sample,
+                boost::mpl::bool_<boost::mpl::size<sample::solution>::value == 1>,
+                boost::mpl::has_key<boost::mpl::front<sample::solution>::type, var<X> >,
+                boost::is_same
+                <
+                    boost::mpl::at<boost::mpl::front<sample::solution>::type, var<X> >::type,
+                    genealogy::randy
+                >
+            >::type::value;
 }

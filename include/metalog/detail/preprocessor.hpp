@@ -12,7 +12,7 @@
 #include <boost/preprocessor/comma_if.hpp>
 
 #ifndef METALOG_MAX_VARIADIC_ARGS
-#define METALOG_MAX_VARIADIC_ARGS 14
+#define METALOG_MAX_VARIADIC_ARGS 20
 #endif
 
 #ifdef BOOST_NO_CXX11_VARIADIC_TEMPLATES
