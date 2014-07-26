@@ -13,15 +13,14 @@
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
 
-
-namespace metalog
-{
 #define METALOG_DEFINE_MODIFIER_UNIFICATION(MODIFIER) \
     template<typename lExpr, typename rExpr, typename u> \
     struct unify<lExpr MODIFIER, rExpr MODIFIER, u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))> : \
             unify<lExpr, rExpr, u> \
     {};
 
+namespace metalog
+{
     METALOG_DEFINE_MODIFIER_UNIFICATION(const)
     METALOG_DEFINE_MODIFIER_UNIFICATION(volatile)
     METALOG_DEFINE_MODIFIER_UNIFICATION(const volatile)
@@ -37,5 +36,7 @@ namespace metalog
             unify<lExpr, rExpr, u>
     {};
 }
+
+#undef METALOG_DEFINE_MODIFIER_UNIFICATION
 
 #endif

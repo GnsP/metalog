@@ -26,6 +26,23 @@
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 
+#define METALOG_FORWARD_SUBSTITUTION_TO_ARG(ARG) \
+    typename boost::mpl::apply_wrap1<substitute<u>, ARG>::type
+
+#define METALOG_DEFINE_TERM_SUBSTITUTION(N) \
+    BOOST_PP_ASSERT(BOOST_PP_LESS_EQUAL(1, N)) \
+    template<typename u> \
+    template<template<METALOG_VARIADIC_PARAMS(N, _)> class term, typename hExpr METALOG_TRAILING_VARIADIC_PARAMS(BOOST_PP_SUB(N, 1), tExpr)> \
+    struct substitute<u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))>:: \
+        apply<term<hExpr METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(N, 1), tExpr)> > : \
+            boost::mpl::identity \
+            < \
+                term<METALOG_FORWARD_SUBSTITUTION_TO_ARG(hExpr) METALOG_FOR_EACH_TRAILING_VARIADIC_ARG(BOOST_PP_SUB(N, 1), tExpr, METALOG_FORWARD_SUBSTITUTION_TO_ARG)> \
+            > \
+    {};
+
+#define METALOG_FORWARD_DEFINE_TERM_SUBSTITUTION(Z, N, DATA) \
+    METALOG_DEFINE_TERM_SUBSTITUTION(N)
 
 namespace metalog
 {
@@ -74,31 +91,15 @@ namespace metalog
         >::type type;
     };
 
-#define METALOG_FORWARD_SUBSTITUTION_TO_ARG(ARG) \
-    typename boost::mpl::apply_wrap1<substitute<u>, ARG>::type
-
-#define METALOG_DEFINE_TERM_SUBSTITUTION(N) \
-    BOOST_PP_ASSERT(BOOST_PP_LESS_EQUAL(1, N)) \
-    template<typename u> \
-    template<template<METALOG_VARIADIC_PARAMS(N, _)> class term, typename hExpr METALOG_TRAILING_VARIADIC_PARAMS(BOOST_PP_SUB(N, 1), tExpr)> \
-    struct substitute<u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))>:: \
-        apply<term<hExpr METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(N, 1), tExpr)> > : \
-            boost::mpl::identity \
-            < \
-                term<METALOG_FORWARD_SUBSTITUTION_TO_ARG(hExpr) METALOG_FOR_EACH_TRAILING_VARIADIC_ARG(BOOST_PP_SUB(N, 1), tExpr, METALOG_FORWARD_SUBSTITUTION_TO_ARG)> \
-            > \
-    {};
-
 #ifdef BOOST_NO_CXX11_VARIADIC_TEMPLATES
-
-#define METALOG_FORWARD_DEFINE_TERM_SUBSTITUTION(Z, N, DATA) \
-    METALOG_DEFINE_TERM_SUBSTITUTION(N)
-
     BOOST_PP_REPEAT_FROM_TO(1, METALOG_MAX_VARIADIC_ARGS, METALOG_FORWARD_DEFINE_TERM_SUBSTITUTION, _)
 #endif
 
-METALOG_DEFINE_TERM_SUBSTITUTION(METALOG_MAX_VARIADIC_ARGS)
-
+    METALOG_DEFINE_TERM_SUBSTITUTION(METALOG_MAX_VARIADIC_ARGS)
 }
+
+#undef METALOG_FORWARD_SUBSTITUTION_TO_ARG
+#undef METALOG_DEFINE_TERM_SUBSTITUTION
+#undef METALOG_FORWARD_DEFINE_TERM_SUBSTITUTION
 
 #endif
