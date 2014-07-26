@@ -18,6 +18,7 @@
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/or.hpp>
 #include <boost/mpl/bind.hpp>
+#include <boost/mpl/quote.hpp>
 
 namespace metalog
 {
@@ -44,8 +45,8 @@ namespace metalog
                 unify<detail::lazy<boost::mpl::bind<substitute<u>, var<n> > >, detail::lazy<boost::mpl::bind<substitute<u>, expr> >, u>,
                 unify //occurs check
                 <
-                    atom<detail::lazy<boost::mpl::bind<substitute<u>, expr> > >,
-                    atom<detail::lazy<boost::mpl::bind<substitute<u, boost::mpl::map<boost::mpl::pair<var<n>, detail::_> > >, expr> > >,
+                    detail::lazy<boost::mpl::bind<boost::mpl::quote1<atom>, boost::mpl::bind<substitute<u>, expr> > >,
+                    detail::lazy<boost::mpl::bind<boost::mpl::quote1<atom>, boost::mpl::bind<substitute<u, boost::mpl::map<boost::mpl::pair<var<n>, detail::_> > >, expr> > >,
                     u, boost::mpl::map<boost::mpl::pair<var<n>, expr> >
                 >
             >::type

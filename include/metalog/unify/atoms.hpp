@@ -9,7 +9,6 @@
 
 #include "../minimize.hpp"
 
-#include "../detail/lazy.hpp"
 #include "../detail/preprocessor.hpp"
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
@@ -37,21 +36,6 @@ namespace metalog
     {
         typedef typename minimize<u>::type unifiers;
     };
-
-    template<typename lExpr, typename rExpr, typename u>
-    struct unify<atom<detail::lazy<lExpr> >, atom<rExpr>, u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))> :
-            unify<atom<typename detail::lazy<lExpr>::type>, atom<rExpr>, u>
-    {};
-
-    template<typename lExpr, typename rExpr, typename u>
-    struct unify<atom<lExpr>, atom<detail::lazy<rExpr> >, u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))> :
-            unify<atom<lExpr>, atom<typename detail::lazy<rExpr>::type>, u>
-    {};
-
-    template<typename lExpr, typename rExpr, typename u>
-    struct unify<atom<detail::lazy<lExpr> >, atom<detail::lazy<rExpr> >, u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))> :
-            unify<atom<typename detail::lazy<lExpr>::type>, atom<typename detail::lazy<rExpr>::type>, u>
-    {};
 }
 
 #endif
