@@ -16,17 +16,17 @@ namespace metalog
 {
     template<typename lExpr, typename rExpr, typename u>
     struct unify<detail::lazy<lExpr>, rExpr, u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))>:
-            unify<typename boost::mpl::apply_wrap0<lExpr>::type, rExpr, u>
+            unify<typename detail::lazy<lExpr>::type, rExpr, u>
     {};
 
     template<typename lExpr, typename rExpr, typename u>
     struct unify<lExpr, detail::lazy<rExpr>, u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))>:
-            unify<lExpr, typename boost::mpl::apply_wrap0<rExpr>::type, u>
+            unify<lExpr, typename detail::lazy<rExpr>::type, u>
     {};
 
     template<typename lExpr, typename rExpr, typename u>
     struct unify<detail::lazy<lExpr>, detail::lazy<rExpr>, u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))>:
-            unify<typename boost::mpl::apply_wrap0<lExpr>::type, typename boost::mpl::apply_wrap0<rExpr>::type, u>
+            unify<typename detail::lazy<lExpr>::type, typename detail::lazy<rExpr>::type, u>
     {};
 }
 

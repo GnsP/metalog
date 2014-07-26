@@ -58,7 +58,7 @@ namespace metalog
 
     template<typename n, typename expr, typename u>
     struct unify<var<n>, detail::lazy<expr>, u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))> :
-            unify<var<n>, typename boost::mpl::apply_wrap0<expr>::type, u>
+            unify<var<n>, typename detail::lazy<expr>::type, u>
     {};
 }
 
