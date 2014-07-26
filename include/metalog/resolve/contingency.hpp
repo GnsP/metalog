@@ -24,6 +24,19 @@
 
 namespace metalog
 {
+    namespace detail
+    {
+        template<typename unification, typename goal, typename clauses, typename begin, typename end>
+        struct recurse_if :
+                boost::mpl::eval_if
+                <
+                    unification,
+                    solution<resolve<goal, clauses, begin, end, boost::mpl::vector<typename unifiers<unification>::type> > >,
+                    boost::mpl::identity<boost::mpl::vector<> >
+                >::type
+        {};
+    }
+
     template<typename goal, typename clauses, typename begin, typename end, typename s>
     struct resolve<goal, clauses, begin, end, s METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))> :
             resolve<conjunction<goal>, clauses, begin, end, s>
@@ -47,28 +60,17 @@ namespace metalog
                 typename boost::mpl::next<it>::type,
                 end,
                 s,
-                typename boost::mpl::eval_if
+                typename detail::recurse_if
                 <
                     unify<hG, typename consequence<typename boost::mpl::deref<it>::type>::type, typename boost::mpl::front<s>::type>,
-                    solution
+                    typename join
                     <
-                        resolve
-                        <
-                            typename join
-                            <
-                                typename premise<typename boost::mpl::deref<it>::type>::type,
-                                conjunction<METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), tG)>
-                            >::type,
-                            clauses,
-                            typename boost::mpl::begin<clauses>::type,
-                            end,
-                            boost::mpl::vector
-                            <
-                                typename unifiers<unify<hG, typename consequence<typename boost::mpl::deref<it>::type>::type, typename boost::mpl::front<s>::type> >::type
-                            >
-                        >
-                    >,
-                    boost::mpl::identity<boost::mpl::vector<> >
+                        typename premise<typename boost::mpl::deref<it>::type>::type,
+                        conjunction<METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), tG)>
+                    >::type,
+                    clauses,
+                    typename boost::mpl::begin<clauses>::type,
+                    end
                 >::type
             >
     {};
