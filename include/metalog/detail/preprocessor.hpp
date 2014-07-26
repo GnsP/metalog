@@ -8,7 +8,6 @@
 #define _METALOG_DETAIL_PREPROCESSOR_HPP_
 
 #include <boost/config.hpp>
-#include <boost/preprocessor/debug/assert.hpp>
 #include <boost/preprocessor/comparison/less_equal.hpp>
 #include <boost/preprocessor/comma_if.hpp>
 
@@ -25,7 +24,6 @@
 #include <boost/preprocessor/seq/elem.hpp>
 
 #define METALOG_FORWARD_MACRO_FOR_EACH_VARIADIC_IDENTIFIER(Z, N, DATA) \
-    BOOST_PP_ASSERT(BOOST_PP_LESS_EQUAL(N, METALOG_MAX_VARIADIC_ARGS)) \
     BOOST_PP_SEQ_ELEM(1, DATA)(BOOST_PP_CAT(BOOST_PP_SEQ_ELEM(0, DATA), N))
 
 #define METALOG_FOR_EACH_VARIADIC_IDENTIFIER(N, PREFIX, MACRO) \
@@ -69,22 +67,17 @@
 #include <boost/preprocessor/identity.hpp>
 #include <boost/preprocessor/tuple/eat.hpp>
 
-#define METALOG_VARIADIC_EMPTY_ARGS(N) \
-    BOOST_PP_ASSERT(BOOST_PP_LESS_EQUAL(N, METALOG_MAX_VARIADIC_ARGS))
+#define METALOG_VARIADIC_EMPTY_ARGS(N)
 
-#define METALOG_TRAILING_VARIADIC_EMPTY_ARGS(N) \
-    METALOG_VARIADIC_EMPTY_ARGS(N)
+#define METALOG_TRAILING_VARIADIC_EMPTY_ARGS(N)
 
 #define METALOG_VARIADIC_PARAMS_DECLARATION(N, PREFIX) \
-    BOOST_PP_ASSERT(BOOST_PP_LESS_EQUAL(N, METALOG_MAX_VARIADIC_ARGS)) \
     BOOST_PP_EXPR_IF(N, typename... PREFIX)
 
 #define METALOG_VARIADIC_PARAMS(N, PREFIX) \
-    BOOST_PP_ASSERT(BOOST_PP_LESS_EQUAL(N, METALOG_MAX_VARIADIC_ARGS)) \
     BOOST_PP_EXPR_IF(N, typename... PREFIX)
 
 #define METALOG_VARIADIC_ARGS(N, PREFIX) \
-    BOOST_PP_ASSERT(BOOST_PP_LESS_EQUAL(N, METALOG_MAX_VARIADIC_ARGS)) \
     BOOST_PP_EXPR_IF(N, PREFIX...)
 
 #define METALOG_FOR_EACH_VARIADIC_ARG(N, PREFIX, MACRO) \
