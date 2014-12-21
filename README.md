@@ -1,4 +1,5 @@
-# metalog - logic metaprogramming #
+metalog - logic metaprogramming
+===============================
 
 ## Introduction ##
 
