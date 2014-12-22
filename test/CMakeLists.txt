@@ -4,15 +4,15 @@
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
-include(CompilerUtils)
-include(EnableExtraCompilerWarnings)
-include(DisableCompilerExtensions)
-include(TargetUtils)
+include(CompilerFlags)
+include(CompilerWarnings)
+include(CompilerExtensions)
+include(TargetUtilities)
 
 enable_testing()
 
 globally_disable_compiler_extensions()
-globally_enable_extra_compiler_warnings()
+globally_enable_compiler_warnings()
 
 file(GLOB_RECURSE METALOG_TEST_HEADERS "*.hpp")
 file(GLOB_RECURSE METALOG_TEST_SOURCES "*.cpp")
