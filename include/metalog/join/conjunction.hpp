@@ -33,29 +33,12 @@
     template<typename> \
     struct join; \
     template<METALOG_VARIADIC_PARAMS(X, lH)> \
-    struct join \
-    < \
-        conjunction \
-        < \
-            METALOG_VARIADIC_ARGS(X, lH) \
-            BOOST_PP_COMMA_IF(BOOST_PP_AND(X, BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, X))) \
-            METALOG_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, X)) \
-        > \
-    > \
+    struct join<conjunction<METALOG_VARIADIC_ARGS(X, lH)> > \
     { \
         template<typename, typename = _> \
         struct apply; \
         template<METALOG_LEADING_VARIADIC_PARAMS(Y, rH) typename _> \
-        struct apply \
-        < \
-            conjunction \
-            < \
-                METALOG_VARIADIC_ARGS(Y, rH) \
-                BOOST_PP_COMMA_IF(BOOST_PP_AND(Y, BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, Y))) \
-                METALOG_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, Y)) \
-            >, \
-            _ \
-        > : \
+        struct apply<conjunction<METALOG_VARIADIC_ARGS(Y, rH)>, _> : \
             boost::mpl::identity<conjunction<METALOG_VARIADIC_ARGS(X, lH) BOOST_PP_COMMA_IF(BOOST_PP_AND(X, Y)) METALOG_VARIADIC_ARGS(Y, rH)> > \
         {};\
     };

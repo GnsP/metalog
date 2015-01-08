@@ -30,8 +30,6 @@ namespace metalog
             METALOG_VARIADIC_PARAMS_DECLARATION(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), sT)
     >
     struct resolve;
-
-
 }
 
 #include "resolve/contingency.hpp"

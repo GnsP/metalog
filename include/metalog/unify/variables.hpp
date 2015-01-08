@@ -23,12 +23,12 @@
 namespace metalog
 {
     template<typename n, typename u>
-    struct unify<var<n>, var<n>, u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))> :
+    struct unify<var<n>, var<n>, u> :
             unify<atom<var<n> >, atom<var<n> >, u>
     {};
 
     template<typename m, typename n, typename u>
-    struct unify<var<m>, var<n>, u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))> :
+    struct unify<var<m>, var<n>, u> :
             boost::mpl::if_
             <
                 boost::mpl::or_<boost::mpl::has_key<u, var<m> >, boost::mpl::has_key<u, var<n> > >,
@@ -38,7 +38,7 @@ namespace metalog
     {};
 
     template<typename n, typename expr, typename u>
-    struct unify<var<n>, expr, u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))> :
+    struct unify<var<n>, expr, u> :
             boost::mpl::if_
             <
                 boost::mpl::has_key<u, var<n> >,
@@ -53,12 +53,12 @@ namespace metalog
     {};
 
     template<typename n, typename expr, typename u>
-    struct unify<expr, var<n>, u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))> :
+    struct unify<expr, var<n>, u> :
             unify<var<n>, expr, u>
     {};
 
     template<typename n, typename expr, typename u>
-    struct unify<var<n>, detail::lazy<expr>, u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))> :
+    struct unify<var<n>, detail::lazy<expr>, u> :
             unify<var<n>, typename detail::lazy<expr>::type, u>
     {};
 }

@@ -22,7 +22,7 @@
 namespace metalog
 {
     template<typename seq1, typename seq2>
-    struct join<seq1, seq2 METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 2))> :
+    struct join<seq1, seq2> :
             boost::mpl::fold<seq2, seq1, boost::mpl::insert<boost::mpl::_1, boost::mpl::end<boost::mpl::_1>, boost::mpl::_2> >
     {};
 }

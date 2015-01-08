@@ -15,7 +15,7 @@
 
 #define METALOG_DEFINE_MODIFIER_UNIFICATION(MODIFIER) \
     template<typename lExpr, typename rExpr, typename u> \
-    struct unify<lExpr MODIFIER, rExpr MODIFIER, u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))> : \
+    struct unify<lExpr MODIFIER, rExpr MODIFIER, u> : \
             unify<lExpr, rExpr, u> \
     {};
 
@@ -32,7 +32,7 @@ namespace metalog
 #endif
 
     template<typename lExpr, typename rExpr, std::size_t N, typename u>
-    struct unify<lExpr[N], rExpr[N], u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))> :
+    struct unify<lExpr[N], rExpr[N], u> :
             unify<lExpr, rExpr, u>
     {};
 }

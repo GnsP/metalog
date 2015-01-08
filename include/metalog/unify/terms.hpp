@@ -31,7 +31,7 @@
     < \
         term<lH1Expr, lH2Expr METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(N, 2), lTExpr)>, \
         term<rH1Expr, rH2Expr METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(N, 2), rTExpr)>, \
-        u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1)) \
+        u \
     > : \
             unify \
             < \
@@ -47,23 +47,12 @@
 namespace metalog
 {
     template<typename lExpr, typename rExpr, typename u>
-    struct unify
-            <
-                term<lExpr METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))>,
-                term<rExpr METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))>,
-                u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))
-            > :
+    struct unify<term<lExpr>, term<rExpr>, u> :
             unify<lExpr, rExpr, u>
     {};
 
     template<typename lHExpr, typename lTExpr, typename rHExpr, typename rTExpr, typename u>
-    struct
-            unify
-            <
-                term<lHExpr, lTExpr METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 2))>,
-                term<rHExpr, rTExpr METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 2))>,
-                u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))
-            > :
+    struct unify<term<lHExpr, lTExpr>, term<rHExpr, rTExpr>, u> :
             boost::mpl::if_
             <
                 unify<lHExpr, rHExpr, u>,
@@ -73,7 +62,7 @@ namespace metalog
     {};
 
     template<template<METALOG_VARIADIC_PARAMS(1, _)> class term, typename lExpr, typename rExpr, typename u>
-    struct unify<term<lExpr>, term<rExpr>, u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))> :
+    struct unify<term<lExpr>, term<rExpr>, u> :
             unify<lExpr, rExpr, u>
     {};
 
@@ -82,7 +71,6 @@ namespace metalog
 #endif
 
     METALOG_DEFINE_EQUIVALENCE_TRANSFORM(METALOG_MAX_VARIADIC_ARGS)
-
 }
 
 #undef METALOG_DEFINE_EQUIVALENCE_TRANSFORM

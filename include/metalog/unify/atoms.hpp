@@ -19,19 +19,19 @@
 namespace metalog
 {
     template<typename lExpr, typename rExpr, typename u>
-    struct unify<lExpr, rExpr, u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))> :
+    struct unify<lExpr, rExpr, u> :
             unify<atom<lExpr>, atom<rExpr>, u>
     {};
 
     template<typename lExpr, typename rExpr, typename u>
-    struct unify<atom<lExpr>, atom<rExpr>, u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))> :
+    struct unify<atom<lExpr>, atom<rExpr>, u> :
             boost::mpl::false_
     {
         typedef boost::mpl::map<> unifiers;
     };
 
     template<typename expr, typename u>
-    struct unify<atom<expr>, atom<expr>, u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))> :
+    struct unify<atom<expr>, atom<expr>, u> :
             boost::mpl::true_
     {
         typedef typename minimize<u>::type unifiers;

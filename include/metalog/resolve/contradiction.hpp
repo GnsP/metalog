@@ -22,7 +22,7 @@ namespace metalog
     struct resolve
             <
                 conjunction<hG METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), tG)>,
-                clauses, it, it, s METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))
+                clauses, it, it, s
             > :
             boost::mpl::not_<boost::mpl::empty<typename boost::mpl::pop_front<s>::type> >
     {

@@ -38,7 +38,7 @@ namespace metalog
     }
 
     template<typename goal, typename clauses, typename begin, typename end, typename s>
-    struct resolve<goal, clauses, begin, end, s METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))> :
+    struct resolve<goal, clauses, begin, end, s> :
             resolve<conjunction<goal>, clauses, begin, end, s>
     {};
 
@@ -51,7 +51,7 @@ namespace metalog
     struct resolve
             <
                 conjunction<hG METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), tG)>,
-                clauses, it, end, s METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))
+                clauses, it, end, s
             > :
             resolve
             <

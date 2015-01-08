@@ -16,22 +16,14 @@
 namespace metalog
 {
     template<typename clauses, typename it, typename s>
-    struct resolve
-            <
-                conjunction<METALOG_VARIADIC_EMPTY_ARGS(METALOG_MAX_VARIADIC_ARGS)>,
-                clauses, it, it, s METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))
-            > :
+    struct resolve<conjunction<>, clauses, it, it, s> :
             boost::mpl::true_
     {
         typedef s solution;
     };
 
     template<typename clauses, typename begin, typename end, typename s>
-    struct resolve
-            <
-                conjunction<METALOG_VARIADIC_EMPTY_ARGS(METALOG_MAX_VARIADIC_ARGS)>,
-                clauses, begin, end, s METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))
-            > :
+    struct resolve<conjunction<>, clauses, begin, end, s> :
             resolve<conjunction<>, clauses, end, end, s>
     {};
 }

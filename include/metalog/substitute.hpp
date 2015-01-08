@@ -33,7 +33,7 @@
     BOOST_PP_ASSERT(BOOST_PP_LESS_EQUAL(1, N)) \
     template<typename u> \
     template<template<METALOG_VARIADIC_PARAMS(N, _)> class term, typename hExpr METALOG_TRAILING_VARIADIC_PARAMS(BOOST_PP_SUB(N, 1), tExpr)> \
-    struct substitute<u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))>:: \
+    struct substitute<u>:: \
         apply<term<hExpr METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(N, 1), tExpr)> > : \
             boost::mpl::identity \
             < \
@@ -52,7 +52,7 @@ namespace metalog
     {};
 
     template<typename u>
-    struct substitute<u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))>
+    struct substitute<u>
     {
         template<typename expr>
         struct apply:
@@ -62,13 +62,13 @@ namespace metalog
 
     template<typename u>
     template<typename expr>
-    struct substitute<u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))>::apply<atom<expr> > :
+    struct substitute<u>::apply<atom<expr> > :
             boost::mpl::identity<atom<expr> >
     {};
 
     template<typename u>
     template<typename n>
-    class substitute<u METALOG_TRAILING_VARIADIC_EMPTY_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1))>::apply<var<n> >
+    class substitute<u>::apply<var<n> >
     {
     private:
         //boost bug #3982
