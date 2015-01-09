@@ -17,8 +17,7 @@
 #include <boost/preprocessor/debug/assert.hpp>
 #include <boost/preprocessor/comparison/less_equal.hpp>
 #include <boost/preprocessor/logical/and.hpp>
-#include <boost/preprocessor/logical/or.hpp>
-#include <boost/preprocessor/if.hpp>
+#include <boost/preprocessor/comma_if.hpp>
 #include <boost/preprocessor/arithmetic/sub.hpp>
 #include <boost/preprocessor/arithmetic/add.hpp>
 #include <boost/preprocessor/repetition/repeat_from_to.hpp>

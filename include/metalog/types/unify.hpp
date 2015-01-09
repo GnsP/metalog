@@ -18,11 +18,11 @@ namespace metalog
 
     template
     <
-            typename lExpr, typename rExpr, typename u,
+            typename lExpr, typename rExpr, typename uH,
             METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)
     >
-    struct unifiers<unify<lExpr, rExpr, u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)> > :
-        boost::mpl::identity<typename unify<lExpr, rExpr, u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)>::unifiers>
+    struct unifiers<unify<lExpr, rExpr, uH, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)> > :
+        boost::mpl::identity<typename unify<lExpr, rExpr, uH, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)>::unifiers>
     {};
 
     template<typename u>

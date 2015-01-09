@@ -17,14 +17,14 @@ namespace metalog
 {
     template
     <
-            typename lExpr, typename rExpr, typename u,
+            typename lExpr, typename rExpr, typename uH,
             METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)
     >
     struct unify :
             unify
             <
                 lExpr, rExpr,
-                typename join<u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)>::type
+                typename join<uH, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)>::type
             >
     {};
 }
