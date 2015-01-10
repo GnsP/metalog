@@ -14,7 +14,6 @@
 #include <boost/preprocessor/arithmetic/sub.hpp>
 
 #include <boost/mpl/vector.hpp>
-#include <boost/mpl/map.hpp>
 #include <boost/mpl/begin.hpp>
 #include <boost/mpl/front.hpp>
 #include <boost/mpl/next.hpp>
