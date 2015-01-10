@@ -14,7 +14,6 @@
 #include <boost/preprocessor/arithmetic/sub.hpp>
 
 #include <boost/mpl/bool.hpp>
-#include <boost/mpl/map.hpp>
 
 namespace metalog
 {
@@ -27,7 +26,7 @@ namespace metalog
     struct unify<atom<lExpr>, atom<rExpr>, u> :
             boost::mpl::false_
     {
-        typedef boost::mpl::map<> unifiers;
+        typedef unifiers<> unifiers;
     };
 
     template<typename expr, typename u>

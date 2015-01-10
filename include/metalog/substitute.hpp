@@ -8,7 +8,6 @@
 #define _METALOG_SUBSTITUTE_HPP_
 
 #include "types.hpp"
-#include "join.hpp"
 
 #include "detail/preprocessor.hpp"
 
@@ -26,7 +25,7 @@
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 
-#define METALOG_FORWARD_SUBSTITUTION_TO_ARG(ARG) \
+#define METALOG_FORWARD_SUBSTITUTION(ARG) \
     typename boost::mpl::apply_wrap1<substitute<u>, ARG>::type
 
 #define METALOG_DEFINE_TERM_SUBSTITUTION(N) \
@@ -37,7 +36,7 @@
         apply<term<hExpr METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(N, 1), tExpr)> > : \
             boost::mpl::identity \
             < \
-                term<METALOG_FORWARD_SUBSTITUTION_TO_ARG(hExpr) METALOG_FOR_EACH_TRAILING_VARIADIC_ARG(BOOST_PP_SUB(N, 1), tExpr, METALOG_FORWARD_SUBSTITUTION_TO_ARG)> \
+                term<METALOG_FORWARD_SUBSTITUTION(hExpr) METALOG_FOR_EACH_TRAILING_VARIADIC_ARG(BOOST_PP_SUB(N, 1), tExpr, METALOG_FORWARD_SUBSTITUTION)> \
             > \
     {};
 
@@ -48,7 +47,7 @@ namespace metalog
 {
     template<typename u, METALOG_VARIADIC_PARAMS_DECLARATION(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)>
     struct substitute :
-            substitute<typename join<u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)>::type>
+            substitute<unifiers<u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)> >
     {};
 
     template<typename u>
@@ -71,13 +70,10 @@ namespace metalog
     class substitute<u>::apply<var<n> >
     {
     private:
-        //boost bug #3982
-        //typedef typename boost::mpl::at<u, var<n>, var<n> >::type lookup;
-
         typedef typename boost::mpl::eval_if
         <
-            boost::mpl::has_key<u, var<n> >,
-            boost::mpl::at<u, var<n> >,
+            boost::mpl::has_key<unifiers<u>, var<n> >,
+            boost::mpl::at<unifiers<u>, var<n> >,
             boost::mpl::identity<var<n> >
         >::type lookup;
 
@@ -98,7 +94,7 @@ namespace metalog
     METALOG_DEFINE_TERM_SUBSTITUTION(METALOG_MAX_VARIADIC_ARGS)
 }
 
-#undef METALOG_FORWARD_SUBSTITUTION_TO_ARG
+#undef METALOG_FORWARD_SUBSTITUTION
 #undef METALOG_DEFINE_TERM_SUBSTITUTION
 #undef METALOG_FORWARD_DEFINE_TERM_SUBSTITUTION
 

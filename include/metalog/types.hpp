@@ -11,7 +11,6 @@
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
 
-
 namespace metalog
 {
     template
@@ -20,6 +19,9 @@ namespace metalog
             METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)
     >
     struct unify;
+
+    template<typename u, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)>
+    struct unifiers;
 
     /**
      * An atom is considered to be a constant for the purpose of unification.
@@ -45,12 +47,11 @@ namespace metalog
     template<METALOG_VARIADIC_PARAMS_DECLARATION(METALOG_MAX_VARIADIC_ARGS, _)>
     struct conjunction;
 
-    template<typename, typename = conjunction<> >
+    template<typename premise, typename consequence = conjunction<> >
     struct clause;
 }
 
 #include "types/clause.hpp"
 #include "types/resolve.hpp"
-#include "types/unify.hpp"
 
 #endif

@@ -31,7 +31,7 @@ namespace metalog
                 boost::mpl::eval_if
                 <
                     unification,
-                    solution<resolve<goal, clauses, begin, end, boost::mpl::vector<typename unifiers<unification>::type> > >,
+                    solution<resolve<goal, clauses, begin, end, boost::mpl::vector<unifiers<unification> > > >,
                     boost::mpl::identity<boost::mpl::vector<> >
                 >::type
         {};

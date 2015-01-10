@@ -13,15 +13,13 @@
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
 
-#include <boost/mpl/map.hpp>
-
 namespace metalog
 {
     template
     <
             typename lExpr,
             typename rExpr,
-            typename u = boost::mpl::map<>,
+            typename u = unifiers<>,
             METALOG_VARIADIC_PARAMS_DECLARATION(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)
     >
     struct unify;

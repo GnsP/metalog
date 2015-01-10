@@ -56,7 +56,7 @@ namespace metalog
             boost::mpl::if_
             <
                 unify<lHExpr, rHExpr, u>,
-                unify<lTExpr, rTExpr, typename unifiers<unify<lHExpr, rHExpr, u> >::type>,
+                unify<lTExpr, rTExpr, unifiers<unify<lHExpr, rHExpr, u> > >,
                 unify<lHExpr, rHExpr, u>
             >::type
     {};

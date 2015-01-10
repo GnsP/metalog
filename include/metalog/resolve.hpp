@@ -9,12 +9,11 @@
 
 #include "types.hpp"
 #include "unify.hpp"
-#include "join.hpp"
+#include "unifiers.hpp"
 
 #include "detail/preprocessor.hpp"
 
 #include <boost/mpl/vector.hpp>
-#include <boost/mpl/map.hpp>
 #include <boost/mpl/begin.hpp>
 #include <boost/mpl/end.hpp>
 
@@ -26,7 +25,7 @@ namespace metalog
             typename clauses,
             typename begin = typename boost::mpl::begin<clauses>::type,
             typename end = typename boost::mpl::end<clauses>::type,
-            typename s = boost::mpl::vector<boost::mpl::map<> >,
+            typename s = boost::mpl::vector<unifiers<> >,
             METALOG_VARIADIC_PARAMS_DECLARATION(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), sT)
     >
     struct resolve;

@@ -7,8 +7,6 @@
 #ifndef _METALOG_UNIFY_VARIADIC_HPP_
 #define _METALOG_UNIFY_VARIADIC_HPP_
 
-#include "../join.hpp"
-
 #include "../detail/preprocessor.hpp"
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
@@ -24,7 +22,7 @@ namespace metalog
             unify
             <
                 lExpr, rExpr,
-                typename join<uH, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)>::type
+                unifiers<uH, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)>
             >
     {};
 }

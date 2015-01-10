@@ -13,12 +13,11 @@
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
 
-#include <boost/mpl/pair.hpp>
-#include <boost/mpl/map.hpp>
-#include <boost/mpl/if.hpp>
-#include <boost/mpl/or.hpp>
 #include <boost/mpl/bind.hpp>
 #include <boost/mpl/quote.hpp>
+#include <boost/mpl/pair.hpp>
+#include <boost/mpl/if.hpp>
+#include <boost/mpl/or.hpp>
 
 namespace metalog
 {
@@ -33,7 +32,7 @@ namespace metalog
             <
                 boost::mpl::or_<boost::mpl::has_key<u, var<m> >, boost::mpl::has_key<u, var<n> > >,
                 unify<detail::lazy<boost::mpl::bind<substitute<u>, var<m> > >, detail::lazy<boost::mpl::bind<substitute<u>, var<n> > >, u>,
-                unify<atom<detail::_>, atom<detail::_>, u, boost::mpl::map<boost::mpl::pair<var<m>, var<n> > > >
+                unify<atom<detail::_>, atom<detail::_>, u, boost::mpl::pair<var<m>, var<n> > >
             >::type
     {};
 
@@ -46,8 +45,8 @@ namespace metalog
                 unify //occurs check
                 <
                     detail::lazy<boost::mpl::bind<boost::mpl::quote1<atom>, boost::mpl::bind<substitute<u>, expr> > >,
-                    detail::lazy<boost::mpl::bind<boost::mpl::quote1<atom>, boost::mpl::bind<substitute<u, boost::mpl::map<boost::mpl::pair<var<n>, detail::_> > >, expr> > >,
-                    u, boost::mpl::map<boost::mpl::pair<var<n>, expr> >
+                    detail::lazy<boost::mpl::bind<boost::mpl::quote1<atom>, boost::mpl::bind<substitute<u, boost::mpl::pair<var<n>, detail::_> >, expr> > >,
+                    u, boost::mpl::pair<var<n>, expr>
                 >
             >::type
     {};
