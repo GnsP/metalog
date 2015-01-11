@@ -55,11 +55,6 @@ namespace metalog
     struct unify<expr, var<n>, u> :
             unify<var<n>, expr, u>
     {};
-
-    template<typename n, typename expr, typename u>
-    struct unify<var<n>, detail::lazy<expr>, u> :
-            unify<var<n>, typename detail::lazy<expr>::type, u>
-    {};
 }
 
 #endif
