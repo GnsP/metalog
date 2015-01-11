@@ -8,8 +8,7 @@
 #define _METALOG_SUBSTITUTE_HPP_
 
 #include "types.hpp"
-
-#include "detail/preprocessor.hpp"
+#include "preprocessor.hpp"
 
 #include <boost/config.hpp>
 #include <boost/type_traits.hpp>
@@ -44,9 +43,9 @@
 
 namespace metalog
 {
-    template<typename u, METALOG_VARIADIC_PARAMS_DECLARATION(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)>
+    template<typename u, METALOG_VARIADIC_OPTIONAL_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT)>
     struct substitute :
-            substitute<unifiers<u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)> >
+            substitute<unifiers<u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT)> >
     {};
 
     template<typename u>
@@ -87,10 +86,10 @@ namespace metalog
     };
 
 #ifdef BOOST_NO_CXX11_VARIADIC_TEMPLATES
-    BOOST_PP_REPEAT_FROM_TO(1, METALOG_MAX_VARIADIC_ARGS, METALOG_FORWARD_DEFINE_TERM_SUBSTITUTION, _)
+    BOOST_PP_REPEAT_FROM_TO(1, METALOG_MAX_ARGS, METALOG_FORWARD_DEFINE_TERM_SUBSTITUTION, _)
 #endif
 
-    METALOG_DEFINE_TERM_SUBSTITUTION(METALOG_MAX_VARIADIC_ARGS)
+    METALOG_DEFINE_TERM_SUBSTITUTION(METALOG_MAX_ARGS)
 }
 
 #undef METALOG_FORWARD_SUBSTITUTION

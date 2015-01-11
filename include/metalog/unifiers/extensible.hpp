@@ -7,9 +7,10 @@
 #ifndef _METALOG_UNIFIERS_EXTENSIBLE_HPP_
 #define _METALOG_UNIFIERS_EXTENSIBLE_HPP_
 
+#include "../preprocessor.hpp"
+
 #include "../detail/lazy.hpp"
 #include "../detail/empty.hpp"
-#include "../detail/preprocessor.hpp"
 
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/arithmetic/sub.hpp>
@@ -29,16 +30,16 @@ namespace metalog
         template<typename>
         struct map;
 
-        template<typename u, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)>
-        struct map<unifiers<u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)> > :
-            boost::mpl::identity<typename unifiers<u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)>::map>
+        template<typename u, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT)>
+        struct map<unifiers<u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT)> > :
+            boost::mpl::identity<typename unifiers<u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT)>::map>
         {};
     }
 }
 
 #define METALOG_DEFINE_FORWARD_CALL(F, N) \
-    template<typename u, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT) METALOG_TRAILING_VARIADIC_PARAMS(BOOST_PP_SUB(N, 1), _)> \
-    struct F<metalog::unifiers<u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)> METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(N, 1), _)> : \
+    template<typename u, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT) METALOG_TRAILING_VARIADIC_PARAMS(BOOST_PP_SUB(N, 1), _)> \
+    struct F<metalog::unifiers<u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT)> METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(N, 1), _)> : \
         identity \
         < \
             metalog::unifiers \
@@ -48,7 +49,7 @@ namespace metalog
                     bind \
                     < \
                         BOOST_PP_CAT(quote, N)<F>, \
-                        bind<quote1<metalog::detail::map>, metalog::unifiers<u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)> > \
+                        bind<quote1<metalog::detail::map>, metalog::unifiers<u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT)> > \
                         METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(N, 1), _) \
                     > \
                 > \
@@ -64,13 +65,13 @@ namespace boost
         METALOG_DEFINE_FORWARD_CALL(erase_key, 2)
         METALOG_DEFINE_FORWARD_CALL(erase, 3)
 
-        template<typename u, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT), typename x>
-        struct insert<metalog::unifiers<u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)>, x> :
-            insert<metalog::unifiers<u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)>, metalog::detail::_, x>
+        template<typename u, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT), typename x>
+        struct insert<metalog::unifiers<u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT)>, x> :
+            insert<metalog::unifiers<u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT)>, metalog::detail::_, x>
         {};
 
-        template<typename u, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)>
-        struct clear<metalog::unifiers<u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)> > :
+        template<typename u, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT)>
+        struct clear<metalog::unifiers<u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT)> > :
             identity<metalog::unifiers<> >
         {};
     }

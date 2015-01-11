@@ -7,7 +7,7 @@
 #ifndef _METALOG_UNIFIERS_ASSOCIATIVE_HPP_
 #define _METALOG_UNIFIERS_ASSOCIATIVE_HPP_
 
-#include "../detail/preprocessor.hpp"
+#include "../preprocessor.hpp"
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
 
@@ -24,11 +24,11 @@
 #include <boost/mpl/value_type.hpp>
 
 #define METALOG_DEFINE_FORWARD_CALL(F, N) \
-    template<typename u, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT) METALOG_TRAILING_VARIADIC_PARAMS(BOOST_PP_SUB(N, 1), _)> \
-    struct F<metalog::unifiers<u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)> METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(N, 1), _)> : \
+    template<typename u, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT) METALOG_TRAILING_VARIADIC_PARAMS(BOOST_PP_SUB(N, 1), _)> \
+    struct F<metalog::unifiers<u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT)> METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(N, 1), _)> : \
         F \
         < \
-            typename metalog::unifiers<u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)>::map \
+            typename metalog::unifiers<u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT)>::map \
             METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(N, 1), _) \
         > \
     {};

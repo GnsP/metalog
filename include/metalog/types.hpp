@@ -7,7 +7,7 @@
 #ifndef _METALOG_TYPES_HPP_
 #define _METALOG_TYPES_HPP_
 
-#include "detail/preprocessor.hpp"
+#include "preprocessor.hpp"
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
 
@@ -24,7 +24,7 @@ namespace metalog
     template<typename>
     struct var;
 
-    template<typename, METALOG_VARIADIC_PARAMS_DECLARATION(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), _)>
+    template<typename, METALOG_VARIADIC_OPTIONAL_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), _)>
     struct term;
 }
 

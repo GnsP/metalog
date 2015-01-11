@@ -9,9 +9,9 @@
 
 #include "../unify.hpp"
 #include "../join.hpp"
+#include "../preprocessor.hpp"
 
 #include "../detail/lazy.hpp"
-#include "../detail/preprocessor.hpp"
 
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/pair.hpp>
@@ -36,9 +36,9 @@ namespace metalog
             unifiers<u>
     {};
 
-    template<typename lExpr, typename rExpr, typename uH, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)>
-    struct unifiers<unify<lExpr, rExpr, uH, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)> > :
-            unify<lExpr, rExpr, uH, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)>::unifiers
+    template<typename lExpr, typename rExpr, typename uH, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT)>
+    struct unifiers<unify<lExpr, rExpr, uH, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT)> > :
+            unify<lExpr, rExpr, uH, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT)>::unifiers
     {};
 
     template<typename expr>
@@ -47,9 +47,9 @@ namespace metalog
     {};
 
     //should be handled by the lazy specialization
-    template<typename uH1, typename uH2, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 2), uT)>
-    struct unifiers<join<uH1, uH2, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 2), uT)> > :
-        join<uH1, uH2, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 2), uT)>::type
+    template<typename uH1, typename uH2, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 2), uT)>
+    struct unifiers<join<uH1, uH2, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 2), uT)> > :
+        join<uH1, uH2, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 2), uT)>::type
     {};
 }
 

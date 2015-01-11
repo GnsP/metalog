@@ -4,9 +4,7 @@
  * See accompanying file LICENSE.txt for its full text.
  */
 
-#define METALOG_MAX_VARIADIC_ARGS 4
 #include "metalog.hpp"
-#include "metalog/detail/preprocessor.hpp"
 
 #include <boost/bind.hpp>
 

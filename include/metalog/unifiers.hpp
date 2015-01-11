@@ -7,7 +7,7 @@
 #ifndef _METALOG_UNIFIERS_HPP_
 #define _METALOG_UNIFIERS_HPP_
 
-#include "detail/preprocessor.hpp"
+#include "preprocessor.hpp"
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
 
@@ -15,7 +15,7 @@
 
 namespace metalog
 {
-    template<typename u = boost::mpl::map<>, METALOG_VARIADIC_PARAMS_DECLARATION(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)>
+    template<typename u = boost::mpl::map<>, METALOG_VARIADIC_OPTIONAL_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT)>
     struct unifiers;
 }
 

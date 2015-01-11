@@ -8,8 +8,7 @@
 #define _METALOG_UNIFIERS_VARIADIC_HPP_
 
 #include "../join.hpp"
-
-#include "../detail/preprocessor.hpp"
+#include "../preprocessor.hpp"
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
 
@@ -18,9 +17,9 @@
 
 namespace metalog
 {
-    template<typename uH, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)>
+    template<typename uH, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT)>
     struct unifiers :
-        unifiers<join<METALOG_FORWARD_CAST(uH) METALOG_FOR_EACH_TRAILING_VARIADIC_ARG(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT, METALOG_FORWARD_CAST)> >
+        unifiers<join<METALOG_FORWARD_CAST(uH) METALOG_FOR_EACH_TRAILING_VARIADIC_ARG(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT, METALOG_FORWARD_CAST)> >
     {};
 }
 

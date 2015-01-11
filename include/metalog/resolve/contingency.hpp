@@ -9,8 +9,7 @@
 
 #include "../solutions.hpp"
 #include "../clause.hpp"
-
-#include "../detail/preprocessor.hpp"
+#include "../preprocessor.hpp"
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
 
@@ -45,17 +44,17 @@ namespace metalog
 
     template
     <
-            typename hG, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), tG),
+            typename hG, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), tG),
             typename clauses, typename it, typename end, typename s
     >
     struct resolve
             <
-                conjunction<hG METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), tG)>,
+                conjunction<hG METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), tG)>,
                 clauses, it, end, s
             > :
             resolve
             <
-                conjunction<hG METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), tG)>,
+                conjunction<hG METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), tG)>,
                 clauses,
                 typename boost::mpl::next<it>::type,
                 end,
@@ -66,7 +65,7 @@ namespace metalog
                     typename join
                     <
                         typename premise<typename boost::mpl::deref<it>::type>::type,
-                        conjunction<METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), tG)>
+                        conjunction<METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), tG)>
                     >::type,
                     clauses,
                     typename boost::mpl::begin<clauses>::type,

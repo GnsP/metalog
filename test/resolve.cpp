@@ -4,7 +4,6 @@
  * See accompanying file LICENSE.txt for its full text.
  */
 
-#define METALOG_MAX_VARIADIC_ARGS 10
 #include "metalog.hpp"
 
 #include <boost/mpl/vector.hpp>

@@ -7,11 +7,11 @@
 #ifndef _METALOG_CONJUNCTION_HPP_
 #define _METALOG_CONJUNCTION_HPP_
 
-#include "detail/preprocessor.hpp"
+#include "preprocessor.hpp"
 
 namespace metalog
 {
-    template<METALOG_VARIADIC_PARAMS_DECLARATION(METALOG_MAX_VARIADIC_ARGS, _)>
+    template<METALOG_VARIADIC_OPTIONAL_PARAMS(METALOG_MAX_ARGS, _)>
     struct conjunction;
 }
 

@@ -7,13 +7,13 @@
 #ifndef _METALOG_JOIN_VARIADIC_HPP_
 #define _METALOG_JOIN_VARIADIC_HPP_
 
-#include "../detail/preprocessor.hpp"
+#include "../preprocessor.hpp"
 
 namespace metalog
 {
-    template<typename h1, typename h2, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 2), t)>
+    template<typename h1, typename h2, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 2), t)>
     struct join :
-            join<typename join<h1, h2>::type, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 2), t)>
+            join<typename join<h1, h2>::type, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 2), t)>
     {};
 }
 

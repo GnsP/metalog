@@ -8,8 +8,7 @@
 #define _METALOG_UNIFY_ATOMS_HPP_
 
 #include "../minimize.hpp"
-
-#include "../detail/preprocessor.hpp"
+#include "../preprocessor.hpp"
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
 

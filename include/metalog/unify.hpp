@@ -8,8 +8,7 @@
 #define _METALOG_UNIFY_HPP_
 
 #include "types.hpp"
-
-#include "detail/preprocessor.hpp"
+#include "preprocessor.hpp"
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
 
@@ -20,7 +19,7 @@ namespace metalog
             typename lExpr,
             typename rExpr,
             typename u = unifiers<>,
-            METALOG_VARIADIC_PARAMS_DECLARATION(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), uT)
+            METALOG_VARIADIC_OPTIONAL_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT)
     >
     struct unify;
 }

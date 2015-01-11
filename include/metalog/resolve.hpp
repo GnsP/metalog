@@ -9,8 +9,7 @@
 
 #include "unify.hpp"
 #include "unifiers.hpp"
-
-#include "detail/preprocessor.hpp"
+#include "preprocessor.hpp"
 
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/begin.hpp>
@@ -25,7 +24,7 @@ namespace metalog
             typename begin = typename boost::mpl::begin<clauses>::type,
             typename end = typename boost::mpl::end<clauses>::type,
             typename s = boost::mpl::vector<unifiers<> >,
-            METALOG_VARIADIC_PARAMS_DECLARATION(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), sT)
+            METALOG_VARIADIC_OPTIONAL_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), sT)
     >
     struct resolve;
 }

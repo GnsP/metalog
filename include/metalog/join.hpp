@@ -7,11 +7,11 @@
 #ifndef _METALOG_JOIN_HPP_
 #define _METALOG_JOIN_HPP_
 
-#include "detail/preprocessor.hpp"
+#include "preprocessor.hpp"
 
 namespace metalog
 {
-    template<typename, typename, METALOG_VARIADIC_PARAMS_DECLARATION(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 2), _)>
+    template<typename, typename, METALOG_VARIADIC_OPTIONAL_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 2), _)>
     struct join;
 }
 

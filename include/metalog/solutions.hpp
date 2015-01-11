@@ -8,8 +8,7 @@
 #define _METALOG_SOLUTIONS_HPP_
 
 #include "resolve.hpp"
-
-#include "detail/preprocessor.hpp"
+#include "preprocessor.hpp"
 
 #include <boost/mpl/identity.hpp>
 
@@ -21,10 +20,10 @@ namespace metalog
     template
     <
             typename goal, typename clauses, typename begin, typename end, typename s,
-            METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), sT)
+            METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), sT)
     >
-    struct solution<resolve<goal, clauses, begin, end, s, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), sT)> > :
-        boost::mpl::identity<typename resolve<goal, clauses, begin, end, s, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), sT)>::solution>
+    struct solution<resolve<goal, clauses, begin, end, s, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), sT)> > :
+        boost::mpl::identity<typename resolve<goal, clauses, begin, end, s, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), sT)>::solution>
     {};
 
     template<typename s>

@@ -7,9 +7,10 @@
 #ifndef _METALOG_UNIFY_VARIABLES_HPP_
 #define _METALOG_UNIFY_VARIABLES_HPP_
 
+#include "../preprocessor.hpp"
+
 #include "../detail/empty.hpp"
 #include "../detail/lazy.hpp"
-#include "../detail/preprocessor.hpp"
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
 

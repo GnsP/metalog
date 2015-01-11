@@ -8,8 +8,7 @@
 #define _METALOG_RESOLVE_VARIADIC_HPP_
 
 #include "../join.hpp"
-
-#include "../detail/preprocessor.hpp"
+#include "../preprocessor.hpp"
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
 
@@ -18,10 +17,10 @@ namespace metalog
     template
     <
             typename goal, typename clauses, typename begin, typename end, typename s,
-            METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), sT)
+            METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), sT)
     >
     struct resolve :
-            resolve<goal, clauses, begin, end, typename join<s, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_VARIADIC_ARGS, 1), sT)>::type>
+            resolve<goal, clauses, begin, end, typename join<s, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), sT)>::type>
     {};
 }
 
