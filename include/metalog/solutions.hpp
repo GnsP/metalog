@@ -4,10 +4,12 @@
  * See accompanying file LICENSE.txt for its full text.
  */
 
-#ifndef _METALOG_TYPES_RESOLVE_HPP_
-#define _METALOG_TYPES_RESOLVE_HPP_
+#ifndef _METALOG_SOLUTIONS_HPP_
+#define _METALOG_SOLUTIONS_HPP_
 
-#include "../detail/preprocessor.hpp"
+#include "resolve.hpp"
+
+#include "detail/preprocessor.hpp"
 
 #include <boost/mpl/identity.hpp>
 

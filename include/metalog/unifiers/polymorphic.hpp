@@ -7,7 +7,7 @@
 #ifndef _METALOG_UNIFIERS_POLYMORPHIC_HPP_
 #define _METALOG_UNIFIERS_POLYMORPHIC_HPP_
 
-#include "../types.hpp"
+#include "../unify.hpp"
 #include "../join.hpp"
 
 #include "../detail/lazy.hpp"

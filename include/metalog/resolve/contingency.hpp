@@ -7,7 +7,8 @@
 #ifndef _METALOG_RESOLVE_CONTINGENCY_HPP_
 #define _METALOG_RESOLVE_CONTINGENCY_HPP_
 
-#include "../types.hpp"
+#include "../solutions.hpp"
+#include "../clause.hpp"
 
 #include "../detail/preprocessor.hpp"
 

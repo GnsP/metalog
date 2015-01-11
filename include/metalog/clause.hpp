@@ -4,16 +4,21 @@
  * See accompanying file LICENSE.txt for its full text.
  */
 
-#ifndef _METALOG_TYPES_CLAUSE_HPP_
-#define _METALOG_TYPES_CLAUSE_HPP_
+#ifndef _METALOG_CLAUSE_HPP_
+#define _METALOG_CLAUSE_HPP_
 
-#include "../detail/preprocessor.hpp"
+#include "conjunction.hpp"
+
+#include "detail/preprocessor.hpp"
 
 #include <boost/mpl/identity.hpp>
 
 namespace metalog
 {
-    template<typename>
+    template<typename consequence, typename premise = conjunction<> >
+    struct clause;
+
+    template<typename clause>
     struct consequence;
 
     template<typename csqc, METALOG_VARIADIC_PARAMS(METALOG_MAX_VARIADIC_ARGS, prms)>
@@ -21,7 +26,7 @@ namespace metalog
             boost::mpl::identity<csqc>
     {};
 
-    template<typename>
+    template<typename clause>
     struct premise;
 
     template<typename csqc, METALOG_VARIADIC_PARAMS(METALOG_MAX_VARIADIC_ARGS, prms)>

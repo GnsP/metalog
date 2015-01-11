@@ -7,13 +7,6 @@
 #ifndef _METALOG_JOIN_SEQUENCES_HPP_
 #define _METALOG_JOIN_SEQUENCES_HPP_
 
-#include "../types.hpp"
-
-#include "../detail/preprocessor.hpp"
-
-#include <boost/preprocessor/arithmetic/sub.hpp>
-
-#include <boost/mpl/identity.hpp>
 #include <boost/mpl/insert.hpp>
 #include <boost/mpl/end.hpp>
 #include <boost/mpl/fold.hpp>
