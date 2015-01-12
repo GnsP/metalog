@@ -10,32 +10,44 @@
 #include "unifiers.hpp"
 #include "substitute.hpp"
 
+#include "detail/lazy.hpp"
+
 #include <boost/mpl/identity.hpp>
-#include <boost/mpl/pair.hpp>
-#include <boost/mpl/fold.hpp>
-#include <boost/mpl/insert.hpp>
+#include <boost/mpl/bind.hpp>
+#include <boost/mpl/quote.hpp>
 #include <boost/mpl/apply_wrap.hpp>
 #include <boost/mpl/placeholders.hpp>
+#include <boost/mpl/fold.hpp>
+#include <boost/mpl/insert.hpp>
+#include <boost/mpl/pair.hpp>
 
 namespace metalog
 {
     template<typename u>
     struct minimize :
             boost::mpl::identity
-            <   typename boost::mpl::fold
+            <
+                unifiers
                 <
-                    unifiers<u>,
-                    unifiers<>,
-                    boost::mpl::insert
+                    detail::lazy
                     <
-                        boost::mpl::_1,
-                        boost::mpl::pair
+                        boost::mpl::bind
                         <
-                            boost::mpl::first<boost::mpl::_2>,
-                            boost::mpl::apply_wrap1<substitute<u>, boost::mpl::second<boost::mpl::_2> >
+                            boost::mpl::quote3<boost::mpl::fold>,
+                            unifiers<u>,
+                            unifiers<>,
+                            boost::mpl::insert
+                            <
+                                boost::mpl::_1,
+                                boost::mpl::pair
+                                <
+                                    boost::mpl::first<boost::mpl::_2>,
+                                    boost::mpl::apply_wrap1<substitute<u>, boost::mpl::second<boost::mpl::_2> >
+                                >
+                            >
                         >
                     >
-                >::type
+                >
             >
     {};
 }
