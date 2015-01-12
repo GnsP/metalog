@@ -9,7 +9,8 @@
 
 #include "unify.hpp"
 #include "unifiers.hpp"
-#include "preprocessor.hpp"
+
+#include "detail/preprocessor.hpp"
 
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/begin.hpp>

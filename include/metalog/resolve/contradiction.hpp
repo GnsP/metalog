@@ -7,8 +7,6 @@
 #ifndef _METALOG_RESOLVE_CONTRADICTION_HPP_
 #define _METALOG_RESOLVE_CONTRADICTION_HPP_
 
-#include "../preprocessor.hpp"
-
 #include <boost/preprocessor/arithmetic/sub.hpp>
 
 #include <boost/mpl/logical.hpp>

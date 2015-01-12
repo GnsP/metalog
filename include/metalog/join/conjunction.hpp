@@ -8,7 +8,6 @@
 #define _METALOG_JOIN_CONJUNCTION_HPP_
 
 #include "../conjunction.hpp"
-#include "../preprocessor.hpp"
 
 #include "../detail/empty.hpp"
 

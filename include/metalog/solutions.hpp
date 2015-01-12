@@ -8,7 +8,8 @@
 #define _METALOG_SOLUTIONS_HPP_
 
 #include "resolve.hpp"
-#include "preprocessor.hpp"
+
+#include "detail/preprocessor.hpp"
 
 #include <boost/mpl/identity.hpp>
 

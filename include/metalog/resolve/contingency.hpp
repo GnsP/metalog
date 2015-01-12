@@ -9,7 +9,6 @@
 
 #include "../solutions.hpp"
 #include "../clause.hpp"
-#include "../preprocessor.hpp"
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
 

@@ -7,8 +7,6 @@
 #ifndef _METALOG_UNIFY_LAZY_HPP_
 #define _METALOG_UNIFY_LAZY_HPP_
 
-#include "../preprocessor.hpp"
-
 #include "../detail/lazy.hpp"
 
 #include <boost/preprocessor/arithmetic/sub.hpp>

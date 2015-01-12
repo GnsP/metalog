@@ -7,8 +7,6 @@
 #ifndef _METALOG_JOIN_VARIADIC_HPP_
 #define _METALOG_JOIN_VARIADIC_HPP_
 
-#include "../preprocessor.hpp"
-
 namespace metalog
 {
     template<typename h1, typename h2, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 2), t)>

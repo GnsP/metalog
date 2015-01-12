@@ -8,7 +8,6 @@
 #define _METALOG_RESOLVE_VARIADIC_HPP_
 
 #include "../join.hpp"
-#include "../preprocessor.hpp"
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
 

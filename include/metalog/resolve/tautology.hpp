@@ -7,8 +7,6 @@
 #ifndef _METALOG_RESOLVE_TAUTOLOGY_HPP_
 #define _METALOG_RESOLVE_TAUTOLOGY_HPP_
 
-#include "../preprocessor.hpp"
-
 #include <boost/preprocessor/arithmetic/sub.hpp>
 
 #include <boost/mpl/logical.hpp>

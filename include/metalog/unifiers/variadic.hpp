@@ -8,7 +8,6 @@
 #define _METALOG_UNIFIERS_VARIADIC_HPP_
 
 #include "../join.hpp"
-#include "../preprocessor.hpp"
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
 

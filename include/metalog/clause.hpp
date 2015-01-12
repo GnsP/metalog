@@ -8,7 +8,8 @@
 #define _METALOG_CLAUSE_HPP_
 
 #include "conjunction.hpp"
-#include "preprocessor.hpp"
+
+#include "detail/preprocessor.hpp"
 
 #include <boost/mpl/identity.hpp>
 

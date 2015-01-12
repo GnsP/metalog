@@ -4,7 +4,7 @@
  * See accompanying file LICENSE.txt for its full text.
  */
 
-#include "../detail/empty.hpp"
+#include "../empty.hpp"
 
 #include <boost/preprocessor/comma_if.hpp>
 #include <boost/preprocessor/repetition/enum.hpp>

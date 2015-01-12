@@ -7,8 +7,6 @@
 #ifndef _METALOG_UNIFY_VARIADIC_HPP_
 #define _METALOG_UNIFY_VARIADIC_HPP_
 
-#include "../preprocessor.hpp"
-
 #include <boost/preprocessor/arithmetic/sub.hpp>
 
 namespace metalog

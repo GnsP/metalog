@@ -8,7 +8,6 @@
 #include "metalog/conjunction.hpp"
 #include "metalog/equivalent.hpp"
 #include "metalog/minimize.hpp"
-#include "metalog/preprocessor.hpp"
 #include "metalog/resolve.hpp"
 #include "metalog/substitute.hpp"
 #include "metalog/types.hpp"

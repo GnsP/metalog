@@ -7,7 +7,7 @@
 #ifndef _METALOG_JOIN_HPP_
 #define _METALOG_JOIN_HPP_
 
-#include "preprocessor.hpp"
+#include "detail/preprocessor.hpp"
 
 namespace metalog
 {

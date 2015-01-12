@@ -9,7 +9,6 @@
 
 #include "../unify.hpp"
 #include "../join.hpp"
-#include "../preprocessor.hpp"
 
 #include "../detail/lazy.hpp"
 
@@ -23,7 +22,7 @@ namespace metalog
     struct unifiers<m> :
             boost::mpl::identity<unifiers<m> >
     {
-        typedef m map;
+        METALOG_DEFINE_IMPL(metalog::unifiers, m)
     };
 
     template<typename key, typename value>

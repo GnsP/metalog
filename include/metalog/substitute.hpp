@@ -8,7 +8,8 @@
 #define _METALOG_SUBSTITUTE_HPP_
 
 #include "types.hpp"
-#include "preprocessor.hpp"
+
+#include "detail/preprocessor.hpp"
 
 #include <boost/config.hpp>
 #include <boost/type_traits.hpp>
