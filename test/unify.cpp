@@ -115,7 +115,7 @@ struct C;
     ((true )((2, (unify<const var<A> volatile, var<B> const>                                                )))((2, (map<pair<var<B>, var<A> volatile> >)))) \
     ((true )((2, (unify<var<A>, var<A> >                                                                    )))((1, (map<>)))) \
     ((true )((2, (unify<var<A>, var<B> >                                                                    )))((2, (map<pair<var<A>, var<B> > >)))) \
-    ((true )((3, (unify<var<A>, term<int, int*> >                                                           )))((3, (map<pair<var<A>, term<int, int*> > >)))) \
+    ((true )((3, (unify<var<A>, rel2<int, int*> >                                                           )))((3, (map<pair<var<A>, rel2<int, int*> > >)))) \
     ((true )((2, (unify<term<int>, term<int> >                                                              )))((1, (map<>)))) \
     ((true )((4, (unify<term<int, int*>, term<int, int*> >                                                  )))((1, (map<>)))) \
     ((true )((4, (unify<term<term<int, int*> >, term<term<int, int*> > >                                    )))((1, (map<>)))) \
@@ -124,7 +124,7 @@ struct C;
     ((true )((4, (unify<term<int, var<A> >, term<int, int*> >                                               )))((2, (map<pair<var<A>, int*> >)))) \
     ((true )((4, (unify<term<var<A>, var<A>*>, term<int, int*> >                                            )))((2, (map<pair<var<A>, int> >)))) \
     ((true )((4, (unify<term<var<A>, var<B> >, term<var<B>, int> >                                          )))((4, (map<pair<var<A>, int>, pair<var<B>, int> >)))) \
-    ((true )((6, (unify<term<var<A>, term<term<int>, var<B> > >, term<term<var<B> >, term<var<A>, int> > >  )))((4, (map<pair<var<A>, term<int> >, pair<var<B>, int> >)))) \
+    ((true )((6, (unify<term<var<A>, rel2<rel1<int>, var<B> > >, term<rel1<var<B> >, rel2<var<A>, int> > >  )))((4, (map<pair<var<A>, rel1<int> >, pair<var<B>, int> >)))) \
     ((true )((2, (unify<rel1<int>, rel1<int> >                                                              )))((1, (map<>)))) \
     ((true )((4, (unify<rel2<int, int*>, rel2<int, int*> >                                                  )))((1, (map<>)))) \
     ((true )((4, (unify<rel1<term<int, var<A>*> >, rel1<term<int, int**> > >                                )))((2, (map<pair<var<A>, int*> >)))) \
