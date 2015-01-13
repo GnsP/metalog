@@ -29,7 +29,7 @@ namespace metalog
     struct unify<var<m>, var<n>, u> :
             boost::mpl::if_
             <
-                boost::mpl::or_<boost::mpl::has_key<u, var<m> >, boost::mpl::has_key<u, var<n> > >,
+                boost::mpl::or_<boost::mpl::has_key<unifiers<u>, var<m> >, boost::mpl::has_key<unifiers<u>, var<n> > >,
                 unify<detail::lazy<boost::mpl::bind<substitute<u>, var<m> > >, detail::lazy<boost::mpl::bind<substitute<u>, var<n> > >, u>,
                 unify<atom<detail::_>, atom<detail::_>, u, boost::mpl::pair<var<m>, var<n> > >
             >::type
@@ -39,7 +39,7 @@ namespace metalog
     struct unify<var<n>, expr, u> :
             boost::mpl::if_
             <
-                boost::mpl::has_key<u, var<n> >,
+                boost::mpl::has_key<unifiers<u>, var<n> >,
                 unify<detail::lazy<boost::mpl::bind<substitute<u>, var<n> > >, detail::lazy<boost::mpl::bind<substitute<u>, expr> >, u>,
                 unify //occurs check
                 <
