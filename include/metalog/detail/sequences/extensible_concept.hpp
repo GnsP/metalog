@@ -8,7 +8,6 @@
 #define _METALOG_DETAIL_SEQUENCES_EXTENSIBLE_CONCEPT_HPP_
 
 #include "forward_call.hpp"
-#include "extenders.hpp"
 #include "forward_concept.hpp"
 
 #include "../empty.hpp"
@@ -20,13 +19,23 @@
 #include <boost/mpl/next.hpp>
 
 #define METALOG_IMPLEMENT_EXTENSIBLE_CONCEPT(SEQ) \
-    METALOG_DEFINE_EXTENDERS(SEQ) \
     METALOG_IMPLEMENT_FORWARD_CONCEPT(SEQ) \
     namespace boost \
     { \
         namespace mpl \
         { \
+            METALOG_DEFINE_LAZY_FORWARD_CALL(SEQ, insert, 3) \
+            template<typename h, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t), typename x> \
+            struct insert<SEQ<h, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>, x> : \
+                insert<SEQ<h, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>, metalog::detail::_, x> \
+            {}; \
             METALOG_DEFINE_LAZY_FORWARD_CALL(SEQ, insert_range, 3) \
+            METALOG_DEFINE_LAZY_FORWARD_CALL(SEQ, erase, 3) \
+            template<typename h, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t), typename pos> \
+            struct erase<SEQ<h, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>, pos> : \
+                erase<SEQ<h, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>, pos, typename boost::mpl::next<pos>::type> \
+            {}; \
+            METALOG_DEFINE_LAZY_FORWARD_CALL(SEQ, clear, 1) \
         } \
     } \
 

@@ -8,7 +8,6 @@
 #define _METALOG_DETAIL_SEQUENCES_FORWARD_CONCEPT_HPP_
 
 #include "forward_call.hpp"
-#include "impl.hpp"
 
 #include <boost/mpl/begin.hpp>
 #include <boost/mpl/end.hpp>

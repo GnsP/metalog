@@ -4,7 +4,7 @@
  * See accompanying file LICENSE.txt for its full text.
  */
 
-#include "sequences/associative_concept.hpp"
-#include "sequences/extensible_associative_concept.hpp"
-#include "sequences/forward_concept.hpp"
 #include "sequences/impl.hpp"
+#include "sequences/forward_concept.hpp"
+#include "sequences/extensible_concept.hpp"
+#include "sequences/extensible_associative_concept.hpp"
