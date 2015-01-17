@@ -16,7 +16,7 @@
 
 namespace metalog
 {
-    template<typename u = boost::mpl::map<>, METALOG_VARIADIC_OPTIONAL_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT)>
+    template<typename h = boost::mpl::map<>, METALOG_VARIADIC_OPTIONAL_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>
     struct unifiers;
 }
 

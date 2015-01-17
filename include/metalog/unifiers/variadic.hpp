@@ -7,21 +7,23 @@
 #ifndef _METALOG_UNIFIERS_VARIADIC_HPP_
 #define _METALOG_UNIFIERS_VARIADIC_HPP_
 
-#include "../join.hpp"
+#include "../detail/preprocessor.hpp"
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
 
-#define METALOG_FORWARD_CAST(ARG) \
-    unifiers<ARG>
+#include <boost/mpl/insert_range.hpp>
 
 namespace metalog
 {
-    template<typename uH, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT)>
+    template<typename h, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>
     struct unifiers :
-        unifiers<join<METALOG_FORWARD_CAST(uH) METALOG_FOR_EACH_TRAILING_VARIADIC_ARG(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT, METALOG_FORWARD_CAST)> >
+            boost::mpl::insert_range
+            <
+                unifiers<h>,
+                typename boost::mpl::end<unifiers<h> >::type,
+                unifiers<METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>
+            >::type
     {};
 }
-
-#undef METALOG_FORWARD_CAST
 
 #endif
