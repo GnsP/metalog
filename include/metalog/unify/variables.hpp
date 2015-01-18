@@ -7,6 +7,8 @@
 #ifndef _METALOG_UNIFY_VARIABLES_HPP_
 #define _METALOG_UNIFY_VARIABLES_HPP_
 
+#include "../unifiers.hpp"
+
 #include "../detail/empty.hpp"
 #include "../detail/lazy.hpp"
 
@@ -31,7 +33,7 @@ namespace metalog
             <
                 boost::mpl::or_<boost::mpl::has_key<unifiers<u>, var<m> >, boost::mpl::has_key<unifiers<u>, var<n> > >,
                 unify<detail::lazy<boost::mpl::bind<substitute<u>, var<m> > >, detail::lazy<boost::mpl::bind<substitute<u>, var<n> > >, u>,
-                unify<atom<detail::_>, atom<detail::_>, u, boost::mpl::pair<var<m>, var<n> > >
+                unify<atom<detail::_>, atom<detail::_>, unifiers<u, boost::mpl::pair<var<m>, var<n> > > >
             >::type
     {};
 
@@ -44,8 +46,8 @@ namespace metalog
                 unify //occurs check
                 <
                     detail::lazy<boost::mpl::bind<boost::mpl::quote1<atom>, boost::mpl::bind<substitute<u>, expr> > >,
-                    detail::lazy<boost::mpl::bind<boost::mpl::quote1<atom>, boost::mpl::bind<substitute<u, boost::mpl::pair<var<n>, detail::_> >, expr> > >,
-                    u, boost::mpl::pair<var<n>, expr>
+                    detail::lazy<boost::mpl::bind<boost::mpl::quote1<atom>, boost::mpl::bind<substitute<unifiers<u, boost::mpl::pair<var<n>, detail::_> > >, expr> > >,
+                    unifiers<u, boost::mpl::pair<var<n>, expr> >
                 >
             >::type
     {};

@@ -7,6 +7,7 @@
 #ifndef _METALOG_UNIFY_ATOMS_HPP_
 #define _METALOG_UNIFY_ATOMS_HPP_
 
+#include "../unifiers.hpp"
 #include "../minimize.hpp"
 
 #include <boost/preprocessor/arithmetic/sub.hpp>
@@ -16,7 +17,7 @@
 namespace metalog
 {
     template<typename lExpr, typename rExpr, typename u>
-    struct unify<lExpr, rExpr, u> :
+    struct unify :
             unify<atom<lExpr>, atom<rExpr>, u>
     {};
 

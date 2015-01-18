@@ -29,9 +29,9 @@ namespace metalog
             unifiers<h, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>
     {};
 
-    template<typename lExpr, typename rExpr, typename h, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>
-    struct unifiers<unify<lExpr, rExpr, h, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)> > :
-            unify<lExpr, rExpr, h, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>::unifiers
+    template<typename lExpr, typename rExpr, typename u>
+    struct unifiers<unify<lExpr, rExpr, u> > :
+            unify<lExpr, rExpr, u>::unifiers
     {};
 
     template<typename key, typename value>

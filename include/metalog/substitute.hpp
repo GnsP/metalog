@@ -50,13 +50,8 @@
 
 namespace metalog
 {
-    template<typename u, METALOG_VARIADIC_OPTIONAL_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT)>
-    struct substitute :
-            substitute<unifiers<u, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT)> >
-    {};
-
     template<typename u>
-    struct substitute<u>
+    struct substitute
     {
         template<typename expr>
         struct apply:

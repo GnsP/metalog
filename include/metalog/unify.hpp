@@ -7,20 +7,13 @@
 #ifndef _METALOG_UNIFY_HPP_
 #define _METALOG_UNIFY_HPP_
 
-#include "types.hpp"
-
-#include "detail/preprocessor.hpp"
-
-#include <boost/preprocessor/arithmetic/sub.hpp>
-
 namespace metalog
 {
     template
     <
             typename lExpr,
             typename rExpr,
-            typename u = unifiers<>,
-            METALOG_VARIADIC_OPTIONAL_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), uT)
+            typename u = unifiers<>
     >
     struct unify;
 }
@@ -30,6 +23,5 @@ namespace metalog
 #include "unify/modifiers.hpp"
 #include "unify/terms.hpp"
 #include "unify/variables.hpp"
-#include "unify/variadic.hpp"
 
 #endif
