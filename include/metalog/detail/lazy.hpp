@@ -17,6 +17,11 @@ namespace metalog
         struct lazy :
                 boost::mpl::apply_wrap0<f>
         {};
+
+        template<typename f>
+        struct lazy<lazy<f> > :
+                lazy<f>
+        {};
     }
 }
 
