@@ -35,51 +35,51 @@
             METALOG_DEFINE_LAZY_FORWARD_CALL(SEQ, insert, 3) \
             template<typename h, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t), typename x> \
             struct insert<SEQ<h, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>, x> : \
-                insert<SEQ<h, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>, metalog::detail::_, x> \
+                    insert<SEQ<h, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>, metalog::detail::_, x> \
             {}; \
             template<typename h, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t), typename pos, typename range> \
             struct insert_range<SEQ<h, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>, pos, range> : \
-                identity \
-                < \
-                    SEQ \
+                    identity \
                     < \
-                        metalog::detail::lazy \
+                        SEQ \
                         < \
-                            bind \
+                            metalog::detail::lazy \
                             < \
-                                quote3<fold>, \
-                                joint_view \
+                                bind \
                                 < \
-                                    iterator_range \
-                                    < \
-                                        typename begin<SEQ<h, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)> >::type, \
-                                        pos \
-                                    >, \
+                                    quote3<fold>, \
                                     joint_view \
                                     < \
-                                        range, \
                                         iterator_range \
                                         < \
-                                            pos, \
-                                            typename end<SEQ<h, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)> >::type \
+                                            typename begin<SEQ<h, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)> >::type, \
+                                            pos \
+                                        >, \
+                                        joint_view \
+                                        < \
+                                            range, \
+                                            iterator_range \
+                                            < \
+                                                pos, \
+                                                typename end<SEQ<h, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)> >::type \
+                                            > \
                                         > \
-                                    > \
-                                >, \
-                                SEQ<>, \
-                                insert<_1, end<_1>, _2> \
+                                    >, \
+                                    SEQ<>, \
+                                    insert<_1, end<_1>, _2> \
+                                > \
                             > \
                         > \
                     > \
-                > \
             {}; \
             METALOG_DEFINE_LAZY_FORWARD_CALL(SEQ, erase, 3) \
             template<typename h, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t), typename pos> \
             struct erase<SEQ<h, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>, pos> : \
-                erase<SEQ<h, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>, pos, typename next<pos>::type> \
+                    erase<SEQ<h, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>, pos, typename next<pos>::type> \
             {}; \
             template<typename h, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)> \
             struct clear<SEQ<h, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)> > : \
-                identity<SEQ<> > \
+                    identity<SEQ<> > \
             {}; \
         } \
     } \

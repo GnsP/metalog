@@ -20,7 +20,7 @@
     struct _impl; \
     template<typename h METALOG_TRAILING_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)> \
     struct _impl<SEQ<h METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)> > : \
-        boost::mpl::identity<typename SEQ<h METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>::_seq_impl> \
+            boost::mpl::identity<typename SEQ<h METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>::_seq_impl> \
     {};
 
 #define METALOG_DEFINE_IMPL(SEQ, IMPL) \

@@ -35,14 +35,14 @@
     template<template<METALOG_VARIADIC_PARAMS(N, _)> class term, typename hExpr METALOG_TRAILING_VARIADIC_PARAMS(BOOST_PP_SUB(N, 1), tExpr)> \
     struct substitute<u>:: \
         apply<term<hExpr METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(N, 1), tExpr)> > : \
-            boost::mpl::identity \
-            < \
-                term \
+                boost::mpl::identity \
                 < \
-                    METALOG_FORWARD_SUBSTITUTION(hExpr) \
-                    METALOG_FOR_EACH_TRAILING_VARIADIC_ARG(BOOST_PP_SUB(N, 1), tExpr, METALOG_FORWARD_SUBSTITUTION) \
+                    term \
+                    < \
+                        METALOG_FORWARD_SUBSTITUTION(hExpr) \
+                        METALOG_FOR_EACH_TRAILING_VARIADIC_ARG(BOOST_PP_SUB(N, 1), tExpr, METALOG_FORWARD_SUBSTITUTION) \
+                    > \
                 > \
-            > \
     {};
 
 #define METALOG_FORWARD_DEFINE_TERM_SUBSTITUTION(Z, N, DATA) \
