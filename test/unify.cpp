@@ -115,7 +115,7 @@ struct C;
     ((true )((2, (unify<const var<A> volatile, var<B> const>                                                )))((2, (map<pair<var<B>, var<A> volatile> >)))) \
     ((true )((2, (unify<var<A>, var<A> >                                                                    )))((1, (map<>)))) \
     ((true )((2, (unify<var<A>, var<B> >                                                                    )))((2, (map<pair<var<A>, var<B> > >)))) \
-    ((true )((3, (unify<var<A>, rel2<int, int*> >                                                           )))((3, (map<pair<var<A>, rel2<int, int*> > >)))) \
+    ((true )((4, (unify<var<A>, rel3<int, int*, void> >                                                     )))((4, (map<pair<var<A>, rel3<int, int*, void> > >)))) \
     ((true )((2, (unify<term<int>, term<int> >                                                              )))((1, (map<>)))) \
     ((true )((4, (unify<term<int, int*>, term<int, int*> >                                                  )))((1, (map<>)))) \
     ((true )((4, (unify<term<term<int, int*> >, term<term<int, int*> > >                                    )))((1, (map<>)))) \
