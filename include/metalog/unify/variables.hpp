@@ -7,7 +7,8 @@
 #ifndef _METALOG_UNIFY_VARIABLES_HPP_
 #define _METALOG_UNIFY_VARIABLES_HPP_
 
-#include "../types.hpp"
+#include "../atom.hpp"
+#include "../var.hpp"
 #include "../unifiers.hpp"
 
 #include "../detail/empty.hpp"

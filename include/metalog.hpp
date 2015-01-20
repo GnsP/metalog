@@ -4,12 +4,16 @@
  * See accompanying file LICENSE.txt for its full text.
  */
 
-#include "metalog/clause.hpp"
-#include "metalog/conjunction.hpp"
-#include "metalog/equivalent.hpp"
-#include "metalog/minimize.hpp"
-#include "metalog/resolve.hpp"
-#include "metalog/substitute.hpp"
-#include "metalog/types.hpp"
+#include "metalog/atom.hpp"
+#include "metalog/var.hpp"
+#include "metalog/term.hpp"
 #include "metalog/unifiers.hpp"
 #include "metalog/unify.hpp"
+
+#include "metalog/clause.hpp"
+#include "metalog/conjunction.hpp"
+#include "metalog/resolve.hpp"
+
+#include "metalog/equivalent.hpp"
+#include "metalog/minimize.hpp"
+#include "metalog/substitute.hpp"

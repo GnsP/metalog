@@ -4,12 +4,10 @@
  * See accompanying file LICENSE.txt for its full text.
  */
 
-#ifndef _METALOG_TYPES_HPP_
-#define _METALOG_TYPES_HPP_
+#ifndef _METALOG_ATOM_HPP_
+#define _METALOG_ATOM_HPP_
 
-#include "detail/preprocessor.hpp"
-
-#include <boost/preprocessor/arithmetic/sub.hpp>
+#include <boost/mpl/identity.hpp>
 
 namespace metalog
 {
@@ -18,14 +16,15 @@ namespace metalog
      * The unification of atom<A> with atom<B> succeeds iff A is literally equal to B,
      * regardless of variable substitutions.
      */
-    template<typename>
-    struct atom;
+    template<typename expr>
+    struct atom :
+            boost::mpl::identity<atom<expr> >
+    {};
 
-    template<typename>
-    struct var;
-
-    template<typename, METALOG_VARIADIC_OPTIONAL_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), _)>
-    struct term;
+    template<typename expr>
+    struct atom<atom<expr> > :
+            atom<expr>
+    {};
 }
 
 #endif

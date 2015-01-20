@@ -7,7 +7,7 @@
 #ifndef _METALOG_UNIFY_ATOMS_HPP_
 #define _METALOG_UNIFY_ATOMS_HPP_
 
-#include "../types.hpp"
+#include "../atom.hpp"
 #include "../unifiers.hpp"
 #include "../minimize.hpp"
 
