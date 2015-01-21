@@ -9,6 +9,8 @@
 
 #include "../term.hpp"
 
+#include "../detail/preprocessor.hpp"
+
 #include <boost/config.hpp>
 
 #include <boost/preprocessor/repetition/repeat_from_to.hpp>

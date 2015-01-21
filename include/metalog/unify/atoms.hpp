@@ -11,8 +11,6 @@
 #include "../unifiers.hpp"
 #include "../minimize.hpp"
 
-#include <boost/preprocessor/arithmetic/sub.hpp>
-
 #include <boost/mpl/bool.hpp>
 
 namespace metalog

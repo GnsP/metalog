@@ -14,8 +14,6 @@
 #include "../detail/empty.hpp"
 #include "../detail/lazy.hpp"
 
-#include <boost/preprocessor/arithmetic/sub.hpp>
-
 #include <boost/mpl/bind.hpp>
 #include <boost/mpl/quote.hpp>
 #include <boost/mpl/pair.hpp>

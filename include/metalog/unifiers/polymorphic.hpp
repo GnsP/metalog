@@ -10,6 +10,10 @@
 #include "../unify.hpp"
 
 #include "../detail/lazy.hpp"
+#include "../detail/sequences.hpp"
+#include "../detail/preprocessor.hpp"
+
+#include <boost/preprocessor/arithmetic/sub.hpp>
 
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/pair.hpp>
@@ -17,11 +21,11 @@
 
 namespace metalog
 {
-    template<typename m>
-    struct unifiers<m> :
-            boost::mpl::identity<unifiers<m> >
+    template<typename seq>
+    struct unifiers<seq> :
+            boost::mpl::identity<unifiers<seq> >
     {
-        METALOG_DEFINE_IMPL(metalog::unifiers, m)
+        METALOG_DEFINE_IMPL(metalog::unifiers, seq)
     };
 
     template<typename h, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>

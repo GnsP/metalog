@@ -9,8 +9,6 @@
 
 #include "../detail/lazy.hpp"
 
-#include <boost/preprocessor/arithmetic/sub.hpp>
-
 namespace metalog
 {
     template<typename lExpr, typename rExpr, typename u>

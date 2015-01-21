@@ -9,8 +9,6 @@
 
 #include <boost/config.hpp>
 
-#include <boost/preprocessor/arithmetic/sub.hpp>
-
 #define METALOG_DEFINE_MODIFIER_UNIFICATION(MODIFIER) \
     template<typename lExpr, typename rExpr, typename u> \
     struct unify<lExpr MODIFIER, rExpr MODIFIER, u> : \
