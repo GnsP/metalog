@@ -32,7 +32,7 @@
         > : \
             FUNC \
             < \
-                typename SEQ<h METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>::template _impl \
+                typename metalog::detail::seq_impl \
                     <SEQ<h METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)> >::type \
                 METALOG_TRAILING_ARGS(BOOST_PP_SUB(M, 1), _) \
             > \
@@ -61,7 +61,7 @@
                             BOOST_PP_CAT(boost::mpl::quote, M)<FUNC>, \
                             boost::mpl::bind \
                             < \
-                                boost::mpl::quote1<SEQ<h METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>::template _impl>, \
+                                boost::mpl::quote1<metalog::detail::seq_impl>, \
                                 SEQ<h METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)> \
                             > \
                             METALOG_TRAILING_ARGS(BOOST_PP_SUB(M, 1), _) \

@@ -25,7 +25,7 @@ namespace metalog
     struct unifiers<seq> :
             boost::mpl::identity<unifiers<seq> >
     {
-        METALOG_DEFINE_IMPL(metalog::unifiers, seq)
+        typedef seq impl;
     };
 
     template<typename h, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>
