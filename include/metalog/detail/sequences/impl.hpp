@@ -7,16 +7,31 @@
 #ifndef _METALOG_DETAIL_SEQUENCES_IMPL_HPP_
 #define _METALOG_DETAIL_SEQUENCES_IMPL_HPP_
 
+#include "../lazy.hpp"
+
 #include <boost/mpl/identity.hpp>
 
 namespace metalog
 {
     namespace detail
     {
-        template<typename seq>
-        struct seq_impl :
-                boost::mpl::identity<typename seq::impl>
-        {};
+        namespace seq
+        {
+            template<typename seq>
+            struct impl :
+                   seq::impl
+            {};
+
+            template<typename impl>
+            struct seq :
+                    boost::mpl::identity<impl>
+            {};
+
+            template<typename expr>
+            struct seq<lazy<expr> > :
+                    lazy<expr>
+            {};
+        }
     }
 
 }

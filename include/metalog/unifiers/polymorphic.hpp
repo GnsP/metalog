@@ -13,24 +13,28 @@
 #include "../detail/sequences.hpp"
 #include "../detail/preprocessor.hpp"
 
-#include <boost/preprocessor/arithmetic/sub.hpp>
-
-#include <boost/mpl/identity.hpp>
 #include <boost/mpl/pair.hpp>
 #include <boost/mpl/map.hpp>
+#include <boost/mpl/identity.hpp>
+#include <boost/mpl/insert.hpp>
 
 namespace metalog
 {
     template<typename seq>
-    struct unifiers<seq> :
-            boost::mpl::identity<unifiers<seq> >
+    struct unifiers<detail::seq::seq<seq> > :
+            boost::mpl::identity<unifiers<detail::seq::seq<seq> > >
     {
-        typedef seq impl;
+        typedef detail::seq::seq<seq> impl;
     };
 
-    template<typename h, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>
-    struct unifiers<unifiers<h, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)> > :
-            unifiers<h, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>
+    template<>
+    struct unifiers<> :
+            unifiers<detail::seq::seq<boost::mpl::map<> > >
+    {};
+
+    template<METALOG_VARIADIC_PARAMS(METALOG_MAX_ARGS, _)>
+    struct unifiers<unifiers<METALOG_VARIADIC_ARGS(METALOG_MAX_ARGS, _)> > :
+            unifiers<METALOG_VARIADIC_ARGS(METALOG_MAX_ARGS, _)>
     {};
 
     template<typename lExpr, typename rExpr, typename u>
@@ -40,7 +44,7 @@ namespace metalog
 
     template<typename key, typename value>
     struct unifiers<boost::mpl::pair<key, value> > :
-            unifiers<boost::mpl::map<boost::mpl::pair<key, value> > >
+            boost::mpl::insert<unifiers<>, boost::mpl::pair<key, value> >::type
     {};
 
     template<typename expr>

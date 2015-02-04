@@ -11,8 +11,6 @@
 #include "../lazy.hpp"
 
 #include <boost/preprocessor/cat.hpp>
-#include <boost/preprocessor/arithmetic/sub.hpp>
-#include <boost/preprocessor/logical/and.hpp>
 
 #include <boost/mpl/bind.hpp>
 #include <boost/mpl/quote.hpp>
@@ -21,50 +19,50 @@
 #define METALOG_DEFINE_FORWARD_CALL(SEQ, FUNC, M) \
     template \
     < \
-        typename h \
-        METALOG_TRAILING_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t) \
-        METALOG_TRAILING_PARAMS(BOOST_PP_SUB(M, 1), _) \
+        METALOG_VARIADIC_PARAMS(METALOG_MAX_ARGS, _) \
+        METALOG_TRAILING_PARAMS(BOOST_PP_SUB(M, 1), arg) \
     > \
     struct FUNC \
         < \
-            SEQ<h METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)> \
-            METALOG_TRAILING_ARGS(BOOST_PP_SUB(M, 1), _) \
+            SEQ<METALOG_VARIADIC_ARGS(METALOG_MAX_ARGS, _)> \
+            METALOG_TRAILING_ARGS(BOOST_PP_SUB(M, 1), arg) \
         > : \
             FUNC \
             < \
-                typename metalog::detail::seq_impl \
-                    <SEQ<h METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)> >::type \
-                METALOG_TRAILING_ARGS(BOOST_PP_SUB(M, 1), _) \
+                typename metalog::detail::seq::impl<SEQ<METALOG_VARIADIC_ARGS(METALOG_MAX_ARGS, _)> >::type \
+                METALOG_TRAILING_ARGS(BOOST_PP_SUB(M, 1), arg) \
             > \
     {};
 
-#define METALOG_DEFINE_LAZY_FORWARD_CALL(SEQ, FUNC, M) \
+#define METALOG_DEFINE_ONTO_FORWARD_CALL(SEQ, FUNC, M) \
     template \
     < \
-        typename h \
-        METALOG_TRAILING_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t) \
-        METALOG_TRAILING_PARAMS(BOOST_PP_SUB(M, 1), _) \
+        METALOG_VARIADIC_PARAMS(METALOG_MAX_ARGS, _) \
+        METALOG_TRAILING_PARAMS(BOOST_PP_SUB(M, 1), arg) \
     > \
     struct FUNC \
         < \
-            SEQ<h METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)> \
-            METALOG_TRAILING_ARGS(BOOST_PP_SUB(M, 1), _) \
+            SEQ<METALOG_VARIADIC_ARGS(METALOG_MAX_ARGS, _)> \
+            METALOG_TRAILING_ARGS(BOOST_PP_SUB(M, 1), arg) \
         > : \
             boost::mpl::identity \
             < \
                 SEQ \
                 < \
-                    metalog::detail::lazy \
+                    metalog::detail::seq::seq \
                     < \
-                        boost::mpl::bind \
+                        metalog::detail::lazy \
                         < \
-                            BOOST_PP_CAT(boost::mpl::quote, M)<FUNC>, \
                             boost::mpl::bind \
                             < \
-                                boost::mpl::quote1<metalog::detail::seq_impl>, \
-                                SEQ<h METALOG_TRAILING_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)> \
+                                BOOST_PP_CAT(boost::mpl::quote, M)<FUNC>, \
+                                boost::mpl::bind \
+                                < \
+                                    boost::mpl::quote1<metalog::detail::seq::impl>, \
+                                    SEQ<METALOG_VARIADIC_ARGS(METALOG_MAX_ARGS, _)> \
+                                > \
+                                METALOG_TRAILING_ARGS(BOOST_PP_SUB(M, 1), arg) \
                             > \
-                            METALOG_TRAILING_ARGS(BOOST_PP_SUB(M, 1), _) \
                         > \
                     > \
                 > \

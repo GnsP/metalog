@@ -9,6 +9,8 @@
 
 #include "../detail/preprocessor.hpp"
 
+#include <boost/config.hpp>
+
 #include <boost/preprocessor/arithmetic/sub.hpp>
 
 #include <boost/mpl/insert_range.hpp>
@@ -16,7 +18,11 @@
 namespace metalog
 {
     template<typename h, METALOG_VARIADIC_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>
-    struct unifiers :
+    struct unifiers
+#ifndef BOOST_NO_CXX11_VARIADIC_TEMPLATES
+            <h, METALOG_VARIADIC_ARGS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>
+#endif
+        :
             boost::mpl::insert_range
             <
                 unifiers<h>,

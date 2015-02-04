@@ -10,13 +10,9 @@
 #include "detail/preprocessor.hpp"
 #include "detail/sequences.hpp"
 
-#include <boost/preprocessor/arithmetic/sub.hpp>
-
-#include <boost/mpl/map.hpp>
-
 namespace metalog
 {
-    template<typename h = boost::mpl::map<>, METALOG_VARIADIC_OPTIONAL_PARAMS(BOOST_PP_SUB(METALOG_MAX_ARGS, 1), t)>
+    template<METALOG_VARIADIC_OPTIONAL_PARAMS(METALOG_MAX_ARGS, _)>
     struct unifiers;
 }
 

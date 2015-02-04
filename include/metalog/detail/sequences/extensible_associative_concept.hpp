@@ -30,7 +30,7 @@
             METALOG_DEFINE_FORWARD_CALL(SEQ, at, 2) \
             METALOG_DEFINE_FORWARD_CALL(SEQ, key_type, 2) \
             METALOG_DEFINE_FORWARD_CALL(SEQ, value_type, 2) \
-            METALOG_DEFINE_LAZY_FORWARD_CALL(SEQ, erase_key, 2) \
+            METALOG_DEFINE_ONTO_FORWARD_CALL(SEQ, erase_key, 2) \
         } \
     } \
 
