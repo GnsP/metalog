@@ -10,14 +10,12 @@
 #include "forward_call.hpp"
 #include "forward_concept.hpp"
 
-#include "../empty.hpp"
 #include "../lazy.hpp"
 
 #include <boost/mpl/insert.hpp>
 #include <boost/mpl/insert_range.hpp>
 #include <boost/mpl/erase.hpp>
 #include <boost/mpl/clear.hpp>
-#include <boost/mpl/next.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/quote.hpp>
 #include <boost/mpl/bind.hpp>
@@ -33,9 +31,10 @@
         namespace mpl \
         { \
             METALOG_DEFINE_ONTO_FORWARD_CALL(SEQ, insert, 3) \
-            template<METALOG_VARIADIC_PARAMS(METALOG_MAX_ARGS, _), typename x> \
-            struct insert<SEQ<METALOG_VARIADIC_ARGS(METALOG_MAX_ARGS, _)>, x> : \
-                    insert<SEQ<METALOG_VARIADIC_ARGS(METALOG_MAX_ARGS, _)>, metalog::detail::_, x> \
+            METALOG_DEFINE_ONTO_FORWARD_CALL(SEQ, erase, 3) \
+            template<METALOG_VARIADIC_PARAMS(METALOG_MAX_ARGS, _)> \
+            struct clear<SEQ<METALOG_VARIADIC_ARGS(METALOG_MAX_ARGS, _)> > : \
+                    identity<SEQ<> > \
             {}; \
             template<METALOG_VARIADIC_PARAMS(METALOG_MAX_ARGS, _), typename pos, typename range> \
             struct insert_range<SEQ<METALOG_VARIADIC_ARGS(METALOG_MAX_ARGS, _)>, pos, range> : \
@@ -47,7 +46,7 @@
                             < \
                                 metalog::detail::lazy \
                                 < \
-                                    bind \
+                                    bind3 \
                                     < \
                                         quote3<fold>, \
                                         joint_view \
@@ -74,15 +73,6 @@
                             > \
                         > \
                     > \
-            {}; \
-            METALOG_DEFINE_ONTO_FORWARD_CALL(SEQ, erase, 3) \
-            template<METALOG_VARIADIC_PARAMS(METALOG_MAX_ARGS, _), typename pos> \
-            struct erase<SEQ<METALOG_VARIADIC_ARGS(METALOG_MAX_ARGS, _)>, pos> : \
-                    erase<SEQ<METALOG_VARIADIC_ARGS(METALOG_MAX_ARGS, _)>, pos, typename next<pos>::type> \
-            {}; \
-            template<METALOG_VARIADIC_PARAMS(METALOG_MAX_ARGS, _)> \
-            struct clear<SEQ<METALOG_VARIADIC_ARGS(METALOG_MAX_ARGS, _)> > : \
-                    identity<SEQ<> > \
             {}; \
         } \
     } \

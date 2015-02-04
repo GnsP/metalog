@@ -53,10 +53,10 @@
                     < \
                         metalog::detail::lazy \
                         < \
-                            boost::mpl::bind \
+                            BOOST_PP_CAT(boost::mpl::bind, M) \
                             < \
                                 BOOST_PP_CAT(boost::mpl::quote, M)<FUNC>, \
-                                boost::mpl::bind \
+                                boost::mpl::bind1 \
                                 < \
                                     boost::mpl::quote1<metalog::detail::seq::impl>, \
                                     SEQ<METALOG_VARIADIC_ARGS(METALOG_MAX_ARGS, _)> \
