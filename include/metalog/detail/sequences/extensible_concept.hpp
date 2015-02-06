@@ -7,7 +7,7 @@
 #ifndef _METALOG_DETAIL_SEQUENCES_EXTENSIBLE_CONCEPT_HPP_
 #define _METALOG_DETAIL_SEQUENCES_EXTENSIBLE_CONCEPT_HPP_
 
-#include "forward_call.hpp"
+#include "algorithms.hpp"
 #include "forward_concept.hpp"
 
 #include "../lazy.hpp"
@@ -30,8 +30,8 @@
     { \
         namespace mpl \
         { \
-            METALOG_DEFINE_ONTO_FORWARD_CALL(SEQ, insert, 3) \
-            METALOG_DEFINE_ONTO_FORWARD_CALL(SEQ, erase, 3) \
+            METALOG_DEFINE_ONTO_ALGORITHM(SEQ, insert, 3) \
+            METALOG_DEFINE_ONTO_ALGORITHM(SEQ, erase, 3) \
             template<METALOG_VARIADIC_PARAMS(METALOG_MAX_ARGS, _)> \
             struct clear<SEQ<METALOG_VARIADIC_ARGS(METALOG_MAX_ARGS, _)> > : \
                     identity<SEQ<> > \

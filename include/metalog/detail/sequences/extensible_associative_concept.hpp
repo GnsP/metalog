@@ -7,7 +7,7 @@
 #ifndef _METALOG_DETAIL_SEQUENCES_EXTENSIBLE_ASSOCIATIVE_CONCEPT_HPP_
 #define _METALOG_DETAIL_SEQUENCES_EXTENSIBLE_ASSOCIATIVE_CONCEPT_HPP_
 
-#include "forward_call.hpp"
+#include "algorithms.hpp"
 #include "extensible_concept.hpp"
 
 #include <boost/mpl/has_key.hpp>
@@ -24,13 +24,13 @@
     { \
         namespace mpl \
         { \
-            METALOG_DEFINE_FORWARD_CALL(SEQ, has_key, 2) \
-            METALOG_DEFINE_FORWARD_CALL(SEQ, count, 2) \
-            METALOG_DEFINE_FORWARD_CALL(SEQ, order, 2) \
-            METALOG_DEFINE_FORWARD_CALL(SEQ, at, 2) \
-            METALOG_DEFINE_FORWARD_CALL(SEQ, key_type, 2) \
-            METALOG_DEFINE_FORWARD_CALL(SEQ, value_type, 2) \
-            METALOG_DEFINE_ONTO_FORWARD_CALL(SEQ, erase_key, 2) \
+            METALOG_DEFINE_ALGORITHM(SEQ, has_key, 2) \
+            METALOG_DEFINE_ALGORITHM(SEQ, count, 2) \
+            METALOG_DEFINE_ALGORITHM(SEQ, order, 2) \
+            METALOG_DEFINE_ALGORITHM(SEQ, at, 2) \
+            METALOG_DEFINE_ALGORITHM(SEQ, key_type, 2) \
+            METALOG_DEFINE_ALGORITHM(SEQ, value_type, 2) \
+            METALOG_DEFINE_ONTO_ALGORITHM(SEQ, erase_key, 2) \
         } \
     } \
 

@@ -4,8 +4,8 @@
  * See accompanying file LICENSE.txt for its full text.
  */
 
-#ifndef _METALOG_DETAIL_SEQUENCES_FORWARD_CALL_HPP_
-#define _METALOG_DETAIL_SEQUENCES_FORWARD_CALL_HPP_
+#ifndef _METALOG_DETAIL_SEQUENCES_ALGORITHMS_HPP_
+#define _METALOG_DETAIL_SEQUENCES_ALGORITHMS_HPP_
 
 #include "../preprocessor.hpp"
 #include "../lazy.hpp"
@@ -16,7 +16,7 @@
 #include <boost/mpl/quote.hpp>
 #include <boost/mpl/identity.hpp>
 
-#define METALOG_DEFINE_FORWARD_CALL(SEQ, FUNC, M) \
+#define METALOG_DEFINE_ALGORITHM(SEQ, FUNC, M) \
     template \
     < \
         METALOG_VARIADIC_PARAMS(METALOG_MAX_ARGS, _) \
@@ -34,7 +34,7 @@
             > \
     {};
 
-#define METALOG_DEFINE_ONTO_FORWARD_CALL(SEQ, FUNC, M) \
+#define METALOG_DEFINE_ONTO_ALGORITHM(SEQ, FUNC, M) \
     template \
     < \
         METALOG_VARIADIC_PARAMS(METALOG_MAX_ARGS, _) \
