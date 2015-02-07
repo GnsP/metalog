@@ -10,8 +10,7 @@
 #include "../conjunction.hpp"
 
 #include "../detail/empty.hpp"
-
-#include <boost/config.hpp>
+#include "../detail/preprocessor.hpp"
 
 #include <boost/preprocessor/debug/assert.hpp>
 #include <boost/preprocessor/comparison/less_equal.hpp>
@@ -48,7 +47,7 @@ namespace metalog
 {
     namespace detail
     {
-#ifdef BOOST_NO_CXX11_VARIADIC_TEMPLATES
+#if METALOG_NO_VARIADIC_TEMPLATES
         BOOST_PP_REPEAT_FROM_TO(0, BOOST_PP_ADD(METALOG_MAX_ARGS, 1), METALOG_FORWARD_DEFINE_JOIN_CONJUNCTION, _)
 #else
         METALOG_DEFINE_JOIN_CONJUNCTION(METALOG_MAX_ARGS, METALOG_MAX_ARGS)

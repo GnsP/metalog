@@ -13,8 +13,6 @@
 #include "detail/lazy.hpp"
 #include "detail/preprocessor.hpp"
 
-#include <boost/config.hpp>
-
 #include <boost/preprocessor/debug/assert.hpp>
 #include <boost/preprocessor/comparison/less_equal.hpp>
 #include <boost/preprocessor/arithmetic/sub.hpp>
@@ -83,7 +81,7 @@ namespace metalog
             >
     {};
 
-#ifdef BOOST_NO_CXX11_VARIADIC_TEMPLATES
+#if METALOG_NO_VARIADIC_TEMPLATES
     BOOST_PP_REPEAT_FROM_TO(1, METALOG_MAX_ARGS, METALOG_FORWARD_DEFINE_TERM_SUBSTITUTION, _)
 #endif
 

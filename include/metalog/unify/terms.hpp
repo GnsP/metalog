@@ -11,8 +11,6 @@
 
 #include "../detail/preprocessor.hpp"
 
-#include <boost/config.hpp>
-
 #include <boost/preprocessor/repetition/repeat_from_to.hpp>
 
 #include <boost/mpl/if.hpp>
@@ -55,7 +53,7 @@ namespace metalog
             >::type
     {};
 
-#ifdef BOOST_NO_CXX11_VARIADIC_TEMPLATES
+#if METALOG_NO_VARIADIC_TEMPLATES
     BOOST_PP_REPEAT_FROM_TO(1, METALOG_MAX_ARGS, METALOG_FORWARD_DEFINE_EQUIVALENCE_TRANSFORM, _)
 #endif
 
