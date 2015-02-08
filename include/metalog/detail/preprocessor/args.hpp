@@ -4,6 +4,9 @@
  * See accompanying file LICENSE.txt for its full text.
  */
 
+#ifndef _METALOG_DETAIL_PREPROCESSOR_ARGS_HPP_
+#define _METALOG_DETAIL_PREPROCESSOR_ARGS_HPP_
+
 #include "../empty.hpp"
 
 #include <boost/preprocessor/comma_if.hpp>
@@ -52,3 +55,5 @@
 
 #define METALOG_TRAILING_PARAMS(N, PREFIX) \
     BOOST_PP_COMMA_IF(N) METALOG_PARAMS(N, PREFIX)
+
+#endif

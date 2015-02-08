@@ -7,6 +7,7 @@
 #ifndef _METALOG_SUBSTITUTE_HPP_
 #define _METALOG_SUBSTITUTE_HPP_
 
+#include "config.hpp"
 #include "atom.hpp"
 #include "var.hpp"
 

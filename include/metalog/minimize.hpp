@@ -7,6 +7,7 @@
 #ifndef _METALOG_MINIMIZE_HPP_
 #define _METALOG_MINIMIZE_HPP_
 
+#include "config.hpp"
 #include "unifiers.hpp"
 #include "substitute.hpp"
 

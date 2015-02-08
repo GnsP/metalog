@@ -7,6 +7,7 @@
 #ifndef _METALOG_CONJUNCTION_HPP_
 #define _METALOG_CONJUNCTION_HPP_
 
+#include "config.hpp"
 #include "detail/preprocessor.hpp"
 
 namespace metalog

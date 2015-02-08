@@ -7,6 +7,8 @@
 #ifndef _METALOG_TERM_HPP_
 #define _METALOG_TERM_HPP_
 
+#include "config.hpp"
+
 #include "detail/preprocessor.hpp"
 
 #include <boost/preprocessor/arithmetic/sub.hpp>

@@ -7,6 +7,7 @@
 #ifndef _METALOG_CLAUSE_HPP_
 #define _METALOG_CLAUSE_HPP_
 
+#include "config.hpp"
 #include "conjunction.hpp"
 
 #include "detail/preprocessor.hpp"

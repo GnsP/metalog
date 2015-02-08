@@ -7,6 +7,7 @@
 #ifndef _METALOG_EQUIVALENT_HPP_
 #define _METALOG_EQUIVALENT_HPP_
 
+#include "config.hpp"
 #include "unifiers.hpp"
 
 #include <boost/type_traits.hpp>

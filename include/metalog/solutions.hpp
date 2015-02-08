@@ -7,6 +7,7 @@
 #ifndef _METALOG_SOLUTIONS_HPP_
 #define _METALOG_SOLUTIONS_HPP_
 
+#include "config.hpp"
 #include "resolve.hpp"
 
 #include "detail/preprocessor.hpp"

@@ -7,6 +7,8 @@
 #ifndef _METALOG_ATOM_HPP_
 #define _METALOG_ATOM_HPP_
 
+#include "config.hpp"
+
 #include <boost/mpl/identity.hpp>
 
 namespace metalog

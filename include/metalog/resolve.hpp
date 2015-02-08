@@ -7,6 +7,7 @@
 #ifndef _METALOG_RESOLVE_HPP_
 #define _METALOG_RESOLVE_HPP_
 
+#include "config.hpp"
 #include "unify.hpp"
 #include "unifiers.hpp"
 
