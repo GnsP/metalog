@@ -26,9 +26,6 @@
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/identity.hpp>
 
-#define METALOG_FORWARD_SUBSTITUTION(ARG) \
-    typename apply<ARG>::type
-
 #define METALOG_DEFINE_TERM_SUBSTITUTION(N) \
     BOOST_PP_ASSERT(BOOST_PP_LESS_EQUAL(1, N)) \
     template<typename u> \
@@ -39,8 +36,8 @@
                 < \
                     term \
                     < \
-                        METALOG_FORWARD_SUBSTITUTION(hExpr) \
-                        METALOG_FOR_EACH_TRAILING_VARIADIC_ARG(BOOST_PP_SUB(N, 1), tExpr, METALOG_FORWARD_SUBSTITUTION) \
+                        typename apply<hExpr>::type \
+                        METALOG_CALL_FOR_EACH_TRAILING_VARIADIC_ARG(BOOST_PP_SUB(N, 1), tExpr, apply) \
                     > \
                 > \
     {};
