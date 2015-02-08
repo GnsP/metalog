@@ -4,8 +4,8 @@
  * See accompanying file LICENSE.txt for its full text.
  */
 
-#ifndef _METALOG_DETAIL_SEQUENCES_IMPL_HPP_
-#define _METALOG_DETAIL_SEQUENCES_IMPL_HPP_
+#ifndef _METALOG_DETAIL_COLLECTIONS_IMPL_HPP_
+#define _METALOG_DETAIL_COLLECTIONS_IMPL_HPP_
 
 #include "../lazy.hpp"
 
@@ -15,7 +15,7 @@ namespace metalog
 {
     namespace detail
     {
-        namespace seq
+        namespace collections
         {
             template<typename seq>
             struct impl :

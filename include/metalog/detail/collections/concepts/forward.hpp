@@ -4,16 +4,19 @@
  * See accompanying file LICENSE.txt for its full text.
  */
 
-#ifndef _METALOG_DETAIL_SEQUENCES_FORWARD_CONCEPT_HPP_
-#define _METALOG_DETAIL_SEQUENCES_FORWARD_CONCEPT_HPP_
+#ifndef _METALOG_DETAIL_COLLECTIONS_CONCEPTS_FORWARD_HPP_
+#define _METALOG_DETAIL_COLLECTIONS_CONCEPTS_FORWARD_HPP_
 
-#include "algorithms.hpp"
+#include "../algorithms.hpp"
+
+#include <boost/mpl/vector.hpp>
 
 #include <boost/mpl/begin.hpp>
 #include <boost/mpl/end.hpp>
 #include <boost/mpl/size.hpp>
 #include <boost/mpl/empty.hpp>
 #include <boost/mpl/front.hpp>
+
 #include <boost/mpl/copy.hpp>
 #include <boost/mpl/copy_if.hpp>
 #include <boost/mpl/transform.hpp>
@@ -25,7 +28,10 @@
 #include <boost/mpl/sort.hpp>
 #include <boost/mpl/reverse.hpp>
 
-#define METALOG_IMPLEMENT_FORWARD_CONCEPT(SEQ) \
+#define METALOG_FORWARD_COLLECTION_IMPL \
+    boost::mpl::vector
+
+#define METALOG_DEFINE_FORWARD_COLLECTION_ALGORITHMS(SEQ) \
     namespace boost \
     { \
         namespace mpl \
@@ -55,5 +61,7 @@
             METALOG_DEFINE_ONTO_ALGORITHM(SEQ, reverse_unique, 3) \
         } \
     }
+
+
 
 #endif

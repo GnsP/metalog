@@ -8,7 +8,7 @@
 #define _METALOG_UNIFIERS_HPP_
 
 #include "detail/preprocessor.hpp"
-#include "detail/sequences.hpp"
+#include "detail/collections.hpp"
 
 namespace metalog
 {
@@ -16,9 +16,8 @@ namespace metalog
     struct unifiers;
 }
 
-METALOG_IMPLEMENT_EXTENSIBLE_ASSOCIATIVE_CONCEPT(metalog::unifiers)
+METALOG_DEFINE_COLLECTION(unifiers, ASSOCIATIVE)
 
 #include "unifiers/polymorphic.hpp"
-#include "unifiers/variadic.hpp"
 
 #endif

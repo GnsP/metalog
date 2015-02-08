@@ -7,6 +7,8 @@
 #ifndef _METALOG_UNIFY_HPP_
 #define _METALOG_UNIFY_HPP_
 
+#include "unifiers.hpp"
+
 namespace metalog
 {
     template
