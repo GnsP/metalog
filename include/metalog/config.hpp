@@ -7,7 +7,8 @@
 #ifndef _METALOG_CONFIG_HPP_
 #define _METALOG_CONFIG_HPP_
 
-#include "config/workaround/mpl.hpp"
+#include "config/workaround/boost7769.hpp"
+#include "config/workaround/boost11001.hpp"
 
 #include <boost/config.hpp>
 

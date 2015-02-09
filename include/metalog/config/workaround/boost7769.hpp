@@ -4,8 +4,8 @@
  * See accompanying file LICENSE.txt for its full text.
  */
 
-#ifndef _METALOG_CONFIG_WORKAROUND_MPL_HPP_
-#define _METALOG_CONFIG_WORKAROUND_MPL_HPP_
+#ifndef _METALOG_CONFIG_WORKAROUND_BOOST7769L_HPP_
+#define _METALOG_CONFIG_WORKAROUND_BOOST7769L_HPP_
 
 #include <boost/mpl/aux_/preprocessor/range.hpp>
 
